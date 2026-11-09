@@ -1,0 +1,69 @@
+---
+interface Props {
+  size?: number | string;
+  class?: string;
+  interactive?: boolean;
+}
+
+const { size = 520, class: className = '', interactive = true } = Astro.props;
+---
+
+<div class={`animated-icon-wrap ${className}`} style={`--icon-size: ${typeof size === 'number' ? `${size}px` : size};`}>
+  <svg
+    class={`wearears-vector-icon ${interactive ? 'interactive' : ''}`}
+    viewBox="0 0 1000 1000"
+    width="100%"
+    height="100%"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <!-- Phase 1: 底盘画板 (Chassis) -->
+    <rect class="stage-chassis" width="1000" height="1000" rx="180" fill="#F6F6F2" />
+
+    <!-- Phase 2: 耳机舱中梁与右下区 (Charging Case Spine & Lower-Right) -->
+    <g class="stage-case">
+      <!-- 贯穿主梁 (从左下直接贯穿到右上角的蓝色大梁) -->
+      <path class="part-spine" fill="#1E4182" d="M182 838L773 247L810 284L219 875Z" />
+      <!-- 右下角蓝色色块 -->
+      <path class="part-case-blue" fill="#1E4182" d="M723 649L801 571L814 584L736 662ZM636 798L749 685L790 726L677 839Z" />
+      <!-- 右下角黄色色块 -->
+      <path class="part-case-yellow" fill="#EAB31A" d="M446 644L626 464L702 540L522 720Z" />
+      <!-- 右下角绿色色块 -->
+      <path class="part-case-green" fill="#669F77" d="M540 704L671 573L723 625L592 756Z" />
+      <!-- 右下角黑色线条与结构 -->
+      <path class="part-case-black" fill="#101316" d="M313 783L365 731L417 783L365 835ZM363 871L869 365L874 370L368 876ZM515 873L871 517L873 519L517 875ZM592 780L723 649L736 662L605 793Z" />
+    </g>
+
+    <!-- Phase 3: 左右耳机同时施工 (Left & Right Earbuds Concurrent Construction) -->
+    <!-- 左耳机组 (Left Earbud) -->
+    <g class="stage-earbud-left">
+      <!-- 左上角黄色色块 -->
+      <path class="part-earbud-yellow" fill="#EAB31A" d="M182 476L294 364L394 464L282 576Z" />
+      <!-- 耳机柄与连接色块 -->
+      <path class="part-earbud-stem-blue" fill="#1E4182" d="M157 416L235 338L253 356L175 434ZM127 503L271 359L277 365L133 509Z" />
+      <path class="part-earbud-stem-black" fill="#101316" d="M209 211L212 208L489 485L486 488ZM247 315L261 301L408 448L394 462Z" />
+    </g>
+
+    <!-- 右耳机组 (Right Earbud) -->
+    <g class="stage-earbud-right">
+      <!-- 右上角黄色色块 -->
+      <path class="part-earbud-yellow" fill="#EAB31A" d="M417 325L477 265L600 388L540 448Z" />
+      <!-- 右上角绿色色块 -->
+      <path class="part-earbud-green" fill="#669F77" d="M477 265L608 134L710 236L579 367ZM303 331L313 321L419 427L409 437Z" />
+      <!-- 耳机柄与连接色块 -->
+      <path class="part-earbud-stem-blue" fill="#1E4182" d="M282 252L305 229L378 302L355 325ZM338 238L395 181L445 231L388 288Z" />
+      <path class="part-earbud-stem-black" fill="#101316" d="M412 198L489 121L506 138L429 215ZM346 334L465 215L488 238L369 357Z" />
+    </g>
+
+    <!-- Phase 4: 从中间戳向左上角的分界粗线与核心落子 (Center Divider & Keystone) -->
+    <g class="stage-divider">
+      <!-- 贯通对角基准线 -->
+      <path class="part-divider-line" fill="#101316" d="M127 857L857 127L875 145L145 875Z" />
+      <!-- 从中间戳向左上角的分界粗块 -->
+      <path class="part-divider-stem" fill="#101316" d="M379 359L415 323L454 362L418 398ZM409 405L453 361L541 449L497 493Z" />
+      <!-- 中心珊瑚红定格方块 -->
+      <path class="part-keystone-red" fill="#DF6863" d="M429 491L450 470L471 491L450 512Z" />
+    </g>
+  </svg>
+</div>

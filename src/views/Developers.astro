@@ -16,7 +16,7 @@ const steps = zh ? [
 ];
 ---
 
-<PageIntro label="03 / DEVELOPERS" title={zh ? '为新的设备留下接口。' : 'A place for the next device.'}
+<PageIntro label="03 / DEVELOPERS" title={zh ? '为新的设备留下接口' : 'A place for the next device'}
   summary={zh ? 'WearEars 将界面、驱动和通信分开。统一接口承接常用操作，具体协议留在各自的驱动中。'
     : 'WearEars separates the interface, drivers and transport. The shared contract carries common operations, while each driver owns its protocol.'}>
   <div class="action-row">
@@ -28,7 +28,7 @@ const steps = zh ? [
   <div class="shell architecture-grid">
     <div class="section-lead">
       <p class="label"><span class="label-mark"></span>SYSTEM DESIGN</p>
-      <h2 id="system-title">{zh ? '沿着四层架构看一次操作。' : 'Follow a control through four layers.'}</h2>
+      <h2 id="system-title">{zh ? '沿着四层架构看一次操作' : 'Follow a control through four layers'}</h2>
       <p>{zh ? '展开每一层查看职责和对应源码。' : 'Open a layer to read its role and inspect the source.'}</p>
     </div>
     <Architecture locale={locale} />

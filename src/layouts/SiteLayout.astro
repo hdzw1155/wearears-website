@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { locale, page, notFound = false } = Astro.props;
+const zh = locale === 'zh';
 const copy = siteCopy[locale];
 const other = locale === 'zh' ? 'en' : 'zh';
 const title = notFound ? '404 · WearEars' : page === 'home' ? copy.title : copy.pages[page] + ' · WearEars';
@@ -112,8 +113,8 @@ const languageUrl = pagePath(other, page);
           </nav>
         </div>
         <div class="footer-baseline">
-          <span>© 2026 WearEars</span>
-          <span>WEAR OS / OPEN SOURCE</span>
+          <span>© 2026 WearEars · {zh ? '保留所有权利' : 'All rights reserved'}</span>
+          <span><a href="/privacy/" class="footer-legal-link">{zh ? '隐私与商标政策' : 'Privacy & Trademarks'}</a> · WEAR OS / MIT</span>
         </div>
       </div>
     </footer>

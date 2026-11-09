@@ -6,9 +6,9 @@ const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 ---
 
-<PageIntro label="DATA / PRIVACY" title={zh ? '网站如何处理数据。' : 'How this site handles data.'}
-  summary={zh ? '这份说明覆盖官网第一阶段的浏览、兼容性查询和外部链接。'
-    : 'This notice describes browsing, compatibility searches and external links on the first-stage website.'} />
+<PageIntro label="DATA / PRIVACY" title={zh ? '网站如何处理数据' : 'How this site handles data'}
+  summary={zh ? '这份说明覆盖官网第一阶段的浏览、兼容性查询、外部链接以及商标使用规范。'
+    : 'This notice describes browsing, compatibility searches, external links and brand identity policies.'} />
 
 <section class="shell content-section split-content" aria-labelledby="privacy-details">
   <div class="section-lead">
@@ -25,6 +25,27 @@ const zh = locale === 'zh';
     <h3>{zh ? 'GitHub 与公开交流' : 'GitHub and public discussions'}</h3>
     <p>{zh ? '下载、源码和讨论链接会打开 GitHub。发布问题或评论时，内容的可见性由 GitHub 仓库和账户设置决定。'
       : 'Downloads, source and discussion links open GitHub. The repository and account settings determine who can see a posted issue or comment.'}</p>
-    <a class="text-link" href={site.sourceRepository}>{zh ? '查看官网源码' : 'View the website source'} <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={site.sourceRepository} target="_blank" rel="noopener noreferrer">{zh ? '查看官网源码' : 'View the website source'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+  </div>
+</section>
+
+<section class="shell content-section split-content ruled" aria-labelledby="trademark-details">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark yellow"></span>TRADEMARKS</p>
+    <h2 id="trademark-details">{zh ? '商标与品牌权利' : 'Trademarks & brand identity'}</h2>
+  </div>
+  <div class="prose">
+    <h3>{zh ? 'MIT 开源许可与商标权属的区分' : 'Separation of MIT License and trademarks'}</h3>
+    <p>{zh
+      ? 'WearEars 项目核心源码采用 MIT 许可证开放。但 MIT 许可仅适用于软件代码本身，不授予使用 WearEars 名称、官方应用启动图标（App Launcher Icon）及相关视觉标识的商标许可。'
+      : 'WearEars source code is licensed under the MIT License. The MIT License applies to software code only and does not grant permission to use the WearEars name, official app launcher icon, or brand identity.'}</p>
+    <h3>{zh ? '合理引用与二次分发' : 'Permitted reference & forks'}</h3>
+    <p>{zh
+      ? '允许在客观描述兼容性或标明原始项目出处时真实引用 WearEars 名称。任何衍生分发或第三方商业发布版本，必须移除官方应用图标并替换为独立标识，且不得暗示拥有 WearEars 官方背书。'
+      : 'Truthful nominative reference is permitted to state compatibility or cite project origin. Derivative commercial distributions must remove official brand icons and must not imply official endorsement.'}</p>
+    <a class="text-link" href={site.sourceRepository + '/blob/main/TRADEMARKS.md'} target="_blank" rel="noopener noreferrer">
+      {zh ? '阅读完整商标政策 (TRADEMARKS.md)' : 'Read full trademark policy (TRADEMARKS.md)'} <span aria-hidden="true">↗</span>
+      <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+    </a>
   </div>
 </section>
