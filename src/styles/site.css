@@ -439,21 +439,9 @@ html.js .slide-section:not(.is-active) .part-keystone-red {
   }
 }
 
-/* 一面一面的 PPT 式整页切换 (Slide-by-slide presentation) */
-html {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-}
+/* 章节容器与入场定位 */
 .slide-section {
   position: relative;
-  min-height: 100vh;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-  padding-block: clamp(3rem, 6vh, 6.5rem);
 }
 
 /* 随着页面切换从页面“崩落”的小彩色块装饰（彩蛋） */
@@ -914,6 +902,11 @@ html.js .slide-section:not(.is-active) .release-list li {
   .page-intro h1 { font-size: clamp(2.5rem, 8.8vw, 4.45rem); }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-grid nav { justify-content: flex-start; }
+  .footer-baseline {
+    flex-direction: column;
+    gap: .55rem;
+    padding-bottom: calc(2.2rem + env(safe-area-inset-bottom, 1rem));
+  }
 }
 
 @media (max-width: 570px) {
