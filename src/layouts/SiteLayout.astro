@@ -1,0 +1,121 @@
+---
+import '../styles/site.css';
+import { locales, navigation, pagePath, site, siteCopy, type Locale, type SitePage } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+  page: SitePage;
+  notFound?: boolean;
+}
+
+const { locale, page, notFound = false } = Astro.props;
+const copy = siteCopy[locale];
+const other = locale === 'zh' ? 'en' : 'zh';
+const title = notFound ? '404 · WearEars' : page === 'home' ? copy.title : copy.pages[page] + ' · WearEars';
+const description = notFound ? copy.description : copy.descriptions[page];
+const canonical = new URL(pagePath(locale, page), site.origin);
+const languageUrl = pagePath(other, page);
+---
+
+<!doctype html>
+<html lang={copy.lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#F7F7F5" />
+    <link rel="icon" type="image/svg+xml" href="/brand/mark.svg" />
+    {notFound ? <meta name="robots" content="noindex" /> : (
+      <>
+        <link rel="canonical" href={canonical.href} />
+        {locales.map((language) => (
+          <link rel="alternate" hreflang={siteCopy[language].lang} href={new URL(pagePath(language, page), site.origin).href} />
+        ))}
+        <link rel="alternate" hreflang="x-default" href={new URL(pagePath('zh', page), site.origin).href} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content={site.name} />
+        <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical.href} />
+        <meta property="og:image" content={site.origin + '/brand/social.png'} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="WearEars geometric brand artwork" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{copy.skip}</a>
+    <header class="masthead">
+      <div class="shell masthead-inner">
+        <a class="wordmark" href={pagePath(locale, 'home')}>
+          <img src="/brand/mark.svg" width="31" height="31" alt="" />
+          <span>WearEars</span>
+        </a>
+        <nav class="desktop-nav" aria-label={copy.navigation}>
+          {navigation.map((item) => (
+            <a href={pagePath(locale, item)} aria-current={!notFound && page === item ? 'page' : undefined}>
+              {copy.pages[item]}
+            </a>
+          ))}
+        </nav>
+        <div class="masthead-actions">
+          <a class="header-github" href={site.appRepository}>GitHub <span aria-hidden="true">↗</span></a>
+          <a class="language-link" href={languageUrl} lang={siteCopy[other].lang} aria-label={copy.language}>
+            {copy.languageLabel}
+          </a>
+          <details class="mobile-nav">
+            <summary aria-label={copy.menu}><span class="menu-icon" aria-hidden="true"></span></summary>
+            <nav aria-label={copy.navigation}>
+              {navigation.map((item) => (
+                <a href={pagePath(locale, item)} aria-current={!notFound && page === item ? 'page' : undefined}>
+                  {copy.pages[item]} <span aria-hidden="true">→</span>
+                </a>
+              ))}
+              <a href={site.appRepository}>GitHub <span aria-hidden="true">↗</span></a>
+            </nav>
+          </details>
+        </div>
+      </div>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell">
+        <div class="footer-grid">
+          <div>
+            <a class="wordmark" href={pagePath(locale, 'home')}>
+              <img src="/brand/mark.svg" width="31" height="31" alt="" />
+              <span>WearEars</span>
+            </a>
+            <p>{copy.tagline}</p>
+          </div>
+          <nav aria-label={copy.footer}>
+            <a href={pagePath(locale, 'developers')}>{copy.pages.developers}</a>
+            <a href={pagePath(locale, 'partners')}>{copy.pages.partners}</a>
+            <a href={pagePath(locale, 'privacy')}>{copy.pages.privacy}</a>
+            <a href={site.appRepository}>GitHub <span aria-hidden="true">↗</span></a>
+            {site.contactEmail && <a href={'mailto:' + site.contactEmail}>{site.contactEmail}</a>}
+          </nav>
+        </div>
+        <div class="footer-baseline">
+          <span>© 2026 WearEars</span>
+          <span>WEAR OS / OPEN SOURCE</span>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
+      menu?.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.open) {
+          menu.open = false;
+          menu.querySelector('summary')?.focus();
+        }
+      });
+    </script>
+  </body>
+</html>

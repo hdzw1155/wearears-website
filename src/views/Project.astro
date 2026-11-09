@@ -1,0 +1,56 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import { pagePath, releasesUrl, site, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const steps = zh ? [
+  ['配对耳机', '在手表的系统蓝牙设置中完成配对。确认手表与耳机可以正常连接。'],
+  ['获取手表应用', '在 GitHub Releases 查看适合的发布与安装说明，将 APK 安装到 Wear OS 手表。'],
+  ['打开腕上控制', '打开 WearEars 并选择耳机。查看设备实际回报的电量和可用模式。'],
+] : [
+  ['Pair the earbuds', 'Use the watch’s Bluetooth settings and confirm that the watch and earbuds can connect.'],
+  ['Get the watch app', 'Find the release and installation guide on GitHub, then install the APK on Wear OS.'],
+  ['Open the controls', 'Open WearEars and select your earbuds to see the reported battery and available modes.'],
+];
+---
+
+<PageIntro label="01 / THE PROJECT" title={zh ? '让声音控制回到手腕。' : 'Bring listening controls to your wrist.'}
+  summary={zh ? 'WearEars 是一个 Wear OS 开源项目，把查看耳机电量和切换聆听模式放进同一个手表应用。'
+    : 'WearEars is an open-source Wear OS project for checking earbud battery and switching listening modes from one watch app.'}>
+  <div class="action-row">
+    <a class="button button-primary" href={releasesUrl}>{zh ? '获取手表应用' : 'Get the watch app'} <span aria-hidden="true">↗</span></a>
+    <a class="button button-outline" href={pagePath(locale, 'compatibility')}>{zh ? '查看兼容性' : 'Check compatibility'} <span aria-hidden="true">→</span></a>
+  </div>
+</PageIntro>
+
+<section class="shell content-section split-content" aria-labelledby="experience-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>THE EXPERIENCE</p>
+    <h2 id="experience-title">{zh ? '日常操作，一处查看。' : 'A single place for everyday controls.'}</h2>
+  </div>
+  <div class="prose">
+    <p class="lead">{zh
+      ? '不同品牌的耳机往往配有各自的控制应用。WearEars 把常用的操作放进同一套腕上界面，让你在走路或通勤时更快看到状态。'
+      : 'Earbud brands often ship separate control apps. WearEars gives everyday operations a shared interface on the wrist, making status easier to check on a walk or commute.'}</p>
+    <p>{zh
+      ? '手表应用支持设备选择、音量控制和表圈滚动。磁贴显示最近确认的电量，也可在驱动支持的情况下发起模式切换。'
+      : 'The watch app offers device selection, volume and bezel scrolling. Tiles show the last confirmed battery and can request mode changes when the driver supports them.'}</p>
+    <p>{zh
+      ? '不同型号的能力范围由实测与协议证据分别记录。系统通用路径可在系统提供数据时读取整机电量。'
+      : 'Hardware and protocol evidence are recorded per model. The standard path can show aggregate battery when the system supplies it.'}</p>
+    <a class="text-link" href={site.appRepository}>{zh ? '在 GitHub 查看项目' : 'View the project on GitHub'} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<section class="shell content-section split-content ruled" aria-labelledby="getting-started">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>GETTING STARTED</p>
+    <h2 id="getting-started">{zh ? '开始使用' : 'Getting started'}</h2>
+  </div>
+  <ol class="step-list">
+    {steps.map(([title, body], index) => (
+      <li><span class="entry-index">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>
+    ))}
+  </ol>
+</section>

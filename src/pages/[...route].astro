@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths } from 'astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import Home from '../views/Home.astro';
+import Project from '../views/Project.astro';
+import Compatibility from '../views/Compatibility.astro';
+import Developers from '../views/Developers.astro';
+import Partners from '../views/Partners.astro';
+import Journal from '../views/Journal.astro';
+import Privacy from '../views/Privacy.astro';
+import { locales, pages, pagePath, type Locale, type SitePage } from '../lib/site';
+
+export const getStaticPaths = (() => locales.flatMap((locale) => pages.map((page) => {
+  const route = pagePath(locale, page).replace(/^\/|\/$/g, '');
+  return { params: { route: route || undefined }, props: { locale, page } };
+}))) satisfies GetStaticPaths;
+
+interface Props {
+  locale: Locale;
+  page: SitePage;
+}
+const { locale, page } = Astro.props;
+const View = {
+  home: Home,
+  project: Project,
+  compatibility: Compatibility,
+  developers: Developers,
+  partners: Partners,
+  blog: Journal,
+  privacy: Privacy,
+}[page];
+---
+
+<SiteLayout locale={locale} page={page}>
+  <View locale={locale} />
+</SiteLayout>

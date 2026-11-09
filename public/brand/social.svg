@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <title>WearEars · Sound, on your wrist</title>
+  <path fill="#F7F7F5" d="M0 0h1200v630H0z"/>
+  <path d="M65 71h1070v487H65z" fill="none" stroke="#121417"/>
+  <g transform="translate(914 315) rotate(-45)">
+    <path d="M-226-16h444V2h-444z" fill="#121417"/>
+    <path d="M-175 16h292v94h-292zM-148-121h125v87h-125z" fill="#1F4384"/>
+    <path d="M-10-121h90v44h-90zM130 67h64v43h-64z" fill="#669C76"/>
+    <path d="M96-117h75v75H96zM130 16h64v39h-64z" fill="#E6B022"/>
+    <path d="M194-47h12v12h-12z" fill="#D96560"/>
+    <path d="M-215 127h419M-162 139h310" fill="none" stroke="#121417" stroke-width="2"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#121417">
+    <text x="105" y="136" font-size="18" font-weight="700" letter-spacing="4">OPEN-SOURCE WEARABLE AUDIO</text>
+    <text x="98" y="313" font-size="118" font-weight="700" letter-spacing="-8">WearEars</text>
+    <text x="106" y="381" font-size="34">Sound, on your wrist.</text>
+    <text x="106" y="509" font-size="16" font-weight="700" letter-spacing="2">WEAREARS.COM</text>
+  </g>
+</svg>

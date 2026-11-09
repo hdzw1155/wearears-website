@@ -1,0 +1,43 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import ReleaseFeed from '../components/ReleaseFeed.astro';
+import { appSource, appRevision, releasesUrl, site, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const notes = zh ? [
+  { title: '协议验证记录', body: '查看各品牌的协议来源、候选型号和离线核查边界。', url: appSource + 'docs/protocol-validation.md' },
+  { title: '滚动与驱动核查', body: '记录表圈触感、界面滚动和各驱动的回归检查。', url: appSource + 'docs/scroll-and-driver-review.md' },
+  { title: '主分支变更记录', body: '查看设置与磁贴样式对齐的实际提交。', url: site.appRepository + '/commit/' + appRevision },
+] : [
+  { title: 'Protocol validation notes', body: 'Protocol sources, candidate models and the limits of offline checks.', url: appSource + 'docs/protocol-validation.md' },
+  { title: 'Scroll and driver review', body: 'Records for bezel feedback, scroll behavior and driver regression checks.', url: appSource + 'docs/scroll-and-driver-review.md' },
+  { title: 'Main branch changes', body: 'See the commit that aligned settings and tile style selection.', url: site.appRepository + '/commit/' + appRevision },
+];
+---
+
+<PageIntro label="05 / JOURNAL" title={zh ? '沿着公开记录向前。' : 'Follow the work in public.'}
+  summary={zh ? '发布版本来自 GitHub。技术笔记链接到实际的协议记录、核查和提交。'
+    : 'Releases come from GitHub. Engineering notes link to protocol records, reviews and commits.'} />
+
+<section class="shell content-section journal-section" aria-labelledby="releases-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>RELEASES</p>
+    <h2 id="releases-title">{zh ? '版本发布' : 'Releases'}</h2>
+    <p>{zh ? '发布日期以 GitHub 为准，按北京时间显示。' : 'GitHub publication dates are shown in China Standard Time.'}</p>
+    <a class="text-link" href={releasesUrl}>GitHub Releases <span aria-hidden="true">↗</span></a>
+  </div>
+  <ReleaseFeed locale={locale} />
+</section>
+
+<section class="shell content-section split-content ruled" aria-labelledby="notes-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>ENGINEERING NOTES</p>
+    <h2 id="notes-title">{zh ? '技术笔记' : 'Engineering notes'}</h2>
+  </div>
+  <ul class="note-list">
+    {notes.map((note) => (
+      <li><a href={note.url}><div><h3>{note.title}</h3><p>{note.body}</p></div><span aria-hidden="true">↗</span></a></li>
+    ))}
+  </ul>
+</section>

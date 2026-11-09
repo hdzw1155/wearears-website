@@ -1,0 +1,26 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  summary: string;
+}
+const { label, title, summary } = Astro.props;
+---
+
+<header class="page-intro shell">
+  <div class="page-intro-main">
+    <p class="label"><span class="label-mark"></span>{label}</p>
+    <h1>{title}</h1>
+    <p class="page-intro-summary">{summary}</p>
+    <slot />
+  </div>
+  <div class="page-intro-figure" aria-hidden="true">
+    <svg viewBox="0 0 250 212" width="250" height="212" fill="none">
+      <path d="M30 186 212 4m-159 196L237 16M21 175 170 26" stroke="currentColor" stroke-width="1" />
+      <path d="M73 162 199 36l32 32-126 126z" fill="var(--blue)" />
+      <path d="M119 64l32-32 31 31-32 32z" fill="var(--yellow)" />
+      <path d="M55 125l30-30 19 19-30 30z" fill="var(--green)" />
+      <path d="M206 120l9-9 9 9-9 9z" fill="var(--red)" />
+    </svg>
+  </div>
+</header>

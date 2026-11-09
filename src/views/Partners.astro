@@ -1,0 +1,59 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import { issuesUrl, site, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const programs = zh ? [
+  { title: '厂商联合验证', status: '合作方向', body: '选择耳机、手表和固件版本，明确电量与声学模式的验收范围。' },
+  { title: '耳机驱动适配', status: '合作方向', body: '以协议文档或授权样本为基础，讨论适配路径、测试方法和维护范围。' },
+  { title: 'SDK 与品牌定制', status: '规划中', body: '探讨统一接口、品牌体验与技术交付方式，作为后续合作议题。' },
+] : [
+  { title: 'Joint device validation', status: 'Collaboration area', body: 'Choose earbuds, watches and firmware versions, then define battery and listening-mode acceptance criteria.' },
+  { title: 'Earbud driver adaptation', status: 'Collaboration area', body: 'Discuss integration, tests and maintenance using protocol documents or authorized samples.' },
+  { title: 'SDK and brand integration', status: 'Planned', body: 'Explore a shared interface, branded experiences and engineering delivery as future collaboration topics.' },
+];
+---
+
+<PageIntro label="04 / PARTNERS" title={zh ? '让适配成为一项共同工作。' : 'Make compatibility a shared effort.'}
+  summary={zh ? '面向耳机品牌、ODM 和穿戴设备团队，从一款设备和可核对的验收范围开始。'
+    : 'For earbud brands, ODMs and wearable teams. Start with a device and a scope both teams can verify.'}>
+  <div class="action-row">
+    <a class="button button-primary" href="#collaboration">{zh ? '查看合作流程' : 'See the collaboration process'} <span aria-hidden="true">↓</span></a>
+  </div>
+</PageIntro>
+
+<section class="shell content-section split-content" aria-labelledby="programs-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>COLLABORATION AREAS</p>
+    <h2 id="programs-title">{zh ? '从验证到接入。' : 'From validation to integration.'}</h2>
+  </div>
+  <ol class="capability-list">
+    {programs.map((entry, index) => (
+      <li>
+        <span class="entry-index" aria-hidden="true">0{index + 1}</span>
+        <div><h3>{entry.title}</h3><p>{entry.body}</p></div>
+        <span class="status-tag">{entry.status}</span>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<section class="shell contact-section" id="collaboration" aria-labelledby="collaboration-title">
+  <div>
+    <p class="label"><span class="label-mark yellow"></span>START A CONVERSATION</p>
+    <h2 id="collaboration-title">{zh ? '先对齐合作范围。' : 'Agree on the scope first.'}</h2>
+    <p>{zh ? '提出设备与目标，讨论验证条件，再评估适配和交付安排。'
+      : 'Share the device and your goals, discuss validation conditions, then assess integration and delivery.'}</p>
+    {site.contactEmail ? (
+      <a class="button button-paper" href={'mailto:' + site.contactEmail}>{zh ? '发送合作邮件' : 'Email the project'} <span aria-hidden="true">↗</span></a>
+    ) : (
+      <a class="button button-paper" href={issuesUrl}>{zh ? '前往 GitHub 公开讨论' : 'Open a public GitHub discussion'} <span aria-hidden="true">↗</span></a>
+    )}
+  </div>
+  <ul class="contact-list">
+    <li><span>01</span>{zh ? '耳机型号、固件与目标手表' : 'Earbud model, firmware and target watch'}</li>
+    <li><span>02</span>{zh ? '目标功能与验证条件' : 'Target features and validation conditions'}</li>
+    <li><span>03</span>{zh ? '可公开的协议线索或问题' : 'Protocol references or questions for public discussion'}</li>
+  </ul>
+</section>

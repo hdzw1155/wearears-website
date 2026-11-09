@@ -1,0 +1,135 @@
+---
+import Architecture from '../components/Architecture.astro';
+import ReleaseFeed from '../components/ReleaseFeed.astro';
+import releases from '../data/releases.json';
+import { pagePath, releasesUrl, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const currentRelease = releases.find((release) => !release.prerelease);
+const capabilities = zh ? [
+  { title: '电量读取', body: '查看耳机实际提供的左右耳、充电盒或整机电量。', state: '已实现' },
+  { title: '声学控制', body: '在支持的型号上切换降噪、关闭和通透。', state: '按型号' },
+  { title: '跨品牌适配', body: '查找具体型号的能力范围、实测记录和协议候选。', state: '公开记录' },
+  { title: '可扩展驱动', body: '通过统一接口接入新驱动，复用已有的腕上操作。', state: '已实现' },
+] : [
+  { title: 'Battery awareness', body: 'See left, right, case or aggregate battery as reported by the earbuds.', state: 'Implemented' },
+  { title: 'Acoustic control', body: 'Switch between noise cancellation, off and transparency on supported models.', state: 'By model' },
+  { title: 'Cross-brand compatibility', body: 'Find device capabilities, hardware records and protocol candidates by model.', state: 'Public records' },
+  { title: 'Extensible drivers', body: 'Add drivers through a shared interface and reuse the controls on the watch.', state: 'Implemented' },
+];
+---
+
+<section class="hero shell" aria-labelledby="hero-title">
+  <div class="hero-index label">
+    <span><i class="label-mark" aria-hidden="true"></i> INDEPENDENT WEARABLE AUDIO</span>
+    <span class="hero-index-side">WEAR OS <span class="hero-cross">×</span> TWS</span>
+  </div>
+  <div class="hero-stage">
+    <figure class="hero-figure" aria-hidden="true">
+      <img src="/brand/signal.svg" width="740" height="560" alt="" fetchpriority="high" />
+      <figcaption>FIG. 01 <span></span> SIGNAL / CONTROL</figcaption>
+    </figure>
+    <div class="hero-copy">
+      <h1 id="hero-title">
+        <span class="hero-name">WearEars</span>
+        <span class="hero-statement">{zh ? '声音，在腕上。' : 'Sound, on your wrist.'}</span>
+      </h1>
+      <p>{zh
+        ? '在 Wear OS 手表上查看耳机电量、切换聆听模式。为不同品牌的耳机，提供一个统一的操作入口。'
+        : 'Check earbud battery and switch listening modes from a Wear OS watch. One place for everyday controls across brands.'}</p>
+      <div class="action-row">
+        <a class="button button-primary" href={pagePath(locale, 'project')}>
+          {zh ? '了解项目' : 'Explore the project'} <span aria-hidden="true">→</span>
+        </a>
+        <a class="button button-outline" href={pagePath(locale, 'developers')}>
+          {zh ? '探索技术' : 'Explore the technology'} <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-meta">
+    <div><span class="label">{zh ? '平台' : 'Platform'}</span><strong>Wear OS</strong></div>
+    <div><span class="label">{zh ? '方法' : 'Approach'}</span><strong>{zh ? '开源驱动' : 'Open-source drivers'}</strong></div>
+    <a href={currentRelease?.url ?? releasesUrl}>
+      <span class="label">{zh ? '公开发布' : 'Public release'}</span>
+      <strong>{currentRelease?.tag ?? (zh ? '查看发布' : 'View releases')} <span aria-hidden="true">↗</span></strong>
+    </a>
+  </div>
+</section>
+
+<section class="shell section-space capability-section" aria-labelledby="capabilities-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>01 / PROJECT</p>
+    <h2 id="capabilities-title">{zh ? '常用控制，抬腕可达。' : 'Everyday controls within reach.'}</h2>
+    <p>{zh
+      ? 'WearEars 把不同耳机的常用操作放进同一套手表界面。连接后可用的功能，由具体耳机和驱动决定。'
+      : 'WearEars brings familiar earbud controls into one watch interface. The model and its driver determine which controls are available.'}</p>
+    <a class="text-link" href={pagePath(locale, 'compatibility')}>{zh ? '查询耳机型号' : 'Find your model'} <span aria-hidden="true">→</span></a>
+  </div>
+  <ol class="capability-list">
+    {capabilities.map((entry, index) => (
+      <li>
+        <span class="entry-index" aria-hidden="true">0{index + 1}</span>
+        <div>
+          <h3>{entry.title}</h3>
+          <p>{entry.body}</p>
+        </div>
+        <span class="status-tag">{entry.state}</span>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<section class="ink-section section-space" aria-labelledby="architecture-title">
+  <div class="shell architecture-grid">
+    <div class="section-lead">
+      <p class="label"><span class="label-mark"></span>02 / SYSTEM DESIGN</p>
+      <h2 id="architecture-title">{zh ? '界面统一，驱动独立。' : 'One interface. Independent drivers.'}</h2>
+      <p>{zh
+        ? '从手表上的一次点击，到耳机的状态回报，四层结构各自承担清晰的职责。'
+        : 'Four layers give each step a clear role, from a tap on the watch to a state report from the earbuds.'}</p>
+      <a class="text-link" href={pagePath(locale, 'developers')}>{zh ? '阅读开发者指南' : 'Read the developer guide'} <span aria-hidden="true">→</span></a>
+    </div>
+    <Architecture locale={locale} />
+  </div>
+</section>
+
+<section class="shell section-space" aria-labelledby="audience-title">
+  <div class="section-heading">
+    <p class="label"><span class="label-mark"></span>03 / EXPLORE</p>
+    <h2 id="audience-title">{zh ? '从这里开始。' : 'Find your starting point.'}</h2>
+  </div>
+  <div class="audience-grid">
+    <article class="consumer-panel">
+      <p class="label">01 / LISTENERS</p>
+      <h3>{zh ? '为你的耳机找到答案。' : 'Find what works with your earbuds.'}</h3>
+      <p>{zh ? '查看型号记录，确认支持的功能，再到 GitHub 获取手表应用。' : 'Check the record for your model, then get the watch app from GitHub.'}</p>
+      <a class="button button-paper" href={pagePath(locale, 'compatibility')}>{zh ? '查询兼容性' : 'Check compatibility'} <span aria-hidden="true">→</span></a>
+    </article>
+    <div class="audience-rail">
+      <article>
+        <p class="label"><span class="label-mark green"></span>02 / DEVELOPERS</p>
+        <h3>{zh ? '从协议到驱动。' : 'From protocol to driver.'}</h3>
+        <p>{zh ? '阅读接口、匹配规则与验证方法，参与设备适配。' : 'Read the contract, matching rules and evidence workflow to contribute a driver.'}</p>
+        <a class="text-link" href={pagePath(locale, 'developers')}>{zh ? '开发者入口' : 'Developer resources'} <span aria-hidden="true">→</span></a>
+      </article>
+      <article>
+        <p class="label"><span class="label-mark yellow"></span>03 / PARTNERS</p>
+        <h3>{zh ? '一起验证更多设备。' : 'Validate more devices together.'}</h3>
+        <p>{zh ? '围绕型号、固件与目标能力，探讨联合验证和驱动适配。' : 'Explore joint validation and driver adaptation around specific models, firmware and capabilities.'}</p>
+        <a class="text-link" href={pagePath(locale, 'partners')}>{zh ? '了解合作' : 'Explore collaboration'} <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="shell section-space journal-section" aria-labelledby="journal-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>04 / JOURNAL</p>
+    <h2 id="journal-title">{zh ? '项目动态' : 'Project journal'}</h2>
+    <p>{zh ? 'GitHub 发布记录与协议技术笔记。' : 'GitHub releases and notes from protocol development.'}</p>
+    <a class="text-link" href={pagePath(locale, 'blog')}>{zh ? '查看全部动态' : 'See the journal'} <span aria-hidden="true">→</span></a>
+  </div>
+  <ReleaseFeed locale={locale} limit={3} />
+</section>

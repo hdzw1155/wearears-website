@@ -1,0 +1,61 @@
+---
+import { appSource, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const layers = [
+  {
+    title: zh ? '交互展示' : 'Interaction',
+    code: zh ? '手表应用与磁贴' : 'Watch app & tiles',
+    body: zh
+      ? '应用与磁贴提供操作入口。连接控制器协调状态查询、目标档位和设备回报。'
+      : 'The watch app and tiles expose controls. The connection controller coordinates queries, requested modes and device reports.',
+    source: 'HeadsetController.java',
+  },
+  {
+    title: zh ? '统一契约' : 'Unified contract',
+    code: 'TwsClient',
+    body: zh
+      ? '统一连接、读取电量和切换模式的接口。驱动通过能力位声明可用的操作。'
+      : 'TwsClient defines the interface for connection, battery queries and mode changes. Drivers declare available operations through capability flags.',
+    source: 'TwsClient.java',
+  },
+  {
+    title: zh ? '驱动调度' : 'Driver selection',
+    code: 'DriverRegistry',
+    body: zh
+      ? '根据设备信息选择候选驱动，保持品牌协议与界面之间的边界。'
+      : 'The registry selects a candidate driver from device information and keeps brand protocols separate from the interface.',
+    source: 'DriverRegistry.java',
+  },
+  {
+    title: zh ? '设备通信' : 'Communication',
+    code: 'RFCOMM / GATT',
+    body: zh
+      ? '驱动解析设备报文并执行已实现的协议操作。通用路径可读取系统提供的整机电量。'
+      : 'Drivers parse device frames and perform implemented protocol operations. The standard path reads aggregate battery when the system provides it.',
+    source: 'StandardClient.java',
+  },
+];
+---
+
+<ol class="architecture" aria-label={zh ? '四层架构' : 'Four layers of the architecture'}>
+  {layers.map((layer, index) => (
+    <li class={'architecture-layer layer-' + (index + 1)}>
+      <details open={index === 0}>
+        <summary>
+          <span class="layer-index" aria-hidden="true">0{index + 1}</span>
+          <span class="layer-name">{layer.title}</span>
+          <span class="layer-code">{layer.code}</span>
+          <span class="layer-toggle" aria-hidden="true"></span>
+        </summary>
+        <div class="layer-detail">
+          <p>{layer.body}</p>
+          <a href={appSource + 'src/com/hdz/wearcontrol/' + layer.source}>
+            {zh ? '查看源码' : 'View source'} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </details>
+    </li>
+  ))}
+</ol>

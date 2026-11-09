@@ -1,0 +1,16 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout locale="zh" page="home" notFound>
+  <PageIntro label="404 / PAGE NOT FOUND" title="这个页面走失了。"
+    summary="请从首页或兼容性索引继续浏览。">
+    <p lang="en">This page is unavailable. Continue from the homepage or device index.</p>
+    <div class="action-row">
+      <a class="button button-primary" href="/">返回首页 <span aria-hidden="true">→</span></a>
+      <a class="button button-outline" href="/en/" lang="en">English home <span aria-hidden="true">→</span></a>
+      <a class="text-link" href="/compatibility/">兼容性 <span aria-hidden="true">→</span></a>
+    </div>
+  </PageIntro>
+</SiteLayout>

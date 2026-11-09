@@ -1,0 +1,58 @@
+---
+import Architecture from '../components/Architecture.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { appSource, issuesUrl, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const steps = zh ? [
+  ['整理协议证据', '记录耳机型号、固件、传输方式与命令来源。标出已经验证的报文和需要核对的字段。'],
+  ['实现统一契约', '让驱动负责帧解析、设备操作和能力声明。通过 DriverRegistry 注册匹配规则。'],
+  ['分别提交验证结果', '保存离线报文检查和真机结果，明确每个型号的能力边界。'],
+] : [
+  ['Document the evidence', 'Record the model, firmware, transport and command sources. Mark verified frames and fields that need investigation.'],
+  ['Implement the shared contract', 'Keep frame parsing, device operations and capability declarations in the driver. Register its matching rules in DriverRegistry.'],
+  ['Record verification separately', 'Keep offline frame checks and hardware results distinct, with capability boundaries per model.'],
+];
+---
+
+<PageIntro label="03 / DEVELOPERS" title={zh ? '为新的设备留下接口。' : 'A place for the next device.'}
+  summary={zh ? 'WearEars 将界面、驱动和通信分开。统一接口承接常用操作，具体协议留在各自的驱动中。'
+    : 'WearEars separates the interface, drivers and transport. The shared contract carries common operations, while each driver owns its protocol.'}>
+  <div class="action-row">
+    <a class="button button-primary" href={appSource + 'README.md#驱动标准契约'}>{zh ? '阅读驱动契约' : 'Read the driver contract (Chinese)'} <span aria-hidden="true">↗</span></a>
+  </div>
+</PageIntro>
+
+<section class="ink-section content-section" aria-labelledby="system-title">
+  <div class="shell architecture-grid">
+    <div class="section-lead">
+      <p class="label"><span class="label-mark"></span>SYSTEM DESIGN</p>
+      <h2 id="system-title">{zh ? '沿着四层架构看一次操作。' : 'Follow a control through four layers.'}</h2>
+      <p>{zh ? '展开每一层查看职责和对应源码。' : 'Open a layer to read its role and inspect the source.'}</p>
+    </div>
+    <Architecture locale={locale} />
+  </div>
+</section>
+
+<section class="shell content-section split-content" aria-labelledby="contribute-title">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>CONTRIBUTE</p>
+    <h2 id="contribute-title">{zh ? '贡献一个驱动' : 'Contribute a driver'}</h2>
+    <a class="text-link" href={issuesUrl}>{zh ? '参与项目讨论' : 'Join the project discussion'} <span aria-hidden="true">↗</span></a>
+  </div>
+  <ol class="step-list">
+    {steps.map(([title, body], index) => (
+      <li><span class="entry-index">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>
+    ))}
+  </ol>
+</section>
+
+<section class="shell roadmap-note" aria-labelledby="sdk-title">
+  <p class="label"><span class="label-mark yellow"></span>{zh ? '规划中' : 'Planned'}</p>
+  <div>
+    <h2 id="sdk-title">{zh ? '开发者 SDK 与独立文档站' : 'Developer SDK and documentation site'}</h2>
+    <p>{zh ? '当前的接入资料是公开源码、驱动契约和协议记录。SDK 与独立文档站属于后续路线。'
+      : 'Current integration resources are the source, driver contract and protocol records. A packaged SDK and dedicated documentation site are on the roadmap.'}</p>
+  </div>
+</section>

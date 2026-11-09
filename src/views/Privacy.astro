@@ -1,0 +1,30 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import { site, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+---
+
+<PageIntro label="DATA / PRIVACY" title={zh ? '网站如何处理数据。' : 'How this site handles data.'}
+  summary={zh ? '这份说明覆盖官网第一阶段的浏览、兼容性查询和外部链接。'
+    : 'This notice describes browsing, compatibility searches and external links on the first-stage website.'} />
+
+<section class="shell content-section split-content" aria-labelledby="privacy-details">
+  <div class="section-lead">
+    <p class="label"><span class="label-mark"></span>THE WEBSITE</p>
+    <h2 id="privacy-details">{zh ? '数据流向' : 'Where data goes'}</h2>
+  </div>
+  <div class="prose">
+    <h3>{zh ? '兼容性查询' : 'Compatibility searches'}</h3>
+    <p>{zh ? '设备记录随网页一起加载。型号关键词和筛选条件在当前浏览器中处理。'
+      : 'Device records load with the page. Model keywords and filter selections are processed in your browser.'}</p>
+    <h3>{zh ? '访问与语言' : 'Browsing and language'}</h3>
+    <p>{zh ? '网站按所访问的地址显示中文或英文。第一阶段以静态文件提供页面，服务器的访问日志取决于最终托管方式。'
+      : 'The address determines whether a page appears in Chinese or English. Pages are served as static files. Server access logs depend on the hosting configuration.'}</p>
+    <h3>{zh ? 'GitHub 与公开交流' : 'GitHub and public discussions'}</h3>
+    <p>{zh ? '下载、源码和讨论链接会打开 GitHub。发布问题或评论时，内容的可见性由 GitHub 仓库和账户设置决定。'
+      : 'Downloads, source and discussion links open GitHub. The repository and account settings determine who can see a posted issue or comment.'}</p>
+    <a class="text-link" href={site.sourceRepository}>{zh ? '查看官网源码' : 'View the website source'} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>

@@ -1,0 +1,136 @@
+---
+import PageIntro from '../components/PageIntro.astro';
+import { brands, capabilityLabels, compatibility, evidenceLabels } from '../data/compatibility';
+import { issuesUrl, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+const labels = zh
+  ? ['品牌', '耳机型号', '验证手表', '电量读取', '降噪控制', '通透模式', '证据类型', '验证日期']
+  : ['Brand', 'Earbud model', 'Test watch', 'Battery', 'ANC controls', 'Transparency', 'Evidence', 'Verified on'];
+const missing = zh ? '未记录' : 'Unrecorded';
+const capability = capabilityLabels[locale];
+const evidence = evidenceLabels[locale];
+---
+
+<PageIntro label="02 / DEVICE INDEX" title={zh ? '找到你的耳机。' : 'Find your earbuds.'}
+  summary={zh
+    ? '按品牌与型号查看 WearEars 的设备记录。每项能力都附有证据类型，方便判断适用范围。'
+    : 'Look up a brand and model in the WearEars device index. Evidence labels show what each entry covers.'} />
+
+<section class="shell content-section compatibility-section" data-compatibility
+  data-count-label={zh ? '显示 {count} 条记录' : '{count} records shown'} aria-labelledby="device-index">
+  <div class="index-heading">
+    <div>
+      <p class="label"><span class="label-mark"></span>MODEL / EVIDENCE</p>
+      <h2 id="device-index">{zh ? '设备记录' : 'Device records'}</h2>
+    </div>
+    <a class="text-link" href="/compatibility.json">{zh ? '查看 JSON 数据' : 'View JSON data'} <span aria-hidden="true">↗</span></a>
+  </div>
+  <ul class="evidence-legend" aria-label={zh ? '证据说明' : 'Evidence key'}>
+    <li><span class="evidence-tag hardware">{evidence.hardware}</span><span>{zh ? '有项目公开的真机记录' : 'Recorded on hardware by the project'}</span></li>
+    <li><span class="evidence-tag partial">{evidence.partial}</span><span>{zh ? '只记录了部分操作' : 'Evidence for selected operations'}</span></li>
+    <li><span class="evidence-tag prototype">{evidence.prototype}</span><span>{zh ? '已有协议路径，等待真机确认' : 'Protocol path awaits device testing'}</span></li>
+  </ul>
+  <form class="device-filters" aria-label={zh ? '筛选设备' : 'Filter devices'} hidden>
+    <label>
+      <span>{zh ? '搜索型号' : 'Search models'}</span>
+      <input name="model" type="search" placeholder={zh ? '例如 FreeBuds 6i' : 'e.g. FreeBuds 6i'} autocomplete="off" />
+    </label>
+    <label>
+      <span>{zh ? '品牌' : 'Brand'}</span>
+      <select name="brand">
+        <option value="">{zh ? '全部品牌' : 'All brands'}</option>
+        {Object.entries(brands).map(([key, brand]) => <option value={key}>{brand[locale]}</option>)}
+      </select>
+    </label>
+    <label>
+      <span>{zh ? '证据类型' : 'Evidence'}</span>
+      <select name="evidence">
+        <option value="">{zh ? '全部记录' : 'All evidence'}</option>
+        {Object.entries(evidence).map(([key, label]) => <option value={key}>{label}</option>)}
+      </select>
+    </label>
+    <button class="button button-outline reset-button" type="reset">{zh ? '重置筛选' : 'Reset filters'}</button>
+  </form>
+  <p class="result-count" role="status">{zh ? '显示 ' + compatibility.length + ' 条记录' : compatibility.length + ' records shown'}</p>
+
+  <table class="device-table" role="table" aria-labelledby="device-index">
+    <thead role="rowgroup"><tr role="row">{labels.map((label) => <th scope="col" role="columnheader">{label}</th>)}</tr></thead>
+    <tbody role="rowgroup">
+      {compatibility.map((record) => (
+        <tr role="row" data-brand={record.brand} data-evidence={record.evidence}
+          data-search={[brands[record.brand].zh + ' ' + record.model, brands[record.brand].en + ' ' + record.model, ...(record.aliases ?? [])].join(' ')}>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[0]}</span>{brands[record.brand][locale]}</td>
+          <th scope="row" role="rowheader">
+            <span class="field-label" aria-hidden="true">{labels[1]}</span>
+            <a href={record.source} class="record-source">{record.model} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（查看记录来源）' : ' (view evidence source)'}</span></a>
+          </th>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[2]}</span>{record.watch ?? missing}</td>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[3]}</span>{capability[record.battery]}</td>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[4]}</span>{capability[record.noise]}</td>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[5]}</span>{capability[record.transparency]}</td>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[6]}</span><span class={'evidence-tag ' + record.evidence}>{evidence[record.evidence]}</span></td>
+          <td role="cell"><span class="field-label" aria-hidden="true">{labels[7]}</span>{record.verifiedOn ? <time datetime={record.verifiedOn}>{record.verifiedOn}</time> : missing}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <div class="empty-state" hidden>
+    <h3>{zh ? '没有符合条件的记录' : 'No matching records'}</h3>
+    <p>{zh ? '换一个型号关键词，或清除筛选条件。' : 'Try a different model keyword or clear the filters.'}</p>
+    <button class="button button-outline" type="button" data-clear>{zh ? '清除筛选' : 'Clear filters'}</button>
+  </div>
+  <div class="index-note">
+    <p>{zh
+      ? '点按型号查看来源。验证手表与日期按公开记录填写，缺项显示「未记录」。系统通用路径可在设备提供数据时显示整机电量。'
+      : 'Open a model to read its source. Watch and date fields reflect the public record. The standard path can show aggregate battery when the device supplies it.'}</p>
+    <a class="text-link" href={issuesUrl}>{zh ? '反馈耳机型号' : 'Share a device report'} <span aria-hidden="true">↗</span></a>
+  </div>
+</section>
+
+<script>
+  const section = document.querySelector<HTMLElement>('[data-compatibility]');
+  const form = section?.querySelector<HTMLFormElement>('.device-filters');
+  const search = form?.querySelector<HTMLInputElement>('input[name="model"]');
+  const brand = form?.querySelector<HTMLSelectElement>('select[name="brand"]');
+  const evidence = form?.querySelector<HTMLSelectElement>('select[name="evidence"]');
+  const table = section?.querySelector<HTMLTableElement>('.device-table');
+  const result = section?.querySelector<HTMLElement>('.result-count');
+  const empty = section?.querySelector<HTMLElement>('.empty-state');
+
+  function normalize(text: string) {
+    return text.normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu, '');
+  }
+
+  if (section && form && search && brand && evidence && table && result && empty) {
+    const rows = Array.from(table.querySelectorAll<HTMLTableRowElement>('tbody tr')).map((row) => ({
+      row,
+      key: normalize(row.dataset.search ?? ''),
+    }));
+    const countLabel = section.dataset.countLabel ?? '{count}';
+    const update = () => {
+      const keyword = normalize(search.value);
+      let count = 0;
+      for (const { row, key } of rows) {
+        const visible = key.includes(keyword)
+          && (!brand.value || row.dataset.brand === brand.value)
+          && (!evidence.value || row.dataset.evidence === evidence.value);
+        row.hidden = !visible;
+        if (visible) count += 1;
+      }
+      result.textContent = countLabel.replace('{count}', String(count));
+      table.hidden = count === 0;
+      empty.hidden = count !== 0;
+    };
+    form.addEventListener('input', update);
+    form.addEventListener('submit', (event) => { event.preventDefault(); update(); });
+    form.addEventListener('reset', () => queueMicrotask(update));
+    empty.querySelector('[data-clear]')?.addEventListener('click', () => {
+      form.reset();
+      search.focus();
+    });
+    form.hidden = false;
+    update();
+  }
+</script>

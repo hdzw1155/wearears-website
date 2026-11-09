@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 560" fill="none">
+  <title>WearEars geometric signal</title>
+  <path d="M90 43h590v460H90z" stroke="#121417" opacity=".14"/>
+  <path d="M90 55V43h12m566 0h12v12M90 491v12h12m566 0h12v-12" stroke="#121417"/>
+  <path d="M385 43v460M90 273h590" stroke="#121417" opacity=".13" stroke-dasharray="3 7"/>
+  <g transform="translate(390 279) rotate(-45)">
+    <path d="M-285-27h570M-244 143h500M-188 154h370" stroke="#121417" stroke-width="1.5"/>
+    <path fill="#1F4384" d="M-218-145h165v103h-165zM-160 24h291v101h-291z"/>
+    <path fill="#669C76" d="M-38-145h121v49H-38zM145 79h73v46h-73z"/>
+    <path fill="#E6B022" d="M96-132h84v84H96zM-244 23h69v53h-69zM145 24h73v42h-73z"/>
+    <path fill="#121417" d="M-281-12h562V8h-562zM-38-84H83v42H-38z"/>
+    <path d="M196-145v103m36 66v101" stroke="#1F4384" stroke-width="4"/>
+    <path fill="#D96560" d="M221-43h12v12h-12z"/>
+  </g>
+  <path d="M72 273h9m304 248v9m304-257h9m-313-256v9" stroke="#121417" stroke-width="1.5"/>
+</svg>
