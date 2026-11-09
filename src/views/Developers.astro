@@ -20,7 +20,7 @@ const steps = zh ? [
   summary={zh ? 'WearEars 将界面、驱动和通信分开。统一接口承接常用操作，具体协议留在各自的驱动中。'
     : 'WearEars separates the interface, drivers and transport. The shared contract carries common operations, while each driver owns its protocol.'}>
   <div class="action-row">
-    <a class="button button-primary" href={appSource + 'README.md#驱动标准契约'}>{zh ? '阅读驱动契约' : 'Read the driver contract (Chinese)'} <span aria-hidden="true">↗</span></a>
+    <a class="button button-primary" href={appSource + 'README.md#驱动标准契约'} target="_blank" rel="noopener noreferrer">{zh ? '阅读驱动契约' : 'Read the driver contract (Chinese)'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
   </div>
 </PageIntro>
 
@@ -39,7 +39,7 @@ const steps = zh ? [
   <div class="section-lead">
     <p class="label"><span class="label-mark"></span>CONTRIBUTE</p>
     <h2 id="contribute-title">{zh ? '贡献一个驱动' : 'Contribute a driver'}</h2>
-    <a class="text-link" href={issuesUrl}>{zh ? '参与项目讨论' : 'Join the project discussion'} <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={issuesUrl} target="_blank" rel="noopener noreferrer">{zh ? '参与项目讨论' : 'Join the project discussion'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
   </div>
   <ol class="step-list">
     {steps.map(([title, body], index) => (

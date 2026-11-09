@@ -26,6 +26,7 @@ const languageUrl = pagePath(other, page);
     <meta name="description" content={description} />
     <meta name="theme-color" content="#F7F7F5" />
     <link rel="icon" type="image/svg+xml" href="/brand/mark.svg" />
+    <link rel="apple-touch-icon" href="/brand/mark.svg" />
     {notFound ? <meta name="robots" content="noindex" /> : (
       <>
         <link rel="canonical" href={canonical.href} />
@@ -63,19 +64,25 @@ const languageUrl = pagePath(other, page);
           ))}
         </nav>
         <div class="masthead-actions">
-          <a class="header-github" href={site.appRepository}>GitHub <span aria-hidden="true">↗</span></a>
+          <a class="header-github" href={site.appRepository} target="_blank" rel="noopener noreferrer">
+            GitHub <span aria-hidden="true">↗</span><span class="sr-only">{locale === 'zh' ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+          </a>
           <a class="language-link" href={languageUrl} lang={siteCopy[other].lang} aria-label={copy.language}>
             {copy.languageLabel}
           </a>
           <details class="mobile-nav">
-            <summary aria-label={copy.menu}><span class="menu-icon" aria-hidden="true"></span></summary>
+            <summary aria-label={copy.menu} data-open-label={copy.menu} data-close-label={locale === 'zh' ? '关闭导航' : 'Close navigation'} aria-expanded="false">
+              <span class="menu-icon" aria-hidden="true"></span>
+            </summary>
             <nav aria-label={copy.navigation}>
               {navigation.map((item) => (
                 <a href={pagePath(locale, item)} aria-current={!notFound && page === item ? 'page' : undefined}>
                   {copy.pages[item]} <span aria-hidden="true">→</span>
                 </a>
               ))}
-              <a href={site.appRepository}>GitHub <span aria-hidden="true">↗</span></a>
+              <a href={site.appRepository} target="_blank" rel="noopener noreferrer">
+                GitHub <span aria-hidden="true">↗</span><span class="sr-only">{locale === 'zh' ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+              </a>
             </nav>
           </details>
         </div>
@@ -98,7 +105,9 @@ const languageUrl = pagePath(other, page);
             <a href={pagePath(locale, 'developers')}>{copy.pages.developers}</a>
             <a href={pagePath(locale, 'partners')}>{copy.pages.partners}</a>
             <a href={pagePath(locale, 'privacy')}>{copy.pages.privacy}</a>
-            <a href={site.appRepository}>GitHub <span aria-hidden="true">↗</span></a>
+            <a href={site.appRepository} target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden="true">↗</span><span class="sr-only">{locale === 'zh' ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+            </a>
             {site.contactEmail && <a href={'mailto:' + site.contactEmail}>{site.contactEmail}</a>}
           </nav>
         </div>
@@ -110,10 +119,40 @@ const languageUrl = pagePath(other, page);
     </footer>
     <script>
       const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
+      const summary = menu?.querySelector<HTMLElement>('summary');
+      const openLabel = summary?.getAttribute('data-open-label') || '打开导航';
+      const closeLabel = summary?.getAttribute('data-close-label') || '关闭导航';
+
+      const updateMenuState = () => {
+        if (!menu || !summary) return;
+        const isOpen = menu.open;
+        summary.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        summary.setAttribute('aria-label', isOpen ? closeLabel : openLabel);
+      };
+
+      menu?.addEventListener('toggle', updateMenuState);
+
+      document.addEventListener('click', (event) => {
+        if (menu?.open && !menu.contains(event.target as Node)) {
+          menu.open = false;
+          updateMenuState();
+        }
+      });
+
+      menu?.querySelectorAll('nav a').forEach((link) => {
+        link.addEventListener('click', () => {
+          if (menu?.open) {
+            menu.open = false;
+            updateMenuState();
+          }
+        });
+      });
+
       menu?.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && menu.open) {
           menu.open = false;
-          menu.querySelector('summary')?.focus();
+          updateMenuState();
+          summary?.focus();
         }
       });
     </script>

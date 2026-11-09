@@ -25,7 +25,7 @@ const notes = zh ? [
     <p class="label"><span class="label-mark"></span>RELEASES</p>
     <h2 id="releases-title">{zh ? '版本发布' : 'Releases'}</h2>
     <p>{zh ? '发布日期以 GitHub 为准，按北京时间显示。' : 'GitHub publication dates are shown in China Standard Time.'}</p>
-    <a class="text-link" href={releasesUrl}>GitHub Releases <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
   </div>
   <ReleaseFeed locale={locale} />
 </section>
@@ -37,7 +37,7 @@ const notes = zh ? [
   </div>
   <ul class="note-list">
     {notes.map((note) => (
-      <li><a href={note.url}><div><h3>{note.title}</h3><p>{note.body}</p></div><span aria-hidden="true">↗</span></a></li>
+      <li><a href={note.url} target="_blank" rel="noopener noreferrer"><div><h3>{note.title}</h3><p>{note.body}</p></div><span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a></li>
     ))}
   </ul>
 </section>

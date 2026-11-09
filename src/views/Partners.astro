@@ -48,7 +48,7 @@ const programs = zh ? [
     {site.contactEmail ? (
       <a class="button button-paper" href={'mailto:' + site.contactEmail}>{zh ? '发送合作邮件' : 'Email the project'} <span aria-hidden="true">↗</span></a>
     ) : (
-      <a class="button button-paper" href={issuesUrl}>{zh ? '前往 GitHub 公开讨论' : 'Open a public GitHub discussion'} <span aria-hidden="true">↗</span></a>
+      <a class="button button-paper" href={issuesUrl} target="_blank" rel="noopener noreferrer">{zh ? '前往 GitHub 公开讨论' : 'Open a public GitHub discussion'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
     )}
   </div>
   <ul class="contact-list">

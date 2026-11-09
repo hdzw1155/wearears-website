@@ -26,10 +26,6 @@ const capabilities = zh ? [
     <span class="hero-index-side">WEAR OS <span class="hero-cross">×</span> TWS</span>
   </div>
   <div class="hero-stage">
-    <figure class="hero-figure" aria-hidden="true">
-      <img src="/brand/signal.svg" width="740" height="560" alt="" fetchpriority="high" />
-      <figcaption>FIG. 01 <span></span> SIGNAL / CONTROL</figcaption>
-    </figure>
     <div class="hero-copy">
       <h1 id="hero-title">
         <span class="hero-name">WearEars</span>
@@ -47,13 +43,17 @@ const capabilities = zh ? [
         </a>
       </div>
     </div>
+    <figure class="hero-figure" aria-hidden="true">
+      <img src="/brand/app-icon.svg" width="520" height="520" alt="WearEars App Icon" fetchpriority="high" />
+      <figcaption>FIG. 01 <span></span> WEAREARS ICON</figcaption>
+    </figure>
   </div>
   <div class="hero-meta">
     <div><span class="label">{zh ? '平台' : 'Platform'}</span><strong>Wear OS</strong></div>
     <div><span class="label">{zh ? '方法' : 'Approach'}</span><strong>{zh ? '开源驱动' : 'Open-source drivers'}</strong></div>
-    <a href={currentRelease?.url ?? releasesUrl}>
+    <a href={currentRelease?.url ?? releasesUrl} target="_blank" rel="noopener noreferrer">
       <span class="label">{zh ? '公开发布' : 'Public release'}</span>
-      <strong>{currentRelease?.tag ?? (zh ? '查看发布' : 'View releases')} <span aria-hidden="true">↗</span></strong>
+      <strong>{currentRelease?.tag ?? (zh ? '查看发布' : 'View releases')} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></strong>
     </a>
   </div>
 </section>

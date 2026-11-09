@@ -53,7 +53,7 @@ const evidence = evidenceLabels[locale];
     </label>
     <button class="button button-outline reset-button" type="reset">{zh ? '重置筛选' : 'Reset filters'}</button>
   </form>
-  <p class="result-count" role="status">{zh ? '显示 ' + compatibility.length + ' 条记录' : compatibility.length + ' records shown'}</p>
+  <p class="result-count" role="status" aria-live="polite" aria-atomic="true">{zh ? '显示 ' + compatibility.length + ' 条记录' : compatibility.length + ' records shown'}</p>
 
   <table class="device-table" role="table" aria-labelledby="device-index">
     <thead role="rowgroup"><tr role="row">{labels.map((label) => <th scope="col" role="columnheader">{label}</th>)}</tr></thead>
@@ -64,7 +64,7 @@ const evidence = evidenceLabels[locale];
           <td role="cell"><span class="field-label" aria-hidden="true">{labels[0]}</span>{brands[record.brand][locale]}</td>
           <th scope="row" role="rowheader">
             <span class="field-label" aria-hidden="true">{labels[1]}</span>
-            <a href={record.source} class="record-source">{record.model} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（查看记录来源）' : ' (view evidence source)'}</span></a>
+            <a href={record.source} class="record-source" target="_blank" rel="noopener noreferrer">{record.model} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页查看记录来源）' : ' (opens in a new tab to view evidence source)'}</span></a>
           </th>
           <td role="cell"><span class="field-label" aria-hidden="true">{labels[2]}</span>{record.watch ?? missing}</td>
           <td role="cell"><span class="field-label" aria-hidden="true">{labels[3]}</span>{capability[record.battery]}</td>
@@ -85,7 +85,7 @@ const evidence = evidenceLabels[locale];
     <p>{zh
       ? '点按型号查看来源。验证手表与日期按公开记录填写，缺项显示「未记录」。系统通用路径可在设备提供数据时显示整机电量。'
       : 'Open a model to read its source. Watch and date fields reflect the public record. The standard path can show aggregate battery when the device supplies it.'}</p>
-    <a class="text-link" href={issuesUrl}>{zh ? '反馈耳机型号' : 'Share a device report'} <span aria-hidden="true">↗</span></a>
+    <a class="text-link" href={issuesUrl} target="_blank" rel="noopener noreferrer">{zh ? '反馈耳机型号' : 'Share a device report'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
   </div>
 </section>
 

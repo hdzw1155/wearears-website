@@ -51,8 +51,8 @@ const layers = [
         </summary>
         <div class="layer-detail">
           <p>{layer.body}</p>
-          <a href={appSource + 'src/com/hdz/wearcontrol/' + layer.source}>
-            {zh ? '查看源码' : 'View source'} <span aria-hidden="true">↗</span>
+          <a href={appSource + 'src/com/hdz/wearcontrol/' + layer.source} target="_blank" rel="noopener noreferrer">
+            {zh ? '查看源码' : 'View source'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
           </a>
         </div>
       </details>

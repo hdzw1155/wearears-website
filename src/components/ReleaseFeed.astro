@@ -20,11 +20,12 @@ const date = new Intl.DateTimeFormat('sv-SE', {
 <ol class="release-list">
   {entries.map((release) => (
     <li>
-      <a href={release.url}>
+      <a href={release.url} target="_blank" rel="noopener noreferrer">
         <time datetime={release.publishedAt}>{date.format(new Date(release.publishedAt))}</time>
         <span class="release-title">WearEars {release.tag}</span>
         <span class="release-kind">{release.prerelease ? (zh ? '预发布' : 'Preview') : (zh ? '发布记录' : 'Release')}</span>
         <span class="release-arrow" aria-hidden="true">↗</span>
+        <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
       </a>
     </li>
   ))}
