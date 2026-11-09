@@ -236,36 +236,49 @@ summary::-webkit-details-marker { display: none; }
   color: var(--blue);
   font-size: clamp(1.7rem, 3.6vw, 3.45rem);
   line-height: 1.1;
-  letter-spacing: -.053em;
+  letter-spacing: 0;
 }
-html[lang="zh-CN"] .hero-statement { letter-spacing: -.07em; }
+html[lang="zh-CN"] .hero-statement { letter-spacing: 0; }
 
 /* Kinetic headline bounce */
 .kinetic-phrase {
   display: inline-flex;
+  align-items: baseline;
   white-space: nowrap;
+}
+.word-spacer {
+  display: inline-block;
+  width: 0.65em;
 }
 .char-unit {
   display: inline-block;
   will-change: transform;
+}
+html.js .slide-section:not(.is-active) .char-unit {
+  opacity: 0;
+  animation: none !important;
+}
+.slide-section.is-active .char-unit {
   animation: charBounce 280ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--bounce-delay, 0ms) both;
 }
-.char-unit.wave {
+.slide-section.is-active .char-unit.wave {
   animation: charWave 320ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--bounce-delay, 0ms) both;
 }
 
 @keyframes charBounce {
-  0% { transform: translateY(0); }
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
   45% { transform: translateY(-13px); }
   72% { transform: translateY(1.5px); }
-  100% { transform: translateY(0); }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes charWave {
-  0% { transform: translateY(0); }
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
   45% { transform: translateY(-15px); }
   70% { transform: translateY(2px); }
-  100% { transform: translateY(0); }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 .hero-copy > p { max-width: 28rem; margin-top: 1.45rem; color: var(--muted); font-size: 1.02rem; }
@@ -306,85 +319,188 @@ html[lang="zh-CN"] .hero-statement { letter-spacing: -.07em; }
   transform: scale(1.025);
 }
 
-/* Phase 1: 底盘画板 (Chassis) 0ms - 180ms */
-.stage-chassis {
+html.js .slide-section:not(.is-active) .stage-chassis,
+html.js .slide-section:not(.is-active) .stage-case,
+html.js .slide-section:not(.is-active) .stage-earbud-left,
+html.js .slide-section:not(.is-active) .stage-earbud-right,
+html.js .slide-section:not(.is-active) .stage-divider,
+html.js .slide-section:not(.is-active) .part-keystone-red {
+  opacity: 0;
+  animation: none !important;
+}
+
+/* Phase 1: 底盘画板 (Chassis) 从0展开 0ms - 220ms */
+.slide-section.is-active .stage-chassis,
+.page-intro .stage-chassis {
   transform-origin: center center;
-  animation: drawChassis 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: drawChassisFromZero 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-@keyframes drawChassis {
-  0% { transform: scale(0.94); }
-  100% { transform: scale(1); }
+@keyframes drawChassisFromZero {
+  0% { opacity: 0; transform: scale(0.3); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-/* Phase 2: 耳机舱大梁与右下部 (Charging Case Spine & Lower-Right) 120ms - 380ms */
-.stage-case {
+/* Phase 2: 耳机舱大梁与右下部 (Charging Case Spine & Lower-Right) 从0滑入 220ms - 540ms */
+.slide-section.is-active .stage-case,
+.page-intro .stage-case {
   transform-origin: center center;
-  animation: drawCase 260ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+  animation: drawCaseFromZero 320ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
 }
-@keyframes drawCase {
+@keyframes drawCaseFromZero {
   0% {
-    transform: translate3d(-34px, 34px, 0);
+    opacity: 0;
+    transform: translate3d(-60px, 60px, 0) scale(0.65);
+  }
+  30% {
+    opacity: 1;
   }
   100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/* Phase 3: 左右耳机同时施工、同时归位 (Left & Right Earbuds Concurrent Construction) 320ms - 560ms */
-.stage-earbud-left {
-  transform-origin: 288px 470px;
-  animation: drawEarbudLeft 240ms cubic-bezier(0.16, 1, 0.3, 1) 320ms both;
-}
-@keyframes drawEarbudLeft {
-  0% {
-    transform: translate3d(-24px, -24px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-.stage-earbud-right {
-  transform-origin: 593px 250px;
-  animation: drawEarbudRight 240ms cubic-bezier(0.16, 1, 0.3, 1) 320ms both;
-}
-@keyframes drawEarbudRight {
-  0% {
-    transform: translate3d(24px, -24px, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/* Phase 4: 从中间戳向左上角的分界粗线与核心落子 (Center Divider & Keystone) 520ms - 740ms */
-.stage-divider {
-  transform-origin: 450px 491px;
-  animation: drawDivider 220ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
-}
-@keyframes drawDivider {
-  0% {
-    transform: translate3d(18px, 18px, 0) scale(0.96);
-  }
-  100% {
+    opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
   }
 }
-.part-keystone-red {
-  transform-origin: 450px 491px;
-  animation: popKeystone 220ms cubic-bezier(0.2, 0.8, 0.2, 1.25) 540ms both;
+
+/* Phase 3: 左右耳机同时施工、同时归位 (Left & Right Earbuds Concurrent) 从0萌生 520ms - 820ms */
+.slide-section.is-active .stage-earbud-left,
+.page-intro .stage-earbud-left {
+  transform-origin: 288px 470px;
+  animation: drawEarbudLeftFromZero 300ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
 }
-@keyframes popKeystone {
+@keyframes drawEarbudLeftFromZero {
   0% {
-    transform: scale(0.2);
+    opacity: 0;
+    transform: scale(0) translate3d(-30px, -30px, 0);
   }
-  70% {
-    transform: scale(1.18);
+  40% {
+    opacity: 1;
   }
   100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.slide-section.is-active .stage-earbud-right,
+.page-intro .stage-earbud-right {
+  transform-origin: 593px 250px;
+  animation: drawEarbudRightFromZero 300ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+}
+@keyframes drawEarbudRightFromZero {
+  0% {
+    opacity: 0;
+    transform: scale(0) translate3d(30px, -30px, 0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+/* Phase 4: 从中间戳向左上角的分界粗线与核心落子 (Center Divider & Keystone) 从0刺入 800ms - 1060ms */
+.slide-section.is-active .stage-divider,
+.page-intro .stage-divider {
+  transform-origin: 450px 491px;
+  animation: drawDividerFromZero 260ms cubic-bezier(0.16, 1, 0.3, 1) 800ms both;
+}
+@keyframes drawDividerFromZero {
+  0% {
+    opacity: 0;
+    transform: scale(0) translate3d(40px, 40px, 0);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+.slide-section.is-active .part-keystone-red,
+.page-intro .part-keystone-red {
+  transform-origin: 450px 491px;
+  animation: popKeystoneFromZero 260ms cubic-bezier(0.2, 0.8, 0.2, 1.3) 860ms both;
+}
+@keyframes popKeystoneFromZero {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 1;
     transform: scale(1);
   }
 }
+
+/* 一面一面的 PPT 式整页切换 (Slide-by-slide presentation) */
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+.slide-section {
+  position: relative;
+  min-height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  padding-block: clamp(3rem, 6vh, 6.5rem);
+}
+
+/* 随着页面切换从页面“崩落”的小彩色块装饰（彩蛋） */
+.falling-tile-track {
+  position: absolute;
+  top: 0;
+  right: clamp(1rem, 4.5vw, 3.5rem);
+  width: 2.5rem;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+.falling-tile {
+  position: absolute;
+  top: 12%;
+  right: 0.5rem;
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  transform: translateY(-24px) rotate(45deg);
+  will-change: transform, opacity;
+}
+.slide-section.is-active .falling-tile {
+  animation: tileDriftSmooth 1350ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both;
+}
+@keyframes tileDriftSmooth {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -24px, 0) rotate(45deg);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  75% {
+    opacity: 0.65;
+    transform: translate3d(-12px, 75px, 0) rotate(58deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-18px, 140px, 0) rotate(70deg);
+  }
+}
+.tile-blue { background-color: var(--blue); }
+.tile-yellow { background-color: var(--yellow); }
+.tile-green { background-color: var(--green); }
+.tile-red { background-color: var(--red); }
 .hero-figure figcaption {
   display: flex;
   justify-content: flex-end;
@@ -433,6 +549,28 @@ html[lang="zh-CN"] .hero-statement { letter-spacing: -.07em; }
   padding-block: 1.2rem;
   border-top: 1px solid var(--rule);
 }
+html.js .slide-section:not(.is-active) .capability-list li {
+  opacity: 0;
+  animation: none !important;
+}
+.slide-section.is-active .capability-list li {
+  animation: capabilitySlideUp 400ms cubic-bezier(0.16, 1, 0.3, 1) var(--card-delay, 0ms) both;
+}
+.capability-list li:nth-child(1) { --card-delay: 0ms; }
+.capability-list li:nth-child(2) { --card-delay: 70ms; }
+.capability-list li:nth-child(3) { --card-delay: 140ms; }
+.capability-list li:nth-child(4) { --card-delay: 210ms; }
+
+@keyframes capabilitySlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .capability-list li:first-child, .step-list li:first-child { border-color: var(--ink); }
 .capability-list li:last-child, .step-list li:last-child { border-bottom: 1px solid var(--rule); }
 .capability-list h3, .step-list h3, .note-list h3 { font-size: clamp(1.25rem, 2.1vw, 1.7rem); letter-spacing: -.035em; }
@@ -462,19 +600,34 @@ html[lang="zh-CN"] .hero-statement { letter-spacing: -.07em; }
   border-inline-start: 5px solid var(--layer-color);
   border-top: 1px solid color-mix(in srgb, var(--paper) 28%, var(--ink));
   will-change: transform, opacity;
-  animation: layerSlideIn 300ms cubic-bezier(0.16, 1, 0.3, 1) var(--slide-delay, 0ms) both;
+}
+html.js .slide-section:not(.is-active) .architecture-layer {
+  opacity: 0;
+  animation: none !important;
+}
+.slide-section.is-active .architecture-layer {
+  animation: layerSlideInSpring 360ms cubic-bezier(0.16, 0.85, 0.24, 1.15) var(--slide-delay, 0ms) both;
 }
 .architecture-layer:last-child { border-bottom: 1px solid color-mix(in srgb, var(--paper) 28%, var(--ink)); }
 .layer-1 { --step: 0; --layer-color: var(--blue); --slide-delay: 0ms; }
-.layer-2 { --step: 1; --layer-color: var(--green); --slide-delay: 120ms; }
-.layer-3 { --step: 2; --layer-color: var(--yellow); --slide-delay: 240ms; }
-.layer-4 { --step: 3; --layer-color: var(--paper); --slide-delay: 360ms; }
+.layer-2 { --step: 1; --layer-color: var(--green); --slide-delay: 45ms; }
+.layer-3 { --step: 2; --layer-color: var(--yellow); --slide-delay: 90ms; }
+.layer-4 { --step: 3; --layer-color: var(--paper); --slide-delay: 135ms; }
 
-@keyframes layerSlideIn {
+@keyframes layerSlideInSpring {
   0% {
-    transform: translate3d(28px, 0, 0);
+    opacity: 0;
+    transform: translate3d(64px, 0, 0);
+  }
+  45% {
+    opacity: 1;
+    transform: translate3d(-10px, 0, 0);
+  }
+  75% {
+    transform: translate3d(2px, 0, 0);
   }
   100% {
+    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
@@ -512,9 +665,14 @@ details[open] .layer-toggle::after { display: none; }
   background: var(--blue);
   color: var(--paper);
 }
-.consumer-panel {
+html.js .slide-section:not(.is-active) .consumer-panel,
+html.js .slide-section:not(.is-active) .audience-rail article {
+  opacity: 0;
+  animation: none !important;
+}
+.slide-section.is-active .consumer-panel {
   will-change: transform, opacity;
-  animation: cardFloatUp 420ms cubic-bezier(0.16, 1, 0.3, 1) 0ms both;
+  animation: elegantEmerge 680ms cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
 }
 .consumer-panel h3 { max-width: 17ch; margin-top: .95rem; font-size: clamp(2rem, 4vw, 3.65rem); letter-spacing: -.06em; }
 .consumer-panel p:not(.label), .contact-section p:not(.label) { max-width: 29rem; margin-top: 1rem; }
@@ -524,18 +682,22 @@ details[open] .layer-toggle::after { display: none; }
   padding-block: 1.2rem;
   border-top: 1px solid var(--rule);
   will-change: transform, opacity;
-  animation: cardFloatUp 420ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
 }
-.audience-rail article:last-child {
+.slide-section.is-active .audience-rail article:first-child {
+  animation: elegantEmerge 680ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
+}
+.slide-section.is-active .audience-rail article:last-child {
   border-bottom: 1px solid var(--rule);
-  animation-delay: 240ms;
+  animation: elegantEmerge 680ms cubic-bezier(0.16, 1, 0.3, 1) 340ms both;
 }
 
-@keyframes cardFloatUp {
+@keyframes elegantEmerge {
   0% {
-    transform: translateY(20px) scale(0.985);
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
   }
   100% {
+    opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
@@ -544,6 +706,16 @@ details[open] .layer-toggle::after { display: none; }
 .audience-rail .text-link { margin-top: .2rem; }
 .journal-section { border-top: 1px solid var(--rule); }
 .release-list li, .note-list li { border-top: 1px solid var(--rule); }
+html.js .slide-section:not(.is-active) .release-list li {
+  opacity: 0;
+  animation: none !important;
+}
+.slide-section.is-active .release-list li {
+  animation: capabilitySlideUp 400ms cubic-bezier(0.16, 1, 0.3, 1) var(--rel-delay, 0ms) both;
+}
+.release-list li:nth-child(1) { --rel-delay: 0ms; }
+.release-list li:nth-child(2) { --rel-delay: 80ms; }
+.release-list li:nth-child(3) { --rel-delay: 160ms; }
 .release-list li:first-child, .note-list li:first-child { border-color: var(--ink); }
 .release-list li:last-child, .note-list li:last-child { border-bottom: 1px solid var(--rule); }
 .release-list a {

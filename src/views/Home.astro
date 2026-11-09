@@ -21,7 +21,10 @@ const capabilities = zh ? [
 ];
 ---
 
-<section class="hero shell" aria-labelledby="hero-title">
+<section class="hero shell slide-section is-active" data-slide aria-labelledby="hero-title">
+  <div class="falling-tile-track" aria-hidden="true">
+    <span class="falling-tile tile-yellow"></span>
+  </div>
   <div class="hero-index label">
     <span><i class="label-mark" aria-hidden="true"></i> INDEPENDENT WEARABLE AUDIO</span>
     <span class="hero-index-side">WEAR OS <span class="hero-cross">×</span> TWS</span>
@@ -30,16 +33,19 @@ const capabilities = zh ? [
     <div class="hero-copy">
       <h1 id="hero-title">
         <span class="hero-name">WearEars</span>
-        <span class="hero-statement" aria-label={zh ? '声音在腕上' : 'Sound on your wrist'}>
+        <span class="hero-statement" aria-label={zh ? '声音 在腕上' : 'Sound on your wrist'}>
           {zh ? (
             <span class="kinetic-phrase">
-              <span class="char-unit" style="--bounce-delay: 0ms">声</span><span class="char-unit" style="--bounce-delay: 120ms">音</span><span class="char-unit wave" style="--bounce-delay: 520ms">在</span><span class="char-unit wave" style="--bounce-delay: 560ms">腕</span><span class="char-unit wave" style="--bounce-delay: 600ms">上</span>
+              <span class="char-unit" style="--bounce-delay: 0ms">声</span><span class="char-unit" style="--bounce-delay: 120ms">音</span><span class="word-spacer" aria-hidden="true">&nbsp;&nbsp;</span><span class="char-unit wave" style="--bounce-delay: 520ms">在</span><span class="char-unit wave" style="--bounce-delay: 560ms">腕</span><span class="char-unit wave" style="--bounce-delay: 600ms">上</span>
             </span>
           ) : (
             <span class="kinetic-phrase">
               <span class="char-unit" style="--bounce-delay: 0ms">Sound</span>
+              <span class="word-spacer" aria-hidden="true">&nbsp;</span>
               <span class="char-unit wave" style="--bounce-delay: 520ms">on</span>
+              <span class="word-spacer" aria-hidden="true">&nbsp;</span>
               <span class="char-unit wave" style="--bounce-delay: 560ms">your</span>
+              <span class="word-spacer" aria-hidden="true">&nbsp;</span>
               <span class="char-unit wave" style="--bounce-delay: 600ms">wrist</span>
             </span>
           )}
@@ -72,10 +78,13 @@ const capabilities = zh ? [
   </div>
 </section>
 
-<section class="shell section-space capability-section" aria-labelledby="capabilities-title">
+<section class="shell section-space capability-section slide-section" data-slide aria-labelledby="capabilities-title">
+  <div class="falling-tile-track" aria-hidden="true">
+    <span class="falling-tile tile-green"></span>
+  </div>
   <div class="section-lead">
     <p class="label"><span class="label-mark"></span>01 / PROJECT</p>
-    <h2 id="capabilities-title">{zh ? '常用控制，抬腕可达' : 'Everyday controls within reach'}</h2>
+    <h2 id="capabilities-title">{zh ? '常用控制 抬腕可达' : 'Everyday controls within reach'}</h2>
     <p>{zh
       ? 'WearEars 把不同耳机的常用操作放进同一套手表界面。连接后可用的功能，由具体耳机和驱动决定。'
       : 'WearEars brings familiar earbud controls into one watch interface. The model and its driver determine which controls are available.'}</p>
@@ -95,11 +104,14 @@ const capabilities = zh ? [
   </ol>
 </section>
 
-<section class="ink-section section-space" aria-labelledby="architecture-title">
+<section class="ink-section section-space slide-section" data-slide aria-labelledby="architecture-title">
+  <div class="falling-tile-track" aria-hidden="true">
+    <span class="falling-tile tile-blue"></span>
+  </div>
   <div class="shell architecture-grid">
     <div class="section-lead">
       <p class="label"><span class="label-mark"></span>02 / SYSTEM DESIGN</p>
-      <h2 id="architecture-title">{zh ? '界面统一，驱动独立' : 'One interface. Independent drivers'}</h2>
+      <h2 id="architecture-title">{zh ? '界面统一 驱动独立' : 'One interface. Independent drivers'}</h2>
       <p>{zh
         ? '从手表上的一次点击，到耳机的状态回报，四层结构各自承担清晰的职责。'
         : 'Four layers give each step a clear role, from a tap on the watch to a state report from the earbuds.'}</p>
@@ -109,7 +121,10 @@ const capabilities = zh ? [
   </div>
 </section>
 
-<section class="shell section-space" aria-labelledby="audience-title">
+<section class="shell section-space slide-section" data-slide aria-labelledby="audience-title">
+  <div class="falling-tile-track" aria-hidden="true">
+    <span class="falling-tile tile-red"></span>
+  </div>
   <div class="section-heading">
     <p class="label"><span class="label-mark"></span>03 / EXPLORE</p>
     <h2 id="audience-title">{zh ? '从这里开始' : 'Find your starting point'}</h2>
@@ -138,7 +153,10 @@ const capabilities = zh ? [
   </div>
 </section>
 
-<section class="shell section-space journal-section" aria-labelledby="journal-title">
+<section class="shell section-space journal-section slide-section" data-slide aria-labelledby="journal-title">
+  <div class="falling-tile-track" aria-hidden="true">
+    <span class="falling-tile tile-yellow"></span>
+  </div>
   <div class="section-lead">
     <p class="label"><span class="label-mark"></span>04 / JOURNAL</p>
     <h2 id="journal-title">{zh ? '项目动态' : 'Project journal'}</h2>
@@ -147,3 +165,25 @@ const capabilities = zh ? [
   </div>
   <ReleaseFeed locale={locale} limit={3} />
 </section>
+
+<script>
+  // Slide-by-slide entrance observer: triggers animations whenever entering a slide
+  const slides = document.querySelectorAll<HTMLElement>('.slide-section');
+  if ('IntersectionObserver' in window && slides.length > 0) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('is-active');
+          void (entry.target as HTMLElement).offsetWidth;
+          entry.target.classList.add('is-active');
+        } else {
+          entry.target.classList.remove('is-active');
+        }
+      });
+    }, { threshold: 0.35 });
+
+    slides.forEach((slide) => {
+      observer.observe(slide);
+    });
+  }
+</script>
