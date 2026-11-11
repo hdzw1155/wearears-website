@@ -503,15 +503,15 @@ html.js .slide-section.is-waiting .part-keystone-red {
   }
 }
 
-/* 一页一页的“折扇甩开”磨砂玻璃卡叠层（仅作用域首页 .home-deck，不动顶部导航和页脚） */
-html:has(.home-deck) {
+/* 首页交互展台：默认“红木扇木扫过揭幕”；连点 5 次 S 后切换为“左右折扇卡片甩开” */
+html:has(.home-deck.is-fan-mode) {
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
 }
 body:has(.home-deck) {
   overflow-x: clip;
 }
-body:has(.home-deck) .masthead {
+body:has(.home-deck.is-fan-mode) .masthead {
   scroll-snap-align: start;
 }
 .home-deck {
@@ -521,7 +521,86 @@ body:has(.home-deck) .masthead {
 .slide-section {
   position: relative;
 }
-.home-deck > .slide-section {
+.deck-stage {
+  position: relative;
+  width: 100%;
+}
+.deck-scroll-spacer {
+  display: none;
+  width: 100%;
+  pointer-events: none;
+}
+.fan-sweeper {
+  display: none;
+  position: absolute;
+  left: -24px;
+  top: -18px;
+  width: 3024px;
+  height: 36px;
+  transform-origin: 24px 18px;
+  pointer-events: none;
+  z-index: 20;
+  opacity: 0;
+  will-change: transform, opacity;
+  filter:
+    drop-shadow(0 9px 18px rgba(18, 10, 8, 0.34))
+    drop-shadow(0 2px 5px rgba(18, 10, 8, 0.24));
+}
+.fan-rib-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+html.js .home-deck:not(.is-fan-mode) > .deck-stage {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: clip;
+}
+html.js .home-deck:not(.is-fan-mode) > .deck-scroll-spacer,
+html.js .home-deck:not(.is-fan-mode) .fan-sweeper {
+  display: block;
+}
+html.js .home-deck:not(.is-fan-mode) .slide-section {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+html.js .home-deck:not(.is-fan-mode) .slide-section > .deck-card {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  transform: translate3d(0, var(--pan-y, 0px), 0) scale(var(--under-scale, 1));
+  will-change: transform;
+}
+html.js .home-deck:not(.is-fan-mode) .deck-card-hero {
+  padding-bottom: 4.85rem;
+  background: var(--paper);
+}
+html.js .home-deck:not(.is-fan-mode) .deck-card.deck-paper {
+  background: var(--paper);
+}
+html.js .home-deck:not(.is-fan-mode) .deck-card.deck-ink {
+  background: var(--ink);
+}
+.home-deck.is-fan-mode > .deck-stage {
+  display: contents;
+}
+.home-deck.is-fan-mode .fan-sweeper,
+.home-deck.is-fan-mode > .deck-scroll-spacer {
+  display: none;
+}
+.home-deck.is-fan-mode .slide-section {
   position: sticky;
   top: 0;
   width: 100%;
@@ -530,14 +609,14 @@ body:has(.home-deck) .masthead {
   box-sizing: border-box;
   scroll-snap-align: start;
 }
-.home-deck > .deck-hero {
+.home-deck.is-fan-mode .deck-hero {
   z-index: 1;
   scroll-snap-align: none;
 }
-.home-deck > .ink-section {
+.home-deck .ink-section {
   background: transparent;
 }
-.home-deck .deck-card {
+.home-deck.is-fan-mode .deck-card {
   position: relative;
   width: 100%;
   flex: 1 0 auto;
@@ -545,56 +624,46 @@ body:has(.home-deck) .masthead {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
-}
-.home-deck.is-fan-mode .deck-card {
   transform: translate3d(var(--fan-x, 0px), 0, 0) rotate(var(--fan-rot, 0deg)) scale(var(--fan-scale, 1));
   will-change: transform;
 }
-.home-deck .deck-card-hero {
+.home-deck.is-fan-mode .deck-card-hero {
   min-height: calc(100dvh - 4.85rem);
   background: var(--paper);
   transform-origin: 12% 100%;
 }
-.home-deck > .deck-sheet .deck-card {
+.home-deck.is-fan-mode .deck-sheet .deck-card {
   min-height: 100dvh;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-  box-shadow: 0 -22px 60px rgba(18, 20, 23, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.72);
-  backdrop-filter: blur(24px) saturate(135%);
-  -webkit-backdrop-filter: blur(24px) saturate(135%);
-}
-.home-deck.is-fan-mode > .deck-sheet .deck-card {
-  border-top-color: color-mix(in srgb, var(--ink) 14%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
   border-inline: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
   box-shadow:
     0 -22px 60px rgba(18, 20, 23, 0.13),
     0 6px 42px rgba(18, 20, 23, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
 }
-.home-deck .deck-fan-right {
+.home-deck.is-fan-mode .deck-fan-right {
   transform-origin: 8% 100%;
 }
-.home-deck .deck-fan-left {
+.home-deck.is-fan-mode .deck-fan-left {
   transform-origin: 92% 100%;
 }
-.home-deck > .deck-sheet .deck-card.deck-paper {
+.home-deck.is-fan-mode .deck-sheet .deck-card.deck-paper {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--paper) calc(80% + var(--settled, 0.88) * 19%), transparent) 0%,
-    color-mix(in srgb, var(--paper) calc(92% + var(--settled, 0.88) * 8%), transparent) 30%,
+    color-mix(in srgb, var(--paper) calc(76% + var(--settled, 0.88) * 23%), transparent) 0%,
+    color-mix(in srgb, var(--paper) calc(91% + var(--settled, 0.88) * 9%), transparent) 32%,
     color-mix(in srgb, var(--paper) calc(97% + var(--settled, 0.88) * 3%), transparent) 100%
   );
 }
-.home-deck > .deck-sheet .deck-card.deck-ink {
+.home-deck.is-fan-mode .deck-sheet .deck-card.deck-ink {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--ink) calc(82% + var(--settled, 0.88) * 16%), transparent) 0%,
-    color-mix(in srgb, var(--ink) calc(92% + var(--settled, 0.88) * 7%), transparent) 35%,
+    color-mix(in srgb, var(--ink) calc(78% + var(--settled, 0.88) * 20%), transparent) 0%,
+    color-mix(in srgb, var(--ink) calc(91% + var(--settled, 0.88) * 8%), transparent) 36%,
     color-mix(in srgb, var(--ink) calc(96% + var(--settled, 0.88) * 4%), transparent) 100%
   );
-  border-top-color: color-mix(in srgb, var(--paper) 16%, transparent);
-  box-shadow: 0 -26px 68px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
-}
-.home-deck.is-fan-mode > .deck-sheet .deck-card.deck-ink {
   border-top-color: color-mix(in srgb, var(--paper) 22%, transparent);
   border-inline-color: color-mix(in srgb, var(--paper) 14%, transparent);
   box-shadow:
@@ -602,16 +671,18 @@ body:has(.home-deck) .masthead {
     0 6px 44px rgba(0, 0, 0, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
-.home-deck > .slide-section[data-slide-index="1"] { z-index: 2; }
-.home-deck > .slide-section[data-slide-index="2"] { z-index: 3; }
-.home-deck > .slide-section[data-slide-index="3"] { z-index: 4; }
-.home-deck > .slide-section[data-slide-index="4"] { z-index: 5; }
-.home-deck > .deck-journal .journal-section { border-top: 0; }
+.home-deck .slide-section[data-slide-index="1"] { z-index: 2; }
+.home-deck .slide-section[data-slide-index="2"] { z-index: 3; }
+.home-deck .slide-section[data-slide-index="3"] { z-index: 4; }
+.home-deck .slide-section[data-slide-index="4"] { z-index: 5; }
+.home-deck .deck-journal .journal-section { border-top: 0; }
 body:has(.home-deck) .site-footer {
   position: relative;
   z-index: 6;
   background: var(--paper);
   box-shadow: 0 -18px 46px rgba(18, 20, 23, 0.08);
+}
+body:has(.home-deck.is-fan-mode) .site-footer {
   scroll-snap-align: end;
 }
 
@@ -1059,8 +1130,11 @@ html.js .slide-section.is-waiting .release-list li {
 }
 
 @media (max-width: 760px) {
-  .home-deck > .deck-hero .deck-card-hero {
+  .home-deck.is-fan-mode .deck-hero .deck-card-hero {
     min-height: calc(100dvh - 4.2rem);
+  }
+  html.js .home-deck:not(.is-fan-mode) .deck-card-hero {
+    padding-bottom: calc(4.2rem + .65rem);
   }
   .falling-tile-track {
     right: 2px;
@@ -1179,5 +1253,24 @@ html.js .slide-section.is-waiting .release-list li {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
+  }
+  html.js .home-deck > .deck-stage {
+    position: relative !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  html.js .home-deck .slide-section {
+    position: relative !important;
+    inset: auto !important;
+    height: auto !important;
+    visibility: visible !important;
+    clip-path: none !important;
+  }
+  html.js .home-deck .deck-card-hero {
+    padding-bottom: 0 !important;
+  }
+  html.js .home-deck > .deck-scroll-spacer,
+  html.js .home-deck .fan-sweeper {
+    display: none !important;
   }
 }

@@ -22,7 +22,8 @@ const capabilities = zh ? [
 const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
 ---
 
-<div class="home-deck">
+<div class="home-deck" data-deck-mode="scroll-wipe">
+  <div class="deck-stage">
   <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-labelledby="hero-title">
     <div class="deck-card deck-card-hero">
       <div class="falling-tile-track" aria-hidden="true">
@@ -198,34 +199,195 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       </div>
     </div>
   </section>
+    <div class="fan-sweeper" aria-hidden="true" data-fan-sweeper>
+      <svg class="fan-rib-svg" viewBox="0 0 3024 36" width="3024" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="wear-fan-rib-clip">
+            <path d="M0 12 L42 11.4 C68 10.6 92 8.2 128 8.4 C166 8.6 196 11.4 252 11.8 L3024 12.6 L3024 23.4 L252 24.2 C196 24.6 166 27.4 128 27.6 C92 27.8 68 25.4 42 24.6 L0 24 Z" />
+          </clipPath>
+          <linearGradient id="wear-rosewood-body" x1="0" y1="8" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#9A4E38" />
+            <stop offset="14%" stop-color="#6C271B" />
+            <stop offset="46%" stop-color="#4A1710" />
+            <stop offset="82%" stop-color="#2D0C08" />
+            <stop offset="100%" stop-color="#190503" />
+          </linearGradient>
+          <linearGradient id="wear-rosewood-grain-wash" x1="0" y1="0" x2="2200" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#2A0B07" stop-opacity="0.16" />
+            <stop offset="18%" stop-color="#7D3222" stop-opacity="0.12" />
+            <stop offset="42%" stop-color="#1F0704" stop-opacity="0.22" />
+            <stop offset="68%" stop-color="#8B3B28" stop-opacity="0.10" />
+            <stop offset="100%" stop-color="#240906" stop-opacity="0.20" />
+          </linearGradient>
+          <linearGradient id="wear-antique-brass" x1="0" y1="8" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#E7C278" />
+            <stop offset="35%" stop-color="#C29140" />
+            <stop offset="72%" stop-color="#875E1D" />
+            <stop offset="100%" stop-color="#583B0E" />
+          </linearGradient>
+          <radialGradient id="wear-brass-pin" cx="0.38" cy="0.35" r="0.65">
+            <stop offset="0%" stop-color="#F0D08C" />
+            <stop offset="55%" stop-color="#BA8838" />
+            <stop offset="100%" stop-color="#664413" />
+          </radialGradient>
+        </defs>
+        <g clip-path="url(#wear-fan-rib-clip)">
+          <rect x="0" y="7" width="3024" height="22" fill="url(#wear-rosewood-body)" />
+          <rect x="0" y="7" width="3024" height="22" fill="url(#wear-rosewood-grain-wash)" />
+          <!-- Organic aged rosewood grain fibers -->
+          <path d="M0 14.2 C240 12.8 480 15.6 740 13.8 C1020 12.2 1320 15.4 1660 13.9 C2020 12.6 2480 15.1 3024 13.7" stroke="#180503" stroke-opacity="0.30" stroke-width="1.05" />
+          <path d="M0 17.5 C190 19.0 420 16.0 690 17.8 C980 19.4 1280 16.3 1620 17.9 C1980 19.3 2450 16.5 3024 18.0" stroke="#9E523B" stroke-opacity="0.18" stroke-width="0.9" />
+          <path d="M0 20.4 C270 19.1 560 22.1 880 20.2 C1210 18.7 1560 21.8 1940 20.1 C2340 18.9 2680 21.6 3024 20.3" stroke="#140402" stroke-opacity="0.34" stroke-width="1.2" />
+          <path d="M48 11.2 C160 11.8 340 10.6 560 12.1 C820 13.2 1140 11.0 1520 12.4 C1920 13.6 2440 11.6 3024 12.8" stroke="#C87E5E" stroke-opacity="0.20" stroke-width="0.7" />
+          <!-- Subtle brushed antique brass inlay collars along fan shoulder -->
+          <rect x="66" y="7" width="2.4" height="22" fill="url(#wear-antique-brass)" />
+          <rect x="64.8" y="7" width="0.8" height="22" fill="#180503" fill-opacity="0.55" />
+          <rect x="68.8" y="7" width="0.8" height="22" fill="#180503" fill-opacity="0.55" />
+          <rect x="158" y="7" width="1.3" height="22" fill="url(#wear-antique-brass)" fill-opacity="0.82" />
+        </g>
+        <!-- Crisp lacquer upper rim highlight & underside bevel -->
+        <path d="M0 12.2 L42 11.6 C68 10.8 92 8.4 128 8.6 C166 8.8 196 11.6 252 12.0 L3024 12.8" stroke="#E2AC88" stroke-opacity="0.38" stroke-width="0.85" />
+        <path d="M0 23.8 L42 24.4 C68 25.2 92 27.6 128 27.4 C166 27.2 196 24.4 252 24.0 L3024 23.2" stroke="#120302" stroke-opacity="0.75" stroke-width="0.95" />
+        <!-- Flush antique brass rivet stud on visible fan handle -->
+        <circle cx="48" cy="18" r="2.8" fill="url(#wear-brass-pin)" stroke="#190503" stroke-opacity="0.65" stroke-width="0.7" />
+      </svg>
+    </div>
+  </div>
+  <div class="deck-scroll-spacer" aria-hidden="true" data-deck-spacer></div>
 </div>
 
 <script>
   (() => {
     const homeDeck = document.querySelector<HTMLElement>('.home-deck');
-    const slides = Array.from(document.querySelectorAll<HTMLElement>('.home-deck > .slide-section'));
-    if (!homeDeck || slides.length === 0) return;
+    const stage = homeDeck?.querySelector<HTMLElement>('.deck-stage') ?? null;
+    const spacer = homeDeck?.querySelector<HTMLElement>('[data-deck-spacer]') ?? null;
+    const sweeper = homeDeck?.querySelector<HTMLElement>('[data-fan-sweeper]') ?? null;
+    const slides = Array.from(document.querySelectorAll<HTMLElement>('.home-deck .slide-section'));
+    if (!homeDeck || !stage || slides.length === 0) return;
 
+    const cards = slides.map((s) => s.querySelector<HTMLElement>('.deck-card'));
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // 默认保持原版“下盖上”磨砂玻璃平滑切换；连续点击 5 次“S”可解锁/切换扇形甩开模式
+    // 默认采用“红木扇木扫过揭幕”；连续点击 5 次“S”后可切换为“左右折扇甩开”效果
     let isFanMode = false;
+    let currentWipe1Progress = 0;
+    let heroWasBuried = false;
+    let scheduleIntroHop = () => {};
 
-    // 1. Dynamic sticky top offsets so tall sections scroll fully before pinning
-    const syncStickyOffsets = () => {
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      for (const slide of slides) {
-        const h = slide.offsetHeight;
-        const topOffset = h > vh ? Math.round(vh - h) : 0;
-        slide.style.top = `${topOffset}px`;
-      }
+    type SegmentLayout = {
+      vh: number;
+      vw: number;
+      wipeLen: number;
+      extraH: number[];
+      heroHoldEnd: number;
+      wipeStarts: number[];
+      wipeEnds: number[];
+      restStarts: number[];
+      restEnds: number[];
+      totalRunwayPx: number;
     };
 
-    syncStickyOffsets();
-    window.addEventListener('resize', syncStickyOffsets, { passive: true });
-    if ('ResizeObserver' in window) {
-      const ro = new ResizeObserver(syncStickyOffsets);
-      slides.forEach((s) => ro.observe(s));
-    }
+    let seg: SegmentLayout = {
+      vh: 900,
+      vw: 1440,
+      wipeLen: 702,
+      extraH: slides.map(() => 0),
+      heroHoldEnd: 48,
+      wipeStarts: [0],
+      wipeEnds: [0],
+      restStarts: [0],
+      restEnds: [0],
+      totalRunwayPx: 3000
+    };
+
+    // 1. Measure layout & sync either Rosewood Sweep runway or Sticky Fan offsets
+    const syncLayout = () => {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const vw = stage.clientWidth || window.innerWidth || document.documentElement.clientWidth;
+
+      if (reducedMotion) {
+        if (spacer) spacer.style.height = '0px';
+        slides.forEach((s, i) => {
+          s.style.top = '';
+          s.style.clipPath = '';
+          s.style.visibility = '';
+          const c = cards[i];
+          if (c) {
+            c.style.removeProperty('--pan-y');
+            c.style.removeProperty('--under-scale');
+            c.style.removeProperty('--fan-rot');
+            c.style.removeProperty('--fan-x');
+            c.style.removeProperty('--fan-scale');
+          }
+        });
+        return;
+      }
+
+      if (isFanMode) {
+        if (spacer) spacer.style.height = '0px';
+        if (sweeper) sweeper.style.opacity = '0';
+        for (let i = 0; i < slides.length; i++) {
+          const slide = slides[i];
+          slide.style.clipPath = '';
+          slide.style.visibility = '';
+          const card = cards[i];
+          if (card) {
+            card.style.removeProperty('--pan-y');
+            card.style.removeProperty('--under-scale');
+          }
+          const h = slide.offsetHeight;
+          const topOffset = h > vh ? Math.round(vh - h) : 0;
+          slide.style.top = `${topOffset}px`;
+        }
+        return;
+      }
+
+      // Default mode: Rosewood Rib Sweep
+      if (sweeper) sweeper.style.opacity = '0';
+      const extraH = cards.map((card, i) => {
+        if (!card) return 0;
+        const measured = Math.max(card.scrollHeight, slides[i].scrollHeight);
+        return Math.max(0, Math.round(measured - vh));
+      });
+      const wipeLen = Math.round(Math.max(460, Math.min(740, vh * 0.78)));
+      const pauseLen = Math.round(Math.max(96, Math.min(180, vh * 0.16)));
+
+      let cursor = extraH[0] + 44;
+      const heroHoldEnd = cursor;
+      const wipeStarts = [0];
+      const wipeEnds = [0];
+      const restStarts = [0];
+      const restEnds = [heroHoldEnd];
+
+      for (let i = 1; i < slides.length; i++) {
+        const wStart = cursor;
+        const wEnd = cursor + wipeLen;
+        const rStart = wEnd;
+        const rEnd = rStart + extraH[i] + (i === slides.length - 1 ? Math.round(pauseLen * 1.15) : pauseLen);
+        wipeStarts.push(wStart);
+        wipeEnds.push(wEnd);
+        restStarts.push(rStart);
+        restEnds.push(rEnd);
+        cursor = rEnd;
+      }
+
+      seg = {
+        vh,
+        vw,
+        wipeLen,
+        extraH,
+        heroHoldEnd,
+        wipeStarts,
+        wipeEnds,
+        restStarts,
+        restEnds,
+        totalRunwayPx: cursor
+      };
+
+      if (spacer) spacer.style.height = `${cursor}px`;
+      slides.forEach((s) => {
+        s.style.top = '';
+      });
+    };
 
     // 2. Replay entrance safely without hiding visible content on screen
     const retriggerSlide = (slide: HTMLElement) => {
@@ -237,21 +399,171 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
 
     const vhInit = window.innerHeight || document.documentElement.clientHeight;
     slides.forEach((slide, idx) => {
-      const r = slide.getBoundingClientRect();
-      if (idx > 0 && r.top >= vhInit - 16) {
-        slide.classList.add('is-waiting');
-      } else {
+      if (idx === 0) {
         slide.classList.add('is-active');
+      } else if (reducedMotion) {
+        const r = slide.getBoundingClientRect();
+        slide.classList.add(r.top >= vhInit - 16 ? 'is-waiting' : 'is-active');
+      } else {
+        slide.classList.add('is-waiting');
       }
     });
 
-    // 3. Scroll-driven alternating folding-fan deck transitions & cover state tracking
-    const cards = slides.map((s) => s.querySelector<HTMLElement>('.deck-card'));
+    const computeSweepClip = (thetaDeg: number, vw: number, vh: number, fromLeft: boolean) => {
+      if (thetaDeg <= 0.02) return 'polygon(0px 0px, 0px 0px, 0px 0px)';
+      if (thetaDeg >= 90.02) return 'none';
+      const r = Math.max(vw, vh) * 1.65 + 240;
+      const tanT = Math.tan((thetaDeg * Math.PI) / 180);
+
+      if (fromLeft) {
+        if (thetaDeg <= 45) {
+          const yR = (r * tanT).toFixed(1);
+          return `polygon(0px 0px, ${r}px 0px, ${r}px ${yR}px)`;
+        }
+        const xB = (r / tanT).toFixed(1);
+        return `polygon(0px 0px, ${r}px 0px, ${r}px ${r}px, ${xB}px ${r}px)`;
+      }
+
+      const xL = (vw - r).toFixed(1);
+      if (thetaDeg <= 45) {
+        const yL = (r * tanT).toFixed(1);
+        return `polygon(${vw}px 0px, ${xL}px 0px, ${xL}px ${yL}px)`;
+      }
+      const xB = (vw - r / tanT).toFixed(1);
+      return `polygon(${vw}px 0px, ${xL}px 0px, ${xL}px ${r}px, ${xB}px ${r}px)`;
+    };
+
+    const rawPToTheta = (rawP: number, vw: number, vh: number) => {
+      const u = 0.5 * (1 - Math.cos(Math.PI * rawP));
+      if (u < 0.04) return -4 + 4 * (u / 0.04);
+      if (u > 0.96) return 90 + 5 * ((u - 0.96) / 0.04);
+      const s = (u - 0.04) / 0.92;
+      const d = s * (vw + vh);
+      const rad = d <= vh ? Math.atan2(d, vw) : Math.atan2(vh, Math.max(0, vw - (d - vh)));
+      return (rad * 180) / Math.PI;
+    };
+
+    // 3. Scroll-driven Rosewood Fan Rib Wipe (default) or Alternating Card Deck (S x5 easter egg)
     let rafId = 0;
     const updateDeckState = () => {
       rafId = 0;
       const vh = window.innerHeight || document.documentElement.clientHeight;
-      const vw = window.innerWidth || document.documentElement.clientWidth;
+      const vw = stage.clientWidth || window.innerWidth || document.documentElement.clientWidth;
+
+      if (reducedMotion) {
+        slides.forEach((slide) => slide.classList.add('is-active'));
+        return;
+      }
+
+      if (!isFanMode) {
+        const deckRect = homeDeck.getBoundingClientRect();
+        const pos = Math.max(0, Math.min(seg.totalRunwayPx, -deckRect.top));
+
+        const wipeP = slides.map((_, i) =>
+          i === 0 ? 1 : Math.max(0, Math.min(1, (pos - seg.wipeStarts[i]) / Math.max(1, seg.wipeLen)))
+        );
+        currentWipe1Progress = wipeP[1] ?? 0;
+
+        let baseIdx = 0;
+        for (let i = 1; i < slides.length; i++) {
+          if (wipeP[i] >= 1) baseIdx = i;
+        }
+        const wipingIdx =
+          baseIdx + 1 < slides.length && wipeP[baseIdx + 1] > 0 && wipeP[baseIdx + 1] < 1
+            ? baseIdx + 1
+            : -1;
+
+        const heroBuriedNow = (wipeP[1] ?? 0) >= 0.96;
+        if (heroBuriedNow) {
+          heroWasBuried = true;
+        } else if (heroWasBuried && (wipeP[1] ?? 0) <= 0.12) {
+          heroWasBuried = false;
+          retriggerSlide(slides[0]);
+          scheduleIntroHop();
+        }
+
+        const panY: number[] = [];
+        for (let i = 0; i < slides.length; i++) {
+          if (i === 0) {
+            panY.push(Math.min(seg.extraH[0], pos));
+          } else {
+            panY.push(Math.max(0, Math.min(seg.extraH[i], pos - seg.restStarts[i])));
+          }
+        }
+
+        const activeWipeFrac = wipingIdx > 0 ? wipeP[wipingIdx] : 0;
+
+        for (let i = 0; i < slides.length; i++) {
+          const slide = slides[i];
+          const card = cards[i];
+          const isVisible = i === baseIdx || i === wipingIdx;
+
+          if (!isVisible) {
+            slide.style.visibility = 'hidden';
+            slide.style.clipPath = 'polygon(0px 0px, 0px 0px, 0px 0px)';
+            if (i > 0 && wipeP[i] <= 0 && slide.classList.contains('is-active')) {
+              slide.classList.remove('is-active');
+              slide.classList.add('is-waiting');
+            } else if (i > 0 && wipeP[i] >= 1 && !slide.classList.contains('is-active')) {
+              slide.classList.remove('is-waiting');
+              slide.classList.add('is-active');
+            }
+            continue;
+          }
+
+          slide.style.visibility = 'visible';
+
+          if (i === baseIdx) {
+            slide.style.clipPath = 'none';
+            if (!slide.classList.contains('is-active')) {
+              retriggerSlide(slide);
+            }
+            if (card) {
+              card.style.setProperty('--pan-y', `${-panY[i]}px`);
+              const underScale = wipingIdx > 0 ? 1 - 0.015 * activeWipeFrac : 1;
+              card.style.setProperty('--under-scale', underScale.toFixed(4));
+            }
+          } else if (i === wipingIdx) {
+            const p = wipeP[i];
+            if (p >= 0.14 && !slide.classList.contains('is-active')) {
+              retriggerSlide(slide);
+            } else if (p < 0.04 && slide.classList.contains('is-active')) {
+              slide.classList.remove('is-active');
+              slide.classList.add('is-waiting');
+            }
+            if (card) {
+              card.style.setProperty('--pan-y', '0px');
+              card.style.setProperty('--under-scale', '1');
+            }
+            const fromLeft = i % 2 === 1;
+            const thetaDeg = rawPToTheta(p, vw, vh);
+            slide.style.clipPath = computeSweepClip(thetaDeg, vw, vh, fromLeft);
+          }
+        }
+
+        if (sweeper) {
+          if (wipingIdx > 0) {
+            const p = wipeP[wipingIdx];
+            const fromLeft = wipingIdx % 2 === 1;
+            const thetaDeg = rawPToTheta(p, vw, vh);
+            const alpha =
+              thetaDeg < -1
+                ? Math.max(0, (thetaDeg + 4) / 3)
+                : thetaDeg > 92
+                  ? Math.max(0, (95 - thetaDeg) / 3)
+                  : 1;
+            sweeper.style.opacity = alpha.toFixed(3);
+            sweeper.style.transform = fromLeft
+              ? `translate3d(0px, 0, 0) rotate(${thetaDeg.toFixed(3)}deg)`
+              : `translate3d(${vw}px, 0, 0) rotate(${(-thetaDeg).toFixed(3)}deg) scaleX(-1)`;
+          } else {
+            sweeper.style.opacity = '0';
+          }
+        }
+        return;
+      }
+
+      // Easter Egg Mode: Scroll-driven alternating folding-fan card deck
       const shellW = Math.min(vw - Math.max(38.4, Math.min(vw * 0.08, 115.2)), 1248);
       const gutterPx = Math.max(16, (vw - shellW) * 0.5);
       const safeMidDeg = (Math.max(8, gutterPx - 3) / Math.max(480, vh * 0.72)) * (180 / Math.PI);
@@ -268,50 +580,42 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
         const nextSlide = i < slides.length - 1 ? slides[i + 1] : null;
         const nextRect = nextSlide ? nextSlide.getBoundingClientRect() : null;
 
-        // Frosted sheet solidifies cleanly as its top approaches viewport top (0px)
         const settledTarget = card || slide;
         if (i > 0) {
           const rawSettled = 1 - Math.max(0, Math.min(rect.top, vh * 0.45)) / (vh * 0.45);
           settledTarget.style.setProperty('--settled', rawSettled.toFixed(3));
         }
 
-        // Under-sheet gentle blur as incoming sheet slides up over it
         const cover = nextRect ? 1 - Math.max(0, Math.min(nextRect.top, vh)) / vh : 0;
         if (nextRect) {
           slide.style.setProperty('--buried', cover.toFixed(3));
         }
 
         if (card) {
-          if (reducedMotion || !isFanMode) {
-            card.style.setProperty('--fan-rot', '0deg');
-            card.style.setProperty('--fan-x', '0vw');
-            card.style.setProperty('--fan-scale', '1');
-          } else {
-            let angle = 0;
-            let shiftVw = 0;
-            let scale = 1;
+          let angle = 0;
+          let shiftVw = 0;
+          let scale = 1;
 
-            if (i > 0) {
-              const inDir = i % 2 === 1 ? 1 : -1;
-              const tIn = Math.max(0, Math.min(1, (vh - rect.top) / enterSpan));
-              const remIn = 0.5 * (1 + Math.cos(Math.PI * tIn));
-              angle += inDir * maxAngle * remIn;
-              shiftVw += inDir * maxShiftVw * remIn;
-              scale *= 1 - 0.045 * remIn;
-            }
-
-            if (nextRect && cover > 0) {
-              const outDir = i % 2 === 0 ? -1 : 1;
-              const tallDamp = slide.offsetHeight > vh * 1.15 ? 0.55 : 1;
-              const coverEase = 0.5 * (1 - Math.cos(Math.PI * cover));
-              angle += outDir * maxOutAngle * tallDamp * coverEase;
-              scale *= 1 - 0.032 * tallDamp * coverEase;
-            }
-
-            card.style.setProperty('--fan-rot', `${angle.toFixed(2)}deg`);
-            card.style.setProperty('--fan-x', `${shiftVw.toFixed(2)}vw`);
-            card.style.setProperty('--fan-scale', scale.toFixed(4));
+          if (i > 0) {
+            const inDir = i % 2 === 1 ? 1 : -1;
+            const tIn = Math.max(0, Math.min(1, (vh - rect.top) / enterSpan));
+            const remIn = 0.5 * (1 + Math.cos(Math.PI * tIn));
+            angle += inDir * maxAngle * remIn;
+            shiftVw += inDir * maxShiftVw * remIn;
+            scale *= 1 - 0.045 * remIn;
           }
+
+          if (nextRect && cover > 0) {
+            const outDir = i % 2 === 0 ? -1 : 1;
+            const tallDamp = slide.offsetHeight > vh * 1.15 ? 0.55 : 1;
+            const coverEase = 0.5 * (1 - Math.cos(Math.PI * cover));
+            angle += outDir * maxOutAngle * tallDamp * coverEase;
+            scale *= 1 - 0.032 * tallDamp * coverEase;
+          }
+
+          card.style.setProperty('--fan-rot', `${angle.toFixed(2)}deg`);
+          card.style.setProperty('--fan-x', `${shiftVw.toFixed(2)}vw`);
+          card.style.setProperty('--fan-scale', scale.toFixed(4));
         }
 
         const isBuried = Boolean(nextRect && nextRect.top <= 18);
@@ -323,12 +627,10 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
           if (i === 0) scheduleIntroHop();
         }
 
-        // Trigger waiting slides when entering from bottom
         if (rect.top < vh * 0.88 && !slide.classList.contains('is-active')) {
           retriggerSlide(slide);
         }
 
-        // Only reset to waiting if completely offscreen below the viewport
         if (i > 0 && rect.top >= vh + 24 && slide.classList.contains('is-active')) {
           slide.classList.remove('is-active');
           slide.classList.add('is-waiting');
@@ -340,9 +642,42 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       if (!rafId) rafId = window.requestAnimationFrame(updateDeckState);
     };
 
-    window.addEventListener('scroll', scheduleDeckUpdate, { passive: true });
-    window.addEventListener('resize', scheduleDeckUpdate, { passive: true });
+    const handleResize = () => {
+      syncLayout();
+      updateDeckState();
+    };
+
+    syncLayout();
     updateDeckState();
+    window.addEventListener('scroll', scheduleDeckUpdate, { passive: true });
+    window.addEventListener('resize', handleResize, { passive: true });
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver(() => {
+        syncLayout();
+        scheduleDeckUpdate();
+      });
+      cards.forEach((c) => {
+        if (c) ro.observe(c);
+      });
+    }
+
+    // Keyboard focus accessibility: scroll smoothly to settled target slide when Tab reaches an offscreen control
+    homeDeck.addEventListener('focusin', (e) => {
+      if (isFanMode || reducedMotion) return;
+      const target = e.target as HTMLElement | null;
+      const targetSlide = target?.closest<HTMLElement>('.slide-section');
+      if (!targetSlide) return;
+      const idx = Number(targetSlide.dataset.slideIndex);
+      if (!Number.isFinite(idx)) return;
+      const deckRect = homeDeck.getBoundingClientRect();
+      const pos = Math.max(0, -deckRect.top);
+      const deckDocTop = Math.round(window.scrollY + deckRect.top);
+      if (idx === 0 && currentWipe1Progress > 0.05) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (idx > 0 && (pos < seg.restStarts[idx] - 4 || pos > seg.restEnds[idx])) {
+        window.scrollTo({ top: deckDocTop + seg.restStarts[idx] + 4, behavior: 'smooth' });
+      }
+    });
 
     // 4. Living "s" character easter egg in WearEars wordmark
     const heroSlide = slides[0];
@@ -404,11 +739,16 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       });
 
     const isHeroFocused = () => {
+      if (document.hidden) return false;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      if (!isFanMode) {
+        const deckRect = homeDeck.getBoundingClientRect();
+        return deckRect.bottom > vh * 0.5 && currentWipe1Progress < 0.35;
+      }
       const heroRect = heroSlide.getBoundingClientRect();
       const nextRect = slides[1] ? slides[1].getBoundingClientRect() : null;
-      const vh = window.innerHeight || document.documentElement.clientHeight;
       const notCovered = !nextRect || nextRect.top > vh * 0.45;
-      return !document.hidden && heroRect.bottom > vh * 0.5 && notCovered;
+      return heroRect.bottom > vh * 0.5 && notCovered;
     };
 
     const playIntroHop = () => {
@@ -427,14 +767,14 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       );
     };
 
-    function scheduleIntroHop() {
+    scheduleIntroHop = function scheduleIntroHopFn() {
       if (introHopTimerId !== null) window.clearTimeout(introHopTimerId);
       // “快慢刀”延迟：待文字波浪(920ms)与图标4阶段绘制(1080ms)彻底静止约640ms后再水滴弹跳
       introHopTimerId = window.setTimeout(() => {
         introHopTimerId = null;
         playIntroHop();
       }, 1720);
-    }
+    };
 
     const startIdleMonitor = () => {
       if (idleTimerId !== null) window.clearTimeout(idleTimerId);
@@ -727,7 +1067,8 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
         }
         isFanMode = !isFanMode;
         homeDeck.classList.toggle('is-fan-mode', isFanMode);
-        homeDeck.dataset.deckMode = isFanMode ? 'fan' : 'stack';
+        homeDeck.dataset.deckMode = isFanMode ? 'fan' : 'scroll-wipe';
+        syncLayout();
         updateDeckState();
 
         if (isRecovering) {
