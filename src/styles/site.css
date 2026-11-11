@@ -493,16 +493,20 @@ html.js .slide-section.is-waiting .part-keystone-red {
   }
 }
 
-/* 一页一页的“下盖上”磨砂玻璃卡叠层（仅作用域首页 .home-deck，不动顶部导航和页脚） */
+/* 一页一页的“折扇甩开”磨砂玻璃卡叠层（仅作用域首页 .home-deck，不动顶部导航和页脚） */
 html:has(.home-deck) {
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
+}
+body:has(.home-deck) {
+  overflow-x: clip;
 }
 body:has(.home-deck) .masthead {
   scroll-snap-align: start;
 }
 .home-deck {
   position: relative;
+  overflow-x: clip;
 }
 .slide-section {
   position: relative;
@@ -513,40 +517,70 @@ body:has(.home-deck) .masthead {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   box-sizing: border-box;
   scroll-snap-align: start;
 }
 .home-deck > .deck-hero {
   z-index: 1;
-  min-height: calc(100dvh - 4.85rem);
-  background: var(--paper);
   scroll-snap-align: none;
 }
-.home-deck > .deck-sheet {
+.home-deck > .ink-section {
+  background: transparent;
+}
+.home-deck .deck-card {
+  position: relative;
+  width: 100%;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  transform: translate3d(var(--fan-x, 0px), 0, 0) rotate(var(--fan-rot, 0deg)) scale(var(--fan-scale, 1));
+  will-change: transform;
+}
+.home-deck .deck-card-hero {
+  min-height: calc(100dvh - 4.85rem);
+  background: var(--paper);
+  transform-origin: 12% 100%;
+}
+.home-deck > .deck-sheet .deck-card {
   min-height: 100dvh;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
-  box-shadow: 0 -22px 60px rgba(18, 20, 23, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  border-inline: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  box-shadow:
+    0 -22px 60px rgba(18, 20, 23, 0.13),
+    0 6px 42px rgba(18, 20, 23, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
   backdrop-filter: blur(24px) saturate(135%);
   -webkit-backdrop-filter: blur(24px) saturate(135%);
 }
-.home-deck > .deck-paper {
+.home-deck .deck-fan-right {
+  transform-origin: 8% 100%;
+}
+.home-deck .deck-fan-left {
+  transform-origin: 92% 100%;
+}
+.home-deck > .deck-sheet .deck-card.deck-paper {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--paper) calc(80% + var(--settled, 0.88) * 19%), transparent) 0%,
-    color-mix(in srgb, var(--paper) calc(92% + var(--settled, 0.88) * 8%), transparent) 30%,
+    color-mix(in srgb, var(--paper) calc(76% + var(--settled, 0.88) * 23%), transparent) 0%,
+    color-mix(in srgb, var(--paper) calc(91% + var(--settled, 0.88) * 9%), transparent) 32%,
     color-mix(in srgb, var(--paper) calc(97% + var(--settled, 0.88) * 3%), transparent) 100%
   );
 }
-.home-deck > .deck-ink {
+.home-deck > .deck-sheet .deck-card.deck-ink {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--ink) calc(82% + var(--settled, 0.88) * 16%), transparent) 0%,
-    color-mix(in srgb, var(--ink) calc(92% + var(--settled, 0.88) * 7%), transparent) 35%,
+    color-mix(in srgb, var(--ink) calc(78% + var(--settled, 0.88) * 20%), transparent) 0%,
+    color-mix(in srgb, var(--ink) calc(91% + var(--settled, 0.88) * 8%), transparent) 36%,
     color-mix(in srgb, var(--ink) calc(96% + var(--settled, 0.88) * 4%), transparent) 100%
   );
-  border-top-color: color-mix(in srgb, var(--paper) 16%, transparent);
-  box-shadow: 0 -26px 68px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  border-top-color: color-mix(in srgb, var(--paper) 22%, transparent);
+  border-inline-color: color-mix(in srgb, var(--paper) 14%, transparent);
+  box-shadow:
+    0 -26px 68px rgba(0, 0, 0, 0.44),
+    0 6px 44px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 .home-deck > .slide-section[data-slide-index="1"] { z-index: 2; }
 .home-deck > .slide-section[data-slide-index="2"] { z-index: 3; }
@@ -1005,7 +1039,7 @@ html.js .slide-section.is-waiting .release-list li {
 }
 
 @media (max-width: 760px) {
-  .home-deck > .deck-hero {
+  .home-deck > .deck-hero .deck-card-hero {
     min-height: calc(100dvh - 4.2rem);
   }
   .falling-tile-track {
@@ -1119,7 +1153,8 @@ html.js .slide-section.is-waiting .release-list li {
   .hero-letter,
   .architecture-layer,
   .consumer-panel,
-  .audience-rail article {
+  .audience-rail article,
+  .home-deck .deck-card {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
