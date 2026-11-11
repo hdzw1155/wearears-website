@@ -224,11 +224,21 @@ summary::-webkit-details-marker { display: none; }
   width: 100%;
 }
 .hero-name {
+  position: relative;
   display: block;
   font-size: clamp(4.6rem, 9.4vw, 9.2rem);
   line-height: .9;
   letter-spacing: -.086em;
   white-space: nowrap;
+}
+.hero-letter {
+  position: relative;
+  display: inline-block;
+  transform-origin: 50% 88%;
+  will-change: transform;
+}
+.hero-letter-s {
+  z-index: 2;
 }
 .hero-statement {
   display: block;
@@ -254,7 +264,7 @@ html[lang="zh-CN"] .hero-statement { letter-spacing: 0; }
   display: inline-block;
   will-change: transform;
 }
-html.js .slide-section:not(.is-active) .char-unit {
+html.js .slide-section.is-waiting .char-unit {
   opacity: 0;
   animation: none !important;
 }
@@ -319,110 +329,154 @@ html.js .slide-section:not(.is-active) .char-unit {
   transform: scale(1.025);
 }
 
-html.js .slide-section:not(.is-active) .stage-chassis,
-html.js .slide-section:not(.is-active) .stage-case,
-html.js .slide-section:not(.is-active) .stage-earbud-left,
-html.js .slide-section:not(.is-active) .stage-earbud-right,
-html.js .slide-section:not(.is-active) .stage-divider,
-html.js .slide-section:not(.is-active) .part-keystone-red {
+html.js .slide-section.is-waiting .stage-chassis,
+html.js .slide-section.is-waiting .stage-case,
+html.js .slide-section.is-waiting .stage-earbud-left,
+html.js .slide-section.is-waiting .stage-earbud-right,
+html.js .slide-section.is-waiting .stage-divider,
+html.js .slide-section.is-waiting .part-keystone-red {
   opacity: 0;
   animation: none !important;
 }
 
-/* Phase 1: 底盘画板 (Chassis) 从0展开 0ms - 220ms */
+/* Phase 1: 底盘画板 (Chassis) 真正从 0 展开 (0ms - 220ms) */
 .slide-section.is-active .stage-chassis,
 .page-intro .stage-chassis {
   transform-origin: center center;
-  animation: drawChassisFromZero 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: drawChassisFromZero 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes drawChassisFromZero {
-  0% { opacity: 0; transform: scale(0.3); }
-  60% { opacity: 1; }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-/* Phase 2: 耳机舱大梁与右下部 (Charging Case Spine & Lower-Right) 从0滑入 220ms - 540ms */
-.slide-section.is-active .stage-case,
-.page-intro .stage-case {
-  transform-origin: center center;
-  animation: drawCaseFromZero 320ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
-}
-@keyframes drawCaseFromZero {
   0% {
     opacity: 0;
-    transform: translate3d(-60px, 60px, 0) scale(0.65);
+    transform: scale(0);
+    clip-path: inset(50% round 18%);
   }
-  30% {
-    opacity: 1;
-  }
+  35% { opacity: 1; }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
+    clip-path: inset(0% round 0%);
   }
 }
 
-/* Phase 3: 左右耳机同时施工、同时归位 (Left & Right Earbuds Concurrent) 从0萌生 520ms - 820ms */
-.slide-section.is-active .stage-earbud-left,
-.page-intro .stage-earbud-left {
-  transform-origin: 288px 470px;
-  animation: drawEarbudLeftFromZero 300ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+/* Phase 2: 耳机舱 (从左下贯穿至右上大梁 + 右下部色块与线条) 沿 45° 从 0 急速画出 (160ms - 480ms) */
+.slide-section.is-active .part-spine,
+.page-intro .part-spine {
+  animation: drawSweepBLtoTR 240ms cubic-bezier(0.2, 0.85, 0.25, 1) 160ms both;
 }
-@keyframes drawEarbudLeftFromZero {
+.slide-section.is-active .part-case-yellow,
+.slide-section.is-active .part-case-green,
+.slide-section.is-active .part-case-blue,
+.slide-section.is-active .part-case-black,
+.page-intro .part-case-yellow,
+.page-intro .part-case-green,
+.page-intro .part-case-blue,
+.page-intro .part-case-black {
+  animation: drawSweepBLtoTR 250ms cubic-bezier(0.16, 1, 0.3, 1) 230ms both;
+}
+@keyframes drawSweepBLtoTR {
   0% {
     opacity: 0;
-    transform: scale(0) translate3d(-30px, -30px, 0);
+    clip-path: polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%);
   }
-  40% {
-    opacity: 1;
+  15% { opacity: 1; }
+  50% {
+    clip-path: polygon(0% 0%, 0% 0%, 100% 100%, 0% 100%);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translate3d(0, 0, 0);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
   }
 }
 
-.slide-section.is-active .stage-earbud-right,
-.page-intro .stage-earbud-right {
-  transform-origin: 593px 250px;
-  animation: drawEarbudRightFromZero 300ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+/* Phase 3: 左右耳机两边同时施工、同时完工（含色块与耳机柄）(440ms - 760ms) */
+.slide-section.is-active .stage-earbud-left .part-earbud-yellow,
+.page-intro .stage-earbud-left .part-earbud-yellow {
+  transform-origin: 394px 464px;
+  animation: drawOutTopLeft 220ms cubic-bezier(0.16, 1, 0.3, 1) 440ms both;
 }
-@keyframes drawEarbudRightFromZero {
+.slide-section.is-active .stage-earbud-left .part-earbud-stem-blue,
+.slide-section.is-active .stage-earbud-left .part-earbud-stem-black,
+.page-intro .stage-earbud-left .part-earbud-stem-blue,
+.page-intro .stage-earbud-left .part-earbud-stem-black {
+  transform-origin: 394px 464px;
+  animation: drawOutTopLeft 240ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+}
+@keyframes drawOutTopLeft {
   0% {
     opacity: 0;
-    transform: scale(0) translate3d(30px, -30px, 0);
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
+    transform: scale(0.45);
   }
-  40% {
-    opacity: 1;
+  18% { opacity: 1; }
+  55% {
+    clip-path: polygon(0% 100%, 100% 0%, 100% 100%, 100% 100%);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translate3d(0, 0, 0);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: scale(1);
   }
 }
 
-/* Phase 4: 从中间戳向左上角的分界粗线与核心落子 (Center Divider & Keystone) 从0刺入 800ms - 1060ms */
-.slide-section.is-active .stage-divider,
-.page-intro .stage-divider {
-  transform-origin: 450px 491px;
-  animation: drawDividerFromZero 260ms cubic-bezier(0.16, 1, 0.3, 1) 800ms both;
+.slide-section.is-active .stage-earbud-right .part-earbud-yellow,
+.slide-section.is-active .stage-earbud-right .part-earbud-green,
+.page-intro .stage-earbud-right .part-earbud-yellow,
+.page-intro .stage-earbud-right .part-earbud-green {
+  transform-origin: 417px 388px;
+  animation: drawOutTopRight 220ms cubic-bezier(0.16, 1, 0.3, 1) 440ms both;
 }
-@keyframes drawDividerFromZero {
+.slide-section.is-active .stage-earbud-right .part-earbud-stem-blue,
+.slide-section.is-active .stage-earbud-right .part-earbud-stem-black,
+.page-intro .stage-earbud-right .part-earbud-stem-blue,
+.page-intro .stage-earbud-right .part-earbud-stem-black {
+  transform-origin: 417px 388px;
+  animation: drawOutTopRight 240ms cubic-bezier(0.16, 1, 0.3, 1) 520ms both;
+}
+@keyframes drawOutTopRight {
   0% {
     opacity: 0;
-    transform: scale(0) translate3d(40px, 40px, 0);
+    clip-path: polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%);
+    transform: scale(0.45);
   }
-  40% {
-    opacity: 1;
+  18% { opacity: 1; }
+  55% {
+    clip-path: polygon(0% 0%, 100% 100%, 0% 100%, 0% 100%);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translate3d(0, 0, 0);
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: scale(1);
+  }
+}
+
+/* Phase 4: 对角分界线 + 从中间戳向左上角的粗线 + 中心珊瑚红落子 (720ms - 1080ms) */
+.slide-section.is-active .part-divider-line,
+.page-intro .part-divider-line {
+  animation: drawSweepBLtoTR 200ms cubic-bezier(0.2, 0.85, 0.25, 1) 720ms both;
+}
+.slide-section.is-active .part-divider-stem,
+.page-intro .part-divider-stem {
+  transform-origin: 515px 468px;
+  animation: drawThrustTopLeft 220ms cubic-bezier(0.16, 1, 0.3, 1) 760ms both;
+}
+@keyframes drawThrustTopLeft {
+  0% {
+    opacity: 0;
+    clip-path: polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%);
+    transform: scale(0.35);
+  }
+  20% { opacity: 1; }
+  100% {
+    opacity: 1;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+    transform: scale(1);
   }
 }
 .slide-section.is-active .part-keystone-red,
 .page-intro .part-keystone-red {
   transform-origin: 450px 491px;
-  animation: popKeystoneFromZero 260ms cubic-bezier(0.2, 0.8, 0.2, 1.3) 860ms both;
+  animation: popKeystoneFromZero 220ms cubic-bezier(0.2, 0.8, 0.2, 1.35) 860ms both;
 }
 @keyframes popKeystoneFromZero {
   0% {
@@ -431,7 +485,7 @@ html.js .slide-section:not(.is-active) .part-keystone-red {
   }
   70% {
     opacity: 1;
-    transform: scale(1.35);
+    transform: scale(1.32);
   }
   100% {
     opacity: 1;
@@ -439,50 +493,137 @@ html.js .slide-section:not(.is-active) .part-keystone-red {
   }
 }
 
-/* 章节容器与入场定位 */
+/* 一页一页的“下盖上”磨砂玻璃卡叠层（仅作用域首页 .home-deck，不动顶部导航和页脚） */
+html:has(.home-deck) {
+  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
+}
+body:has(.home-deck) .masthead {
+  scroll-snap-align: start;
+}
+.home-deck {
+  position: relative;
+}
 .slide-section {
   position: relative;
 }
+.home-deck > .slide-section {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+}
+.home-deck > .deck-hero {
+  z-index: 1;
+  min-height: calc(100dvh - 4.85rem);
+  background: var(--paper);
+  scroll-snap-align: none;
+}
+.home-deck > .deck-sheet {
+  min-height: 100dvh;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  box-shadow: 0 -22px 60px rgba(18, 20, 23, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+}
+.home-deck > .deck-paper {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--paper) calc(80% + var(--settled, 0.88) * 19%), transparent) 0%,
+    color-mix(in srgb, var(--paper) calc(92% + var(--settled, 0.88) * 8%), transparent) 30%,
+    color-mix(in srgb, var(--paper) calc(97% + var(--settled, 0.88) * 3%), transparent) 100%
+  );
+}
+.home-deck > .deck-ink {
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--ink) calc(82% + var(--settled, 0.88) * 16%), transparent) 0%,
+    color-mix(in srgb, var(--ink) calc(92% + var(--settled, 0.88) * 7%), transparent) 35%,
+    color-mix(in srgb, var(--ink) calc(96% + var(--settled, 0.88) * 4%), transparent) 100%
+  );
+  border-top-color: color-mix(in srgb, var(--paper) 16%, transparent);
+  box-shadow: 0 -26px 68px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+.home-deck > .slide-section[data-slide-index="1"] { z-index: 2; }
+.home-deck > .slide-section[data-slide-index="2"] { z-index: 3; }
+.home-deck > .slide-section[data-slide-index="3"] { z-index: 4; }
+.home-deck > .slide-section[data-slide-index="4"] { z-index: 5; }
+.home-deck > .deck-journal .journal-section { border-top: 0; }
+body:has(.home-deck) .site-footer {
+  position: relative;
+  z-index: 6;
+  background: var(--paper);
+  box-shadow: 0 -18px 46px rgba(18, 20, 23, 0.08);
+  scroll-snap-align: end;
+}
 
-/* 随着页面切换从页面“崩落”的小彩色块装饰（彩蛋） */
+/* 崩落彩色微块装饰（严格限制在右侧外留白槽内，绝不压挡正文文字） */
 .falling-tile-track {
   position: absolute;
   top: 0;
-  right: clamp(1rem, 4.5vw, 3.5rem);
-  width: 2.5rem;
+  right: 8px;
+  width: clamp(16px, 2.6vw, 36px);
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 1;
+  z-index: 4;
 }
 .falling-tile {
   position: absolute;
-  top: 12%;
-  right: 0.5rem;
-  width: 12px;
-  height: 12px;
+  top: 10%;
+  right: 6px;
+  width: 10px;
+  height: 10px;
   opacity: 0;
-  transform: translateY(-24px) rotate(45deg);
+  transform: translateY(-20px) rotate(45deg);
   will-change: transform, opacity;
 }
-.slide-section.is-active .falling-tile {
-  animation: tileDriftSmooth 1350ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both;
+.falling-tile.tile-mini {
+  top: 18%;
+  right: 16px;
+  width: 6px;
+  height: 6px;
+}
+.slide-section.is-active .falling-tile:not(.tile-mini) {
+  animation: tileDriftSmooth 1500ms cubic-bezier(0.22, 1, 0.36, 1) 280ms both;
+}
+.slide-section.is-active .falling-tile.tile-mini {
+  animation: tileDriftMini 1700ms cubic-bezier(0.22, 1, 0.36, 1) 460ms both;
 }
 @keyframes tileDriftSmooth {
   0% {
     opacity: 0;
-    transform: translate3d(0, -24px, 0) rotate(45deg);
+    transform: translate3d(0, -24px, 0) rotate(45deg) scale(0.7);
   }
-  25% {
-    opacity: 0.85;
+  20% {
+    opacity: 0.82;
+    transform: translate3d(-2px, 12px, 0) rotate(50deg) scale(1);
   }
   75% {
-    opacity: 0.65;
-    transform: translate3d(-12px, 75px, 0) rotate(58deg);
+    opacity: 0.56;
+    transform: translate3d(-6px, 82px, 0) rotate(62deg) scale(0.95);
   }
   100% {
     opacity: 0;
-    transform: translate3d(-18px, 140px, 0) rotate(70deg);
+    transform: translate3d(-8px, 136px, 0) rotate(72deg) scale(0.75);
+  }
+}
+@keyframes tileDriftMini {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -14px, 0) rotate(45deg) scale(0.6);
+  }
+  25% {
+    opacity: 0.6;
+    transform: translate3d(3px, 16px, 0) rotate(36deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(-4px, 108px, 0) rotate(18deg) scale(0.6);
   }
 }
 .tile-blue { background-color: var(--blue); }
@@ -537,7 +678,7 @@ html.js .slide-section:not(.is-active) .part-keystone-red {
   padding-block: 1.2rem;
   border-top: 1px solid var(--rule);
 }
-html.js .slide-section:not(.is-active) .capability-list li {
+html.js .slide-section.is-waiting .capability-list li {
   opacity: 0;
   animation: none !important;
 }
@@ -589,34 +730,41 @@ html.js .slide-section:not(.is-active) .capability-list li {
   border-top: 1px solid color-mix(in srgb, var(--paper) 28%, var(--ink));
   will-change: transform, opacity;
 }
-html.js .slide-section:not(.is-active) .architecture-layer {
+html.js .slide-section.is-waiting .architecture-layer {
   opacity: 0;
+  transform: translate3d(96px, 0, 0) scaleX(0);
+  transform-origin: right center;
   animation: none !important;
 }
 .slide-section.is-active .architecture-layer {
-  animation: layerSlideInSpring 360ms cubic-bezier(0.16, 0.85, 0.24, 1.15) var(--slide-delay, 0ms) both;
+  transform-origin: right center;
+  animation: layerPopFromZero 520ms cubic-bezier(0.22, 1, 0.36, 1) var(--slide-delay, 320ms) both;
 }
 .architecture-layer:last-child { border-bottom: 1px solid color-mix(in srgb, var(--paper) 28%, var(--ink)); }
-.layer-1 { --step: 0; --layer-color: var(--blue); --slide-delay: 0ms; }
-.layer-2 { --step: 1; --layer-color: var(--green); --slide-delay: 45ms; }
-.layer-3 { --step: 2; --layer-color: var(--yellow); --slide-delay: 90ms; }
-.layer-4 { --step: 3; --layer-color: var(--paper); --slide-delay: 135ms; }
+/* 先迟滞 320ms 让视线稳定锁住区域，再从 0 从右向左 Q 弹连续弹出 */
+.layer-1 { --step: 0; --layer-color: var(--blue); --slide-delay: 320ms; }
+.layer-2 { --step: 1; --layer-color: var(--green); --slide-delay: 390ms; }
+.layer-3 { --step: 2; --layer-color: var(--yellow); --slide-delay: 460ms; }
+.layer-4 { --step: 3; --layer-color: var(--paper); --slide-delay: 530ms; }
 
-@keyframes layerSlideInSpring {
+@keyframes layerPopFromZero {
   0% {
     opacity: 0;
-    transform: translate3d(64px, 0, 0);
+    transform: translate3d(88px, 0, 0) scaleX(0) scaleY(0.92);
   }
-  45% {
+  42% {
     opacity: 1;
-    transform: translate3d(-10px, 0, 0);
+    transform: translate3d(-18px, 0, 0) scaleX(1.035) scaleY(1.015);
   }
-  75% {
-    transform: translate3d(2px, 0, 0);
+  68% {
+    transform: translate3d(7px, 0, 0) scaleX(0.985) scaleY(0.995);
+  }
+  85% {
+    transform: translate3d(-2px, 0, 0) scaleX(1.006) scaleY(1);
   }
   100% {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scaleX(1) scaleY(1);
   }
 }
 .architecture summary {
@@ -653,8 +801,8 @@ details[open] .layer-toggle::after { display: none; }
   background: var(--blue);
   color: var(--paper);
 }
-html.js .slide-section:not(.is-active) .consumer-panel,
-html.js .slide-section:not(.is-active) .audience-rail article {
+html.js .slide-section.is-waiting .consumer-panel,
+html.js .slide-section.is-waiting .audience-rail article {
   opacity: 0;
   animation: none !important;
 }
@@ -694,7 +842,7 @@ html.js .slide-section:not(.is-active) .audience-rail article {
 .audience-rail .text-link { margin-top: .2rem; }
 .journal-section { border-top: 1px solid var(--rule); }
 .release-list li, .note-list li { border-top: 1px solid var(--rule); }
-html.js .slide-section:not(.is-active) .release-list li {
+html.js .slide-section.is-waiting .release-list li {
   opacity: 0;
   animation: none !important;
 }
@@ -857,6 +1005,21 @@ html.js .slide-section:not(.is-active) .release-list li {
 }
 
 @media (max-width: 760px) {
+  .home-deck > .deck-hero {
+    min-height: calc(100dvh - 4.2rem);
+  }
+  .falling-tile-track {
+    right: 2px;
+    width: 14px;
+  }
+  .falling-tile {
+    right: 3px;
+    width: 7px;
+    height: 7px;
+  }
+  .falling-tile.tile-mini {
+    display: none;
+  }
   .hero-index { padding-block: .85rem; }
   .hero-index-side { display: none; }
   .hero-stage {
@@ -941,12 +1104,25 @@ html.js .slide-section:not(.is-active) .release-list li {
   .stage-earbud-left,
   .stage-earbud-right,
   .stage-divider,
+  .part-spine,
+  .part-case-yellow,
+  .part-case-green,
+  .part-case-blue,
+  .part-case-black,
+  .part-earbud-yellow,
+  .part-earbud-green,
+  .part-earbud-stem-blue,
+  .part-earbud-stem-black,
+  .part-divider-line,
+  .part-divider-stem,
   .part-keystone-red,
+  .hero-letter,
   .architecture-layer,
   .consumer-panel,
   .audience-rail article {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
   }
 }
