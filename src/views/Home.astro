@@ -202,10 +202,13 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
 
 <script>
   (() => {
+    const homeDeck = document.querySelector<HTMLElement>('.home-deck');
     const slides = Array.from(document.querySelectorAll<HTMLElement>('.home-deck > .slide-section'));
-    if (slides.length === 0) return;
+    if (!homeDeck || slides.length === 0) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // 默认保持原版“下盖上”磨砂玻璃平滑切换；连续点击 5 次“S”可解锁/切换扇形甩开模式
+    let isFanMode = false;
 
     // 1. Dynamic sticky top offsets so tall sections scroll fully before pinning
     const syncStickyOffsets = () => {
@@ -279,7 +282,7 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
         }
 
         if (card) {
-          if (reducedMotion) {
+          if (reducedMotion || !isFanMode) {
             card.style.setProperty('--fan-rot', '0deg');
             card.style.setProperty('--fan-x', '0vw');
             card.style.setProperty('--fan-scale', '1');
@@ -356,6 +359,10 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
     let isRecovering = false;
     let hasFinishedTour = false;
     let activeAnimations: Animation[] = [];
+    let sTapCount = 0;
+    let sTapResetTimer: number | null = null;
+    let pokeAnim: Animation | null = null;
+    let pendingWiggle = false;
 
     const clearAnimations = () => {
       activeAnimations.forEach((a) => {
@@ -647,6 +654,92 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       }
     };
 
+    const playPokeFeedback = (count: number) => {
+      if (isIdleRunning || isRecovering) return;
+      if (pokeAnim) {
+        try { pokeAnim.cancel(); } catch {}
+      }
+      const dir = count % 2 === 1 ? -1 : 1;
+      const tilt = (5 + count * 1.4) * dir;
+      const skew = -tilt * 0.6;
+      const anim = sEl.animate(
+        [
+          { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 0 },
+          { transform: `translate3d(0, 2px, 0) rotate(${tilt}deg) skewX(${skew}deg) scale(1.07, 0.91)`, offset: 0.35 },
+          { transform: 'translate3d(0, -3px, 0) scale(0.97, 1.05)', offset: 0.72 },
+          { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 1 }
+        ],
+        { duration: 200, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+      );
+      pokeAnim = anim;
+      anim.onfinish = () => {
+        if (pokeAnim === anim) pokeAnim = null;
+      };
+    };
+
+    const playUnlockWiggle = () => {
+      if (pokeAnim) {
+        try { pokeAnim.cancel(); } catch {}
+        pokeAnim = null;
+      }
+      sEl.style.zIndex = '4';
+      const wiggleAnim = sEl.animate(
+        [
+          { transform: 'translate3d(0, 0, 0) rotate(0deg) skewX(0deg) scale(1, 1)', offset: 0 },
+          { transform: 'translate3d(-3px, 2px, 0) rotate(-14deg) skewX(12deg) scale(1.09, 0.89)', offset: 0.14 },
+          { transform: 'translate3d(4px, -6px, 0) rotate(17deg) skewX(-13deg) scale(0.93, 1.11)', offset: 0.30 },
+          { transform: 'translate3d(-4px, -3px, 0) rotate(-15deg) skewX(11deg) scale(0.96, 1.07)', offset: 0.48 },
+          { transform: 'translate3d(3px, -7px, 0) rotate(13deg) skewX(-10deg) scale(0.95, 1.08)', offset: 0.66 },
+          { transform: 'translate3d(-1px, 2px, 0) rotate(-5deg) skewX(4deg) scale(1.06, 0.93)', offset: 0.84 },
+          { transform: 'translate3d(0, 0, 0) rotate(0deg) skewX(0deg) scale(1, 1)', offset: 1 }
+        ],
+        { duration: 760, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+      );
+      pokeAnim = wiggleAnim;
+      wiggleAnim.onfinish = () => {
+        if (pokeAnim === wiggleAnim) pokeAnim = null;
+        if (!isIdleRunning) sEl.style.zIndex = '';
+      };
+      wiggleAnim.oncancel = () => {
+        if (pokeAnim === wiggleAnim) pokeAnim = null;
+      };
+    };
+
+    sEl.addEventListener('click', () => {
+      if (introHopTimerId !== null) {
+        window.clearTimeout(introHopTimerId);
+        introHopTimerId = null;
+      }
+      if (isIdleRunning) hurryBackHome();
+
+      sTapCount++;
+      if (sTapResetTimer !== null) window.clearTimeout(sTapResetTimer);
+      sTapResetTimer = window.setTimeout(() => {
+        sTapCount = 0;
+        sTapResetTimer = null;
+      }, 4500);
+
+      if (sTapCount >= 5) {
+        sTapCount = 0;
+        if (sTapResetTimer !== null) {
+          window.clearTimeout(sTapResetTimer);
+          sTapResetTimer = null;
+        }
+        isFanMode = !isFanMode;
+        homeDeck.classList.toggle('is-fan-mode', isFanMode);
+        homeDeck.dataset.deckMode = isFanMode ? 'fan' : 'stack';
+        updateDeckState();
+
+        if (isRecovering) {
+          pendingWiggle = true;
+        } else {
+          playUnlockWiggle();
+        }
+      } else {
+        playPokeFeedback(sTapCount);
+      }
+    });
+
     const hurryBackHome = () => {
       if (!isIdleRunning) {
         startIdleMonitor();
@@ -696,6 +789,10 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
           sEl.style.zIndex = '';
           sEl.style.transform = '';
           isRecovering = false;
+          if (pendingWiggle) {
+            pendingWiggle = false;
+            playUnlockWiggle();
+          }
           startIdleMonitor();
         };
         return;
@@ -718,6 +815,10 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
         sEl.style.zIndex = '';
         sEl.style.transform = '';
         isRecovering = false;
+        if (pendingWiggle) {
+          pendingWiggle = false;
+          playUnlockWiggle();
+        }
         startIdleMonitor();
       };
     };

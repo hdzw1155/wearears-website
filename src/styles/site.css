@@ -239,6 +239,16 @@ summary::-webkit-details-marker { display: none; }
 }
 .hero-letter-s {
   z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.hero-letter-s::after {
+  content: "";
+  position: absolute;
+  inset: -10px -14px -10px -4px;
 }
 .hero-statement {
   display: block;
@@ -535,6 +545,8 @@ body:has(.home-deck) .masthead {
   flex-direction: column;
   justify-content: center;
   box-sizing: border-box;
+}
+.home-deck.is-fan-mode .deck-card {
   transform: translate3d(var(--fan-x, 0px), 0, 0) rotate(var(--fan-rot, 0deg)) scale(var(--fan-scale, 1));
   will-change: transform;
 }
@@ -545,14 +557,18 @@ body:has(.home-deck) .masthead {
 }
 .home-deck > .deck-sheet .deck-card {
   min-height: 100dvh;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  box-shadow: 0 -22px 60px rgba(18, 20, 23, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(135%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+}
+.home-deck.is-fan-mode > .deck-sheet .deck-card {
+  border-top-color: color-mix(in srgb, var(--ink) 14%, transparent);
   border-inline: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
   box-shadow:
     0 -22px 60px rgba(18, 20, 23, 0.13),
     0 6px 42px rgba(18, 20, 23, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.78);
-  backdrop-filter: blur(24px) saturate(135%);
-  -webkit-backdrop-filter: blur(24px) saturate(135%);
 }
 .home-deck .deck-fan-right {
   transform-origin: 8% 100%;
@@ -563,18 +579,22 @@ body:has(.home-deck) .masthead {
 .home-deck > .deck-sheet .deck-card.deck-paper {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--paper) calc(76% + var(--settled, 0.88) * 23%), transparent) 0%,
-    color-mix(in srgb, var(--paper) calc(91% + var(--settled, 0.88) * 9%), transparent) 32%,
+    color-mix(in srgb, var(--paper) calc(80% + var(--settled, 0.88) * 19%), transparent) 0%,
+    color-mix(in srgb, var(--paper) calc(92% + var(--settled, 0.88) * 8%), transparent) 30%,
     color-mix(in srgb, var(--paper) calc(97% + var(--settled, 0.88) * 3%), transparent) 100%
   );
 }
 .home-deck > .deck-sheet .deck-card.deck-ink {
   background: linear-gradient(
     to bottom,
-    color-mix(in srgb, var(--ink) calc(78% + var(--settled, 0.88) * 20%), transparent) 0%,
-    color-mix(in srgb, var(--ink) calc(91% + var(--settled, 0.88) * 8%), transparent) 36%,
+    color-mix(in srgb, var(--ink) calc(82% + var(--settled, 0.88) * 16%), transparent) 0%,
+    color-mix(in srgb, var(--ink) calc(92% + var(--settled, 0.88) * 7%), transparent) 35%,
     color-mix(in srgb, var(--ink) calc(96% + var(--settled, 0.88) * 4%), transparent) 100%
   );
+  border-top-color: color-mix(in srgb, var(--paper) 16%, transparent);
+  box-shadow: 0 -26px 68px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+.home-deck.is-fan-mode > .deck-sheet .deck-card.deck-ink {
   border-top-color: color-mix(in srgb, var(--paper) 22%, transparent);
   border-inline-color: color-mix(in srgb, var(--paper) 14%, transparent);
   box-shadow:
