@@ -1,5 +1,7 @@
 ---
 import PageIntro from '../components/PageIntro.astro';
+import FanDeck from '../components/FanDeck.astro';
+import FallingTiles from '../components/FallingTiles.astro';
 import { pagePath, releasesUrl, site, type Locale } from '../lib/site';
 
 const { locale } = Astro.props as { locale: Locale };
@@ -15,42 +17,59 @@ const steps = zh ? [
 ];
 ---
 
-<PageIntro label="01 / THE PROJECT" title={zh ? '让声音控制回到手腕' : 'Bring listening controls to your wrist'}
-  summary={zh ? 'WearEars 是一个 Wear OS 开源项目，把查看耳机电量和切换聆听模式放进同一个手表应用。'
-    : 'WearEars is an open-source Wear OS project for checking earbud battery and switching listening modes from one watch app.'}>
-  <div class="action-row">
-    <a class="button button-primary" href={releasesUrl} target="_blank" rel="noopener noreferrer">{zh ? '获取手表应用' : 'Get the watch app'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
-    <a class="button button-outline" href={pagePath(locale, 'compatibility')}>{zh ? '查看兼容性' : 'Check compatibility'} <span aria-hidden="true">→</span></a>
-  </div>
-</PageIntro>
+<FanDeck>
+  <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-label={zh ? '项目简介' : 'Project introduction'}>
+    <div class="deck-card deck-card-hero">
+      <FallingTiles primary="yellow" secondary="blue" />
+      <PageIntro label="01 / THE PROJECT" title={zh ? '让声音控制回到手腕' : 'Bring listening controls to your wrist'}
+        summary={zh ? 'WearEars 是一个 Wear OS 开源项目，把查看耳机电量和切换聆听模式放进同一个手表应用。'
+          : 'WearEars is an open-source Wear OS project for checking earbud battery and switching listening modes from one watch app.'}>
+        <div class="action-row">
+          <a class="button button-primary" href={releasesUrl} target="_blank" rel="noopener noreferrer">{zh ? '获取手表应用' : 'Get the watch app'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+          <a class="button button-outline" href={pagePath(locale, 'compatibility')}>{zh ? '查看兼容性' : 'Check compatibility'} <span aria-hidden="true">→</span></a>
+        </div>
+      </PageIntro>
+    </div>
+  </section>
 
-<section class="shell content-section split-content" aria-labelledby="experience-title">
-  <div class="section-lead">
-    <p class="label"><span class="label-mark"></span>THE EXPERIENCE</p>
-    <h2 id="experience-title">{zh ? '日常操作 一处查看' : 'A single place for everyday controls'}</h2>
-  </div>
-  <div class="prose">
-    <p class="lead">{zh
-      ? '不同品牌的耳机往往配有各自的控制应用。WearEars 把常用的操作放进同一套腕上界面，让你在走路或通勤时更快看到状态。'
-      : 'Earbud brands often ship separate control apps. WearEars gives everyday operations a shared interface on the wrist, making status easier to check on a walk or commute.'}</p>
-    <p>{zh
-      ? '手表应用支持设备选择、音量控制和表圈滚动。磁贴显示最近确认的电量，也可在驱动支持的情况下发起模式切换。'
-      : 'The watch app offers device selection, volume and bezel scrolling. Tiles show the last confirmed battery and can request mode changes when the driver supports them.'}</p>
-    <p>{zh
-      ? '不同型号的能力范围由实测与协议证据分别记录。系统通用路径可在系统提供数据时读取整机电量。'
-      : 'Hardware and protocol evidence are recorded per model. The standard path can show aggregate battery when the system supplies it.'}</p>
-    <a class="text-link" href={site.appRepository} target="_blank" rel="noopener noreferrer">{zh ? '在 GitHub 查看项目' : 'View the project on GitHub'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
-  </div>
-</section>
+  <section class="slide-section deck-sheet" data-slide data-slide-index="1" aria-labelledby="experience-title">
+    <div class="deck-card deck-paper deck-fan-right">
+      <FallingTiles primary="green" secondary="yellow" />
+      <div class="shell content-section split-content">
+        <div class="section-lead">
+          <p class="label"><span class="label-mark"></span>THE EXPERIENCE</p>
+          <h2 id="experience-title">{zh ? '日常操作 一处查看' : 'A single place for everyday controls'}</h2>
+        </div>
+        <div class="prose">
+          <p class="lead">{zh
+            ? '不同品牌的耳机往往配有各自的控制应用。WearEars 把常用的操作放进同一套腕上界面，让你在走路或通勤时更快看到状态。'
+            : 'Earbud brands often ship separate control apps. WearEars gives everyday operations a shared interface on the wrist, making status easier to check on a walk or commute.'}</p>
+          <p>{zh
+            ? '手表应用支持设备选择、音量控制和表圈滚动。磁贴显示最近确认的电量，也可在驱动支持的情况下发起模式切换。'
+            : 'The watch app offers device selection, volume and bezel scrolling. Tiles show the last confirmed battery and can request mode changes when the driver supports them.'}</p>
+          <p>{zh
+            ? '不同型号的能力范围由实测与协议证据分别记录。系统通用路径可在系统提供数据时读取整机电量。'
+            : 'Hardware and protocol evidence are recorded per model. The standard path can show aggregate battery when the system supplies it.'}</p>
+          <a class="text-link" href={site.appRepository} target="_blank" rel="noopener noreferrer">{zh ? '在 GitHub 查看项目' : 'View the project on GitHub'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<section class="shell content-section split-content ruled" aria-labelledby="getting-started">
-  <div class="section-lead">
-    <p class="label"><span class="label-mark"></span>GETTING STARTED</p>
-    <h2 id="getting-started">{zh ? '开始使用' : 'Getting started'}</h2>
-  </div>
-  <ol class="step-list">
-    {steps.map(([title, body], index) => (
-      <li><span class="entry-index">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>
-    ))}
-  </ol>
-</section>
+  <section class="slide-section deck-sheet" data-slide data-slide-index="2" aria-labelledby="getting-started">
+    <div class="deck-card deck-paper deck-fan-left">
+      <FallingTiles primary="blue" secondary="red" />
+      <div class="shell content-section split-content ruled">
+        <div class="section-lead">
+          <p class="label"><span class="label-mark"></span>GETTING STARTED</p>
+          <h2 id="getting-started">{zh ? '开始使用' : 'Getting started'}</h2>
+        </div>
+        <ol class="step-list">
+          {steps.map(([title, body], index) => (
+            <li><span class="entry-index">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+</FanDeck>

@@ -1,0 +1,70 @@
+---
+---
+
+<div class="home-deck" data-deck-mode="scroll-wipe">
+  <div class="deck-stage">
+    <slot />
+    <div class="fan-sweeper" aria-hidden="true" data-fan-sweeper>
+      <svg class="fan-rib-svg" viewBox="0 0 3024 36" width="3024" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="wear-fan-rib-clip">
+            <path d="M0 12 L42 11.4 C68 10.6 92 8.2 128 8.4 C166 8.6 196 11.4 252 11.8 L3024 12.6 L3024 23.4 L252 24.2 C196 24.6 166 27.4 128 27.6 C92 27.8 68 25.4 42 24.6 L0 24 Z" />
+          </clipPath>
+          <linearGradient id="wear-rosewood-body" x1="0" y1="8" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#9A4E38" />
+            <stop offset="14%" stop-color="#6C271B" />
+            <stop offset="46%" stop-color="#4A1710" />
+            <stop offset="82%" stop-color="#2D0C08" />
+            <stop offset="100%" stop-color="#190503" />
+          </linearGradient>
+          <linearGradient id="wear-rosewood-grain-wash" x1="0" y1="0" x2="2200" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#2A0B07" stop-opacity="0.16" />
+            <stop offset="18%" stop-color="#7D3222" stop-opacity="0.12" />
+            <stop offset="42%" stop-color="#1F0704" stop-opacity="0.22" />
+            <stop offset="68%" stop-color="#8B3B28" stop-opacity="0.10" />
+            <stop offset="100%" stop-color="#240906" stop-opacity="0.20" />
+          </linearGradient>
+          <linearGradient id="wear-antique-brass" x1="0" y1="8" x2="0" y2="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#E7C278" />
+            <stop offset="35%" stop-color="#C29140" />
+            <stop offset="72%" stop-color="#875E1D" />
+            <stop offset="100%" stop-color="#583B0E" />
+          </linearGradient>
+          <radialGradient id="wear-brass-pin" cx="0.38" cy="0.35" r="0.65">
+            <stop offset="0%" stop-color="#F0D08C" />
+            <stop offset="55%" stop-color="#BA8838" />
+            <stop offset="100%" stop-color="#664413" />
+          </radialGradient>
+        </defs>
+        <g clip-path="url(#wear-fan-rib-clip)">
+          <rect x="0" y="7" width="3024" height="22" fill="url(#wear-rosewood-body)" />
+          <rect x="0" y="7" width="3024" height="22" fill="url(#wear-rosewood-grain-wash)" />
+          <path d="M0 14.2 C240 12.8 480 15.6 740 13.8 C1020 12.2 1320 15.4 1660 13.9 C2020 12.6 2480 15.1 3024 13.7" stroke="#180503" stroke-opacity="0.30" stroke-width="1.05" />
+          <path d="M0 17.5 C190 19.0 420 16.0 690 17.8 C980 19.4 1280 16.3 1620 17.9 C1980 19.3 2450 16.5 3024 18.0" stroke="#9E523B" stroke-opacity="0.18" stroke-width="0.9" />
+          <path d="M0 20.4 C270 19.1 560 22.1 880 20.2 C1210 18.7 1560 21.8 1940 20.1 C2340 18.9 2680 21.6 3024 20.3" stroke="#140402" stroke-opacity="0.34" stroke-width="1.2" />
+          <path d="M48 11.2 C160 11.8 340 10.6 560 12.1 C820 13.2 1140 11.0 1520 12.4 C1920 13.6 2440 11.6 3024 12.8" stroke="#C87E5E" stroke-opacity="0.20" stroke-width="0.7" />
+          <rect x="66" y="7" width="2.4" height="22" fill="url(#wear-antique-brass)" />
+          <rect x="64.8" y="7" width="0.8" height="22" fill="#180503" fill-opacity="0.55" />
+          <rect x="68.8" y="7" width="0.8" height="22" fill="#180503" fill-opacity="0.55" />
+          <rect x="158" y="7" width="1.3" height="22" fill="url(#wear-antique-brass)" fill-opacity="0.82" />
+        </g>
+        <path d="M0 12.2 L42 11.6 C68 10.8 92 8.4 128 8.6 C166 8.8 196 11.6 252 12.0 L3024 12.8" stroke="#E2AC88" stroke-opacity="0.38" stroke-width="0.85" />
+        <path d="M0 23.8 L42 24.4 C68 25.2 92 27.6 128 27.4 C166 27.2 196 24.4 252 24.0 L3024 23.2" stroke="#120302" stroke-opacity="0.75" stroke-width="0.95" />
+        <circle cx="48" cy="18" r="2.8" fill="url(#wear-brass-pin)" stroke="#190503" stroke-opacity="0.65" stroke-width="0.7" />
+      </svg>
+    </div>
+  </div>
+  <div class="deck-scroll-spacer" aria-hidden="true" data-deck-spacer></div>
+</div>
+
+<script>
+  import { initFanDeck } from '../scripts/fanDeck';
+  import { initHeroLivingS } from '../scripts/heroLivingS';
+
+  document.querySelectorAll<HTMLElement>('.home-deck').forEach((deck) => {
+    const controller = initFanDeck(deck);
+    if (controller && deck.querySelector('.hero-letter-s')) {
+      initHeroLivingS(deck, controller);
+    }
+  });
+</script>

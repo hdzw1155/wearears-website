@@ -1,6 +1,8 @@
 ---
 import PageIntro from '../components/PageIntro.astro';
 import ReleaseFeed from '../components/ReleaseFeed.astro';
+import FanDeck from '../components/FanDeck.astro';
+import FallingTiles from '../components/FallingTiles.astro';
 import { appSource, appRevision, releasesUrl, site, type Locale } from '../lib/site';
 
 const { locale } = Astro.props as { locale: Locale };
@@ -16,28 +18,45 @@ const notes = zh ? [
 ];
 ---
 
-<PageIntro label="05 / JOURNAL" title={zh ? '沿着公开记录向前' : 'Follow the work in public'}
-  summary={zh ? '发布版本来自 GitHub。技术笔记链接到实际的协议记录、核查和提交。'
-    : 'Releases come from GitHub. Engineering notes link to protocol records, reviews and commits.'} />
+<FanDeck>
+  <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-label={zh ? '项目动态概述' : 'Journal introduction'}>
+    <div class="deck-card deck-card-hero">
+      <FallingTiles primary="yellow" secondary="blue" />
+      <PageIntro label="05 / JOURNAL" title={zh ? '沿着公开记录向前' : 'Follow the work in public'}
+        summary={zh ? '发布版本来自 GitHub。技术笔记链接到实际的协议记录、核查和提交。'
+          : 'Releases come from GitHub. Engineering notes link to protocol records, reviews and commits.'} />
+    </div>
+  </section>
 
-<section class="shell content-section journal-section" aria-labelledby="releases-title">
-  <div class="section-lead">
-    <p class="label"><span class="label-mark"></span>RELEASES</p>
-    <h2 id="releases-title">{zh ? '版本发布' : 'Releases'}</h2>
-    <p>{zh ? '发布日期以 GitHub 为准，按北京时间显示。' : 'GitHub publication dates are shown in China Standard Time.'}</p>
-    <a class="text-link" href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
-  </div>
-  <ReleaseFeed locale={locale} />
-</section>
+  <section class="slide-section deck-sheet deck-journal" data-slide data-slide-index="1" aria-labelledby="releases-title">
+    <div class="deck-card deck-paper deck-fan-right">
+      <FallingTiles primary="green" secondary="yellow" />
+      <div class="shell content-section journal-section">
+        <div class="section-lead">
+          <p class="label"><span class="label-mark"></span>RELEASES</p>
+          <h2 id="releases-title">{zh ? '版本发布' : 'Releases'}</h2>
+          <p>{zh ? '发布日期以 GitHub 为准，按北京时间显示。' : 'GitHub publication dates are shown in China Standard Time.'}</p>
+          <a class="text-link" href={releasesUrl} target="_blank" rel="noopener noreferrer">GitHub Releases <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+        </div>
+        <ReleaseFeed locale={locale} />
+      </div>
+    </div>
+  </section>
 
-<section class="shell content-section split-content ruled" aria-labelledby="notes-title">
-  <div class="section-lead">
-    <p class="label"><span class="label-mark"></span>ENGINEERING NOTES</p>
-    <h2 id="notes-title">{zh ? '技术笔记' : 'Engineering notes'}</h2>
-  </div>
-  <ul class="note-list">
-    {notes.map((note) => (
-      <li><a href={note.url} target="_blank" rel="noopener noreferrer"><div><h3>{note.title}</h3><p>{note.body}</p></div><span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a></li>
-    ))}
-  </ul>
-</section>
+  <section class="slide-section deck-sheet" data-slide data-slide-index="2" aria-labelledby="notes-title">
+    <div class="deck-card deck-paper deck-fan-left">
+      <FallingTiles primary="red" secondary="blue" />
+      <div class="shell content-section split-content ruled">
+        <div class="section-lead">
+          <p class="label"><span class="label-mark"></span>ENGINEERING NOTES</p>
+          <h2 id="notes-title">{zh ? '技术笔记' : 'Engineering notes'}</h2>
+        </div>
+        <ul class="note-list">
+          {notes.map((note) => (
+            <li><a href={note.url} target="_blank" rel="noopener noreferrer"><div><h3>{note.title}</h3><p>{note.body}</p></div><span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</FanDeck>

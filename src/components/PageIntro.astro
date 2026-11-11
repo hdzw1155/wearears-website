@@ -16,7 +16,7 @@ const { label, title, summary } = Astro.props;
     <p class="page-intro-summary">{summary}</p>
     <slot />
   </div>
-  <div class="page-intro-figure" aria-hidden="true">
-    <AnimatedAppIcon size={220} interactive={false} />
+  <div class="page-intro-figure">
+    <AnimatedAppIcon size={220} interactive={true} />
   </div>
 </header>

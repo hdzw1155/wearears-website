@@ -1,5 +1,7 @@
 ---
 import PageIntro from '../components/PageIntro.astro';
+import FanDeck from '../components/FanDeck.astro';
+import FallingTiles from '../components/FallingTiles.astro';
 import { issuesUrl, site, type Locale } from '../lib/site';
 
 const { locale } = Astro.props as { locale: Locale };
@@ -15,45 +17,64 @@ const programs = zh ? [
 ];
 ---
 
-<PageIntro label="04 / PARTNERS" title={zh ? '让适配成为一项共同工作' : 'Make compatibility a shared effort'}
-  summary={zh ? '面向耳机品牌、ODM 和穿戴设备团队，从一款设备和可核对的验收范围开始。'
-    : 'For earbud brands, ODMs and wearable teams. Start with a device and a scope both teams can verify.'}>
-  <div class="action-row">
-    <a class="button button-primary" href="#collaboration">{zh ? '查看合作流程' : 'See the collaboration process'} <span aria-hidden="true">↓</span></a>
-  </div>
-</PageIntro>
+<FanDeck>
+  <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-label={zh ? '合作概述' : 'Partners introduction'}>
+    <div class="deck-card deck-card-hero">
+      <FallingTiles primary="yellow" secondary="blue" />
+      <PageIntro label="04 / PARTNERS" title={zh ? '让适配成为一项共同工作' : 'Make compatibility a shared effort'}
+        summary={zh ? '面向耳机品牌、ODM 和穿戴设备团队，从一款设备和可核对的验收范围开始。'
+          : 'For earbud brands, ODMs and wearable teams. Start with a device and a scope both teams can verify.'}>
+        <div class="action-row">
+          <a class="button button-primary" href="#collaboration">{zh ? '查看合作流程' : 'See the collaboration process'} <span aria-hidden="true">↓</span></a>
+        </div>
+      </PageIntro>
+    </div>
+  </section>
 
-<section class="shell content-section split-content" aria-labelledby="programs-title">
-  <div class="section-lead">
-    <p class="label"><span class="label-mark"></span>COLLABORATION AREAS</p>
-    <h2 id="programs-title">{zh ? '从验证到接入' : 'From validation to integration'}</h2>
-  </div>
-  <ol class="capability-list">
-    {programs.map((entry, index) => (
-      <li>
-        <span class="entry-index" aria-hidden="true">0{index + 1}</span>
-        <div><h3>{entry.title}</h3><p>{entry.body}</p></div>
-        <span class="status-tag">{entry.status}</span>
-      </li>
-    ))}
-  </ol>
-</section>
+  <section class="slide-section deck-sheet" data-slide data-slide-index="1" aria-labelledby="programs-title">
+    <div class="deck-card deck-paper deck-fan-right">
+      <FallingTiles primary="green" secondary="yellow" />
+      <div class="shell content-section split-content">
+        <div class="section-lead">
+          <p class="label"><span class="label-mark"></span>COLLABORATION AREAS</p>
+          <h2 id="programs-title">{zh ? '从验证到接入' : 'From validation to integration'}</h2>
+        </div>
+        <ol class="capability-list">
+          {programs.map((entry, index) => (
+            <li>
+              <span class="entry-index" aria-hidden="true">0{index + 1}</span>
+              <div><h3>{entry.title}</h3><p>{entry.body}</p></div>
+              <span class="status-tag">{entry.status}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
 
-<section class="shell contact-section" id="collaboration" aria-labelledby="collaboration-title">
-  <div>
-    <p class="label"><span class="label-mark yellow"></span>START A CONVERSATION</p>
-    <h2 id="collaboration-title">{zh ? '先对齐合作范围' : 'Agree on the scope first'}</h2>
-    <p>{zh ? '提出设备与目标，讨论验证条件，再评估适配和交付安排。'
-      : 'Share the device and your goals, discuss validation conditions, then assess integration and delivery.'}</p>
-    {site.contactEmail ? (
-      <a class="button button-paper" href={'mailto:' + site.contactEmail}>{zh ? '发送合作邮件' : 'Email the project'} <span aria-hidden="true">↗</span></a>
-    ) : (
-      <a class="button button-paper" href={issuesUrl} target="_blank" rel="noopener noreferrer">{zh ? '前往 GitHub 公开讨论' : 'Open a public GitHub discussion'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
-    )}
-  </div>
-  <ul class="contact-list">
-    <li><span>01</span>{zh ? '耳机型号、固件与目标手表' : 'Earbud model, firmware and target watch'}</li>
-    <li><span>02</span>{zh ? '目标功能与验证条件' : 'Target features and validation conditions'}</li>
-    <li><span>03</span>{zh ? '可公开的协议线索或问题' : 'Protocol references or questions for public discussion'}</li>
-  </ul>
-</section>
+  <section class="slide-section deck-sheet" data-slide data-slide-index="2" aria-labelledby="collaboration-title">
+    <div class="deck-card deck-paper deck-fan-left">
+      <FallingTiles primary="red" secondary="green" />
+      <div class="shell content-section">
+        <div class="contact-section" id="collaboration">
+          <div>
+            <p class="label"><span class="label-mark yellow"></span>START A CONVERSATION</p>
+            <h2 id="collaboration-title">{zh ? '先对齐合作范围' : 'Agree on the scope first'}</h2>
+            <p>{zh ? '提出设备与目标，讨论验证条件，再评估适配和交付安排。'
+              : 'Share the device and your goals, discuss validation conditions, then assess integration and delivery.'}</p>
+            {site.contactEmail ? (
+              <a class="button button-paper" href={'mailto:' + site.contactEmail}>{zh ? '发送合作邮件' : 'Email the project'} <span aria-hidden="true">↗</span></a>
+            ) : (
+              <a class="button button-paper" href={issuesUrl} target="_blank" rel="noopener noreferrer">{zh ? '前往 GitHub 公开讨论' : 'Open a public GitHub discussion'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+            )}
+          </div>
+          <ul class="contact-list">
+            <li><span>01</span>{zh ? '耳机型号、固件与目标手表' : 'Earbud model, firmware and target watch'}</li>
+            <li><span>02</span>{zh ? '目标功能与验证条件' : 'Target features and validation conditions'}</li>
+            <li><span>03</span>{zh ? '可公开的协议线索或问题' : 'Protocol references or questions for public discussion'}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</FanDeck>

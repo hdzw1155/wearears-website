@@ -1,0 +1,13 @@
+---
+interface Props {
+  primary?: 'yellow' | 'green' | 'blue' | 'red';
+  secondary?: 'yellow' | 'green' | 'blue' | 'red';
+}
+
+const { primary = 'yellow', secondary = 'blue' } = Astro.props;
+---
+
+<div class="falling-tile-track" aria-hidden="true">
+  <span class={`falling-tile tile-${primary}`}></span>
+  <span class={`falling-tile tile-mini tile-${secondary}`}></span>
+</div>
