@@ -298,6 +298,7 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
     let introHopTimerId: number | null = null;
     let isIdleRunning = false;
     let isRecovering = false;
+    let hasFinishedTour = false;
     let activeAnimations: Animation[] = [];
 
     const clearAnimations = () => {
@@ -349,27 +350,27 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
 
     const playIntroHop = () => {
       if (!isHeroFocused() || isIdleRunning) return;
-      const runId = scriptRunId;
+      // 水滴弹跳质感：表面张力微压 → 水滴纵向拉长腾空 → 软落回弹一次微颤
       sEl.animate(
         [
           { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 0 },
-          { transform: 'translate3d(0, 1px, 0) scale(1.09, 0.89)', offset: 0.16 },
-          { transform: 'translate3d(0, -19px, 0) scale(0.93, 1.09)', offset: 0.46 },
-          { transform: 'translate3d(0, 2px, 0) scale(1.05, 0.95)', offset: 0.78 },
+          { transform: 'translate3d(0, 2px, 0) scale(1.13, 0.85)', offset: 0.15 },
+          { transform: 'translate3d(0, -23px, 0) scale(0.88, 1.15)', offset: 0.44 },
+          { transform: 'translate3d(0, 2px, 0) scale(1.14, 0.84)', offset: 0.72 },
+          { transform: 'translate3d(0, -5px, 0) scale(0.95, 1.06)', offset: 0.86 },
           { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 1 }
         ],
-        { duration: 430, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        { duration: 580, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
       );
-      void runId;
     };
 
     function scheduleIntroHop() {
       if (introHopTimerId !== null) window.clearTimeout(introHopTimerId);
-      // Fires right after headline wave (920ms) + 4-phase icon draw (~1080ms) complete
+      // “快慢刀”延迟：待文字波浪(920ms)与图标4阶段绘制(1080ms)彻底静止约640ms后再水滴弹跳
       introHopTimerId = window.setTimeout(() => {
         introHopTimerId = null;
         playIntroHop();
-      }, 1150);
+      }, 1720);
     }
 
     const startIdleMonitor = () => {
@@ -379,12 +380,12 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
         if (isHeroFocused() && !isIdleRunning) {
           void runIdleChoreography();
         }
-      }, 5400);
+      }, 5800);
     };
 
     const disturbLetter = async (letter: HTMLElement, runId: number) => {
       letter.style.zIndex = '3';
-      // 1) 伸缩两下（“咳咳”，提醒立正站稳）
+      // 1) 伸缩两下（“咳咳”，温和提示）
       const ok1 = await playAnim(
         letter,
         [
@@ -394,7 +395,7 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
           { transform: 'translate3d(0, 1px, 0) scale(1.06, 0.90)', offset: 0.74 },
           { transform: 'translate3d(0, 0, 0) scale(0.99, 1.02)', offset: 1 }
         ],
-        { duration: 340, easing: 'ease-in-out' },
+        { duration: 440, easing: 'ease-in-out' },
         runId
       );
       if (!ok1) {
@@ -407,11 +408,11 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
         letter,
         [
           { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 0 },
-          { transform: 'translate3d(0, -5px, 0) scale(1.11, 1.16)', offset: 0.26 },
-          { transform: 'translate3d(0, -4px, 0) scale(1.11, 1.16)', offset: 0.68 },
+          { transform: 'translate3d(0, -5px, 0) scale(1.11, 1.16)', offset: 0.28 },
+          { transform: 'translate3d(0, -4px, 0) scale(1.11, 1.16)', offset: 0.70 },
           { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 1 }
         ],
-        { duration: 720, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+        { duration: 920, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
         runId
       );
       letter.style.zIndex = '';
@@ -423,63 +424,75 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       isIdleRunning = true;
       sEl.style.zIndex = '4';
 
-      // Helper to keep track of current X translation
       let curX = 0;
 
-      // 1) 再蹦一下，变得像人
-      if (!(await playAnim(
-        sEl,
-        [
-          { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 0 },
-          { transform: 'translate3d(0, 1px, 0) scale(1.10, 0.88)', offset: 0.16 },
-          { transform: 'translate3d(0, -24px, 0) scale(0.92, 1.11)', offset: 0.48 },
-          { transform: 'translate3d(0, 2px, 0) scale(1.05, 0.95)', offset: 0.80 },
-          { transform: 'translate3d(0, 0, 0) scale(0.97, 1.04)', offset: 1 }
-        ],
-        { duration: 480, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' },
-        runId
-      ))) return;
-
-      // 2) 左顾右盼 + 上下四处乱看 + 左右晃身子
-      const lookAround = async (xBase: number) => {
+      const lookAround = async (xBase: number, slow = false) => {
+        const durLook = slow ? 1950 : 1650;
         if (!(await playAnim(
           sEl,
           [
-            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) scale(0.97, 1.04)`, offset: 0 },
-            { transform: `translate3d(${xBase - 3}px, 0, 0) rotate(-17deg) scale(0.97, 1.04)`, offset: 0.16 },
-            { transform: `translate3d(${xBase - 3}px, 0, 0) rotate(-17deg) scale(0.97, 1.04)`, offset: 0.30 },
-            { transform: `translate3d(${xBase + 3}px, 0, 0) rotate(17deg) scale(0.97, 1.04)`, offset: 0.48 },
-            { transform: `translate3d(${xBase + 3}px, 0, 0) rotate(17deg) scale(0.97, 1.04)`, offset: 0.62 },
-            { transform: `translate3d(${xBase}px, -6px, 0) rotate(-4deg) scale(0.95, 1.07)`, offset: 0.74 },
-            { transform: `translate3d(${xBase}px, 3px, 0) rotate(5deg) scale(1.04, 0.93)`, offset: 0.86 },
-            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) scale(0.98, 1.03)`, offset: 1 }
+            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) scale(0.97, 1.03)`, offset: 0 },
+            { transform: `translate3d(${xBase - 2}px, 0, 0) rotate(-14deg) scale(0.97, 1.03)`, offset: 0.18 },
+            { transform: `translate3d(${xBase - 2}px, 0, 0) rotate(-14deg) scale(0.97, 1.03)`, offset: 0.36 },
+            { transform: `translate3d(${xBase + 2}px, 0, 0) rotate(13deg) scale(0.97, 1.03)`, offset: 0.56 },
+            { transform: `translate3d(${xBase + 2}px, 0, 0) rotate(13deg) scale(0.97, 1.03)`, offset: 0.74 },
+            { transform: `translate3d(${xBase}px, -4px, 0) rotate(-3deg) scale(0.96, 1.05)`, offset: 0.87 },
+            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) scale(1, 1)`, offset: 1 }
           ],
-          { duration: 1350, easing: 'ease-in-out', fill: 'forwards' },
-          runId
-        ))) return false;
-
-        // 时不时左右晃一晃身子
-        if (!(await playAnim(
-          sEl,
-          [
-            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg)`, offset: 0 },
-            { transform: `translate3d(${xBase - 2}px, -2px, 0) rotate(-11deg)`, offset: 0.25 },
-            { transform: `translate3d(${xBase + 2}px, -2px, 0) rotate(11deg)`, offset: 0.55 },
-            { transform: `translate3d(${xBase - 1}px, -1px, 0) rotate(-6deg)`, offset: 0.80 },
-            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg)`, offset: 1 }
-          ],
-          { duration: 520, easing: 'ease-in-out', fill: 'forwards' },
+          { duration: durLook, easing: 'ease-in-out', fill: 'forwards' },
           runId
         ))) return false;
         return true;
       };
 
-      if (!(await lookAround(0))) return;
+      const lazyStretch = async (xBase: number) => {
+        // 躲在最后面发呆：伸个懒腰并弯曲一下身子
+        return playAnim(
+          sEl,
+          [
+            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) skewX(0deg) scale(1, 1)`, offset: 0 },
+            { transform: `translate3d(${xBase - 1}px, -4px, 0) rotate(-9deg) skewX(-6deg) scale(0.93, 1.11)`, offset: 0.30 },
+            { transform: `translate3d(${xBase - 1}px, -4px, 0) rotate(-9deg) skewX(-6deg) scale(0.93, 1.11)`, offset: 0.52 },
+            { transform: `translate3d(${xBase + 2}px, 1px, 0) rotate(7deg) skewX(5deg) scale(1.04, 0.94)`, offset: 0.78 },
+            { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) skewX(0deg) scale(1, 1)`, offset: 1 }
+          ],
+          { duration: 1900, easing: 'ease-in-out', fill: 'forwards' },
+          runId
+        );
+      };
 
-      // 3) 挨个骚扰 WearEars 的其他字母
-      while (runId === scriptRunId && isHeroFocused()) {
+      if (!hasFinishedTour) {
+        // 1) 再水滴弹一下，变得像人
+        if (!(await playAnim(
+          sEl,
+          [
+            { transform: 'translate3d(0, 0, 0) scale(1, 1)', offset: 0 },
+            { transform: 'translate3d(0, 2px, 0) scale(1.12, 0.86)', offset: 0.16 },
+            { transform: 'translate3d(0, -24px, 0) scale(0.89, 1.13)', offset: 0.46 },
+            { transform: 'translate3d(0, 2px, 0) scale(1.08, 0.92)', offset: 0.78 },
+            { transform: 'translate3d(0, 0, 0) scale(0.98, 1.03)', offset: 1 }
+          ],
+          { duration: 560, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' },
+          runId
+        ))) return;
+
+        // 2) 左顾右盼 + 上下张望 + 轻晃身子
+        if (!(await lookAround(0))) return;
+        if (!(await playAnim(
+          sEl,
+          [
+            { transform: 'translate3d(0, 0, 0) rotate(0deg)', offset: 0 },
+            { transform: 'translate3d(-2px, -2px, 0) rotate(-10deg)', offset: 0.3 },
+            { transform: 'translate3d(2px, -2px, 0) rotate(10deg)', offset: 0.65 },
+            { transform: 'translate3d(0, 0, 0) rotate(0deg)', offset: 1 }
+          ],
+          { duration: 720, easing: 'ease-in-out', fill: 'forwards' },
+          runId
+        ))) return;
+        if (!(await waitMs(320, runId))) return;
+
+        // 3) 第一轮：放慢节奏挨个找大家“交流”（仅一轮）
         const sCenter = sEl.offsetLeft + sEl.offsetWidth * 0.5;
-
         for (let idx = 0; idx < siblingLetters.length; idx++) {
           if (runId !== scriptRunId || !isHeroFocused()) return;
           const target = siblingLetters[idx];
@@ -488,15 +501,15 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
           );
           const midX = Math.round((curX + standbyX) * 0.5);
           const dist = Math.abs(standbyX - curX);
-          const travelMs = Math.max(220, Math.min(420, dist * 2 + 180));
-          const leanDir = standbyX < curX ? -12 : 12;
+          const travelMs = Math.max(420, Math.min(680, dist * 2.8 + 300));
+          const leanDir = standbyX < curX ? -10 : 10;
 
-          // Hop over to the target letter
+          // 舒缓跳过去找对方
           if (!(await playAnim(
             sEl,
             [
               { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 0 },
-              { transform: `translate3d(${midX}px, -14px, 0) rotate(${leanDir}deg) scale(0.95, 1.07)`, offset: 0.5 },
+              { transform: `translate3d(${midX}px, -13px, 0) rotate(${leanDir}deg) scale(0.95, 1.06)`, offset: 0.5 },
               { transform: `translate3d(${standbyX}px, 0, 0) rotate(0deg) scale(1.04, 0.96)`, offset: 0.88 },
               { transform: `translate3d(${standbyX}px, 0, 0) rotate(0deg) scale(1, 1)`, offset: 1 }
             ],
@@ -504,46 +517,77 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
             runId
           ))) return;
           curX = standbyX;
+          if (!(await waitMs(180, runId))) return;
 
-          // Nudge/harass the letter twice
+          // 温和地敲一敲、点头打招呼“交流”
           if (!(await playAnim(
             sEl,
             [
               { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 0 },
-              { transform: `translate3d(${curX - 9}px, -3px, 0) rotate(-18deg)`, offset: 0.25 },
-              { transform: `translate3d(${curX + 2}px, 0, 0) rotate(5deg)`, offset: 0.50 },
-              { transform: `translate3d(${curX - 9}px, -3px, 0) rotate(-18deg)`, offset: 0.75 },
+              { transform: `translate3d(${curX - 7}px, -2px, 0) rotate(-14deg)`, offset: 0.28 },
+              { transform: `translate3d(${curX + 2}px, 0, 0) rotate(4deg)`, offset: 0.54 },
+              { transform: `translate3d(${curX - 7}px, -2px, 0) rotate(-14deg)`, offset: 0.78 },
               { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 1 }
             ],
-            { duration: 380, easing: 'ease-in-out', fill: 'forwards' },
+            { duration: 600, easing: 'ease-in-out', fill: 'forwards' },
             runId
           ))) return;
+          if (!(await waitMs(140, runId))) return;
 
-          // Sibling clears throat twice ("咳咳") & stands tall, then settles still
+          // 对方“咳咳”两声并挺腰回应
           const okDisturb = await disturbLetter(target, runId);
           if (!okDisturb) return;
 
-          if (idx % 3 === 2) {
-            // Occasionally look around & sway mischievously mid-patrol
-            if (!(await lookAround(curX))) return;
-          } else {
-            if (!(await waitMs(140, runId))) return;
-          }
+          if (!(await waitMs(380, runId))) return;
         }
 
-        // Hop back near home, sway, pause briefly before next round
+        // 第一轮交流结束，慢慢溜达回最后面自己的位置
         if (!(await playAnim(
           sEl,
           [
             { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 0 },
-            { transform: `translate3d(${Math.round(curX * 0.5)}px, -16px, 0) rotate(14deg)`, offset: 0.5 },
-            { transform: 'translate3d(0, 0, 0) rotate(0deg)', offset: 1 }
+            { transform: `translate3d(${Math.round(curX * 0.5)}px, -14px, 0) rotate(12deg)`, offset: 0.5 },
+            { transform: 'translate3d(2px, 0, 0) rotate(0deg)', offset: 1 }
           ],
-          { duration: 420, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' },
+          { duration: 680, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'forwards' },
           runId
         ))) return;
-        curX = 0;
-        if (!(await waitMs(1100, runId))) return;
+        curX = 2;
+        hasFinishedTour = true;
+        if (!(await waitMs(1400, runId))) return;
+      }
+
+      // 4) 之后不再去找别人，只会一个人躲在最后面发呆（时不时东张西望、伸懒腰弯曲身子）
+      curX = 2;
+      let cycle = 0;
+      while (runId === scriptRunId && isHeroFocused()) {
+        // 静静发呆一会
+        if (!(await waitMs(2400, runId))) return;
+
+        if (cycle % 2 === 0) {
+          // 时不时东张西望一下
+          if (!(await lookAround(curX, true))) return;
+        } else {
+          // 时不时伸个懒腰、弯曲一下身子
+          if (!(await lazyStretch(curX))) return;
+        }
+
+        if (!(await waitMs(1600, runId))) return;
+        if (cycle % 3 === 1) {
+          // 偶尔轻轻晃一下懒腰收尾
+          if (!(await playAnim(
+            sEl,
+            [
+              { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 0 },
+              { transform: `translate3d(${curX}px, -1px, 0) rotate(-5deg)`, offset: 0.4 },
+              { transform: `translate3d(${curX}px, 0, 0) rotate(4deg)`, offset: 0.75 },
+              { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 1 }
+            ],
+            { duration: 900, easing: 'ease-in-out', fill: 'forwards' },
+            runId
+          ))) return;
+        }
+        cycle++;
       }
     };
 
@@ -582,6 +626,25 @@ const heroLetters = ['W', 'e', 'a', 'r', 'E', 'a', 'r', 's'];
       });
 
       const dist = Math.abs(curX);
+      if (dist <= 6) {
+        // 本来就在角落发呆/伸懒腰：立刻一个激灵站直归位
+        const snapAnim = sEl.animate(
+          [
+            { transform: computed && computed !== 'none' ? computed : 'translate3d(0, 0, 0)' },
+            { transform: 'translate3d(0, 0, 0) rotate(-3deg) scale(0.95, 1.07)', offset: 0.45 },
+            { transform: 'translate3d(0, 0, 0) rotate(0deg) skewX(0deg) scale(1, 1)', offset: 1 }
+          ],
+          { duration: 220, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+        );
+        snapAnim.onfinish = () => {
+          sEl.style.zIndex = '';
+          sEl.style.transform = '';
+          isRecovering = false;
+          startIdleMonitor();
+        };
+        return;
+      }
+
       const runMs = Math.max(200, Math.min(420, dist * 0.85 + 180));
       const runDir = curX < 0 ? 1 : -1;
       const runAnim = sEl.animate(
