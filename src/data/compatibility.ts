@@ -3,6 +3,7 @@ import { appSource, type Locale } from '../lib/site';
 export const brands = {
   vivo: { zh: 'vivo', en: 'vivo' },
   huawei: { zh: '华为', en: 'Huawei' },
+  honor: { zh: '荣耀', en: 'HONOR' },
   nicehck: { zh: '原道', en: 'NiceHCK' },
   redmi: { zh: '小米 / Redmi', en: 'Xiaomi / Redmi' },
   oppo: { zh: 'OPPO', en: 'OPPO' },
@@ -38,19 +39,44 @@ export const compatibility: DeviceRecord[] = [
     evidence: 'hardware', verifiedOn: null, source: readme,
   },
   {
+    brand: 'sony', model: 'WF-1000XM5', watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'redmi', model: 'Redmi Buds 6', aliases: ['红米 Buds 6'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'oppo', model: 'Enco Air5 Pro', aliases: ['OPPO Enco Air5 Pro'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'oppo', model: 'Enco Free4', aliases: ['OPPO Enco Free4'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'honor', model: 'HONOR Earbuds X9', aliases: ['荣耀 Earbuds X9'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
     brand: 'huawei', model: 'FreeBuds 6i', watch: null,
     battery: 'verified', noise: 'verified', transparency: 'verified',
     evidence: 'hardware', verifiedOn: null, source: readme,
   },
   {
-    brand: 'nicehck', model: 'OriG in', aliases: ['原点', 'Origin'], watch: null,
+    brand: 'nicehck', model: 'OriG in', aliases: ['原点', '原道原点', 'Origin'], watch: null,
     battery: 'verified', noise: 'verified', transparency: 'verified',
     evidence: 'hardware', verifiedOn: null, source: readme,
   },
   {
     brand: 'huawei', model: 'FreeBuds SE 4 ANC', watch: null,
-    battery: 'unknown', noise: 'offOnly', transparency: 'unknown',
-    evidence: 'partial', verifiedOn: null, source: readme,
+    battery: 'verified', noise: 'verified', transparency: 'offOnly',
+    evidence: 'hardware', verifiedOn: null, source: readme,
   },
   {
     brand: 'redmi', model: 'Redmi Buds 5', watch: null,
