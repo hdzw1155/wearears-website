@@ -5,36 +5,36 @@ const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 const layers = [
   {
-    title: zh ? '交互展示' : 'Interaction',
-    code: zh ? '手表应用与磁贴' : 'Watch app & tiles',
+    title: zh ? '界面、双端适配与安全门禁' : 'UI, Dual-Device & Safety Gates',
+    code: 'MainActivity · SafetyGates · Tiles',
     body: zh
-      ? '应用与磁贴提供操作入口。连接控制器协调状态查询、目标档位和设备回报。'
-      : 'The watch app and tiles expose controls. The connection controller coordinates queries, requested modes and device reports.',
-    source: 'HeadsetController.java',
+      ? '自适应手表圆屏与手机竖屏，四套皮肤统一，内置70%音量护栏与查找耳机三层保护。'
+      : 'Adapts between round watches and portrait phones across 4 themes with 70% volume and wear-safety gates.',
+    source: 'app/src/com/hdz/wearcontrol/MainActivity.java',
   },
   {
-    title: zh ? '统一契约' : 'Unified contract',
-    code: 'TwsClient',
+    title: zh ? '协调、短连接与特性引擎' : 'Hub, Burst Mode & Feature Engine',
+    code: 'ControlHub · FeatureTransactions',
     body: zh
-      ? '统一连接、读取电量和切换模式的接口。驱动通过能力位声明可用的操作。'
-      : 'TwsClient defines the interface for connection, battery queries and mode changes. Drivers declare available operations through capability flags.',
-    source: 'TwsClient.java',
+      ? '手机端3.8秒按需释放RFCOMM并设12秒防抢占守卫，14类扩展特性隔离事务。'
+      : 'Phones release RFCOMM after 3.8s idle with a 12s anti-hijack guard; 14 feature IDs run in isolated lanes.',
+    source: 'core/src/com/hdz/wearcontrol/FeatureTransactions.java',
   },
   {
-    title: zh ? '驱动调度' : 'Driver selection',
-    code: 'DriverRegistry',
+    title: zh ? '九品牌驱动与构建裁剪' : 'Nine Brand Drivers & Trimming',
+    code: 'DriverRegistry · modules.json',
     body: zh
-      ? '根据设备信息选择候选驱动，保持品牌协议与界面之间的边界。'
-      : 'The registry selects a candidate driver from device information and keeps brand protocols separate from the interface.',
-    source: 'DriverRegistry.java',
+      ? '编译期按需裁剪9个品牌驱动，独立线程运行，探测确认能力后才开放写入。'
+      : 'Compile-time trimming across 9 brand drivers; per-link threads confirm capability before writes.',
+    source: 'app/src/com/hdz/wearcontrol/DriverRegistry.java',
   },
   {
-    title: zh ? '设备通信' : 'Communication',
-    code: 'RFCOMM / GATT',
+    title: zh ? '传输链路与本机声学内核' : 'Transport & Binaural HRTF Kernel',
+    code: 'RfcommLink · GattPump · 48kHz HRTF',
     body: zh
-      ? '驱动解析设备报文并执行已实现的协议操作。通用路径可读取系统提供的整机电量。'
-      : 'Drivers parse device frames and perform implemented protocol operations. The standard path reads aggregate battery when the system provides it.',
-    source: 'StandardClient.java',
+      ? 'RFCOMM/GATT与标准蓝牙兜底，内嵌纯Java零GC 48kHz双耳HRTF内核。'
+      : 'RFCOMM/GATT and standard Bluetooth fallback paired with a zero-GC 48 kHz Java binaural kernel.',
+    source: 'core/src/com/hdz/wearcontrol/WearEarsBinauralKernel.java',
   },
 ];
 ---
@@ -51,7 +51,7 @@ const layers = [
         </summary>
         <div class="layer-detail">
           <p>{layer.body}</p>
-          <a href={appSource + 'src/com/hdz/wearcontrol/' + layer.source} target="_blank" rel="noopener noreferrer">
+          <a href={appSource + layer.source} target="_blank" rel="noopener noreferrer">
             {zh ? '查看源码' : 'View source'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
           </a>
         </div>

@@ -12,9 +12,9 @@ const zh = locale === 'zh';
   <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-label={zh ? '隐私与商标概述' : 'Privacy and trademarks introduction'}>
     <div class="deck-card deck-card-hero">
       <FallingTiles primary="yellow" secondary="blue" />
-      <PageIntro label="DATA / PRIVACY" title={zh ? '网站如何处理数据' : 'How this site handles data'}
-        summary={zh ? '这份说明覆盖官网第一阶段的浏览、兼容性查询、外部链接以及商标使用规范。'
-          : 'This notice describes browsing, compatibility searches, external links and brand identity policies.'} />
+      <PageIntro label="DATA / PRIVACY" title={zh ? '应用与网站如何处理数据' : 'How the app and site handle data'}
+        summary={zh ? 'WearEars客户端纯本地蓝牙通信、不联网且不收集数据。本页同时说明官网静态查询与商标使用边界。'
+          : 'The WearEars app runs purely over local Bluetooth with zero network calls or telemetry. This page also covers website handling and trademarks.'} />
     </div>
   </section>
 
@@ -23,19 +23,19 @@ const zh = locale === 'zh';
       <FallingTiles primary="green" secondary="yellow" />
       <div class="shell content-section split-content">
         <div class="section-lead">
-          <p class="label"><span class="label-mark"></span>THE WEBSITE</p>
+          <p class="label"><span class="label-mark"></span>DATA BOUNDARIES</p>
           <h2 id="privacy-details">{zh ? '数据流向' : 'Where data goes'}</h2>
         </div>
         <div class="prose">
-          <h3>{zh ? '兼容性查询' : 'Compatibility searches'}</h3>
-          <p>{zh ? '设备记录随网页一起加载。型号关键词和筛选条件在当前浏览器中处理。'
-            : 'Device records load with the page. Model keywords and filter selections are processed in your browser.'}</p>
-          <h3>{zh ? '访问与语言' : 'Browsing and language'}</h3>
-          <p>{zh ? '网站按所访问的地址显示中文或英文。第一阶段以静态文件提供页面，服务器的访问日志取决于最终托管方式。'
-            : 'The address determines whether a page appears in Chinese or English. Pages are served as static files. Server access logs depend on the hosting configuration.'}</p>
-          <h3>{zh ? 'GitHub 与公开交流' : 'GitHub and public discussions'}</h3>
-          <p>{zh ? '下载、源码和讨论链接会打开 GitHub。发布问题或评论时，内容的可见性由 GitHub 仓库和账户设置决定。'
-            : 'Downloads, source and discussion links open GitHub. The repository and account settings determine who can see a posted issue or comment.'}</p>
+          <h3>{zh ? 'WearEars安卓与手表客户端' : 'WearEars Watch & Phone App'}</h3>
+          <p>{zh ? '客户端不申请网络访问权限之外的遥测通道，不联网、不埋点、不收集或上传任何蓝牙地址、耳机电量、使用习惯或音频流。'
+            : 'The app communicates strictly over local Bluetooth and system audio APIs, with zero network telemetry, analytics or data uploads.'}</p>
+          <h3>{zh ? '官网兼容性查询' : 'Compatibility searches'}</h3>
+          <p>{zh ? '设备记录随网页一起加载。型号关键词与品牌筛选全部在您当前的浏览器本地处理，不会向后台发送搜索日志。'
+            : 'Device records load statically with the page. Model searches and filters run locally in your browser.'}</p>
+          <h3>{zh ? 'GitHub与公开交流' : 'GitHub and public discussions'}</h3>
+          <p>{zh ? '安装包下载、源码查阅和问题反馈链接会跳转到GitHub。您提交的Issue或评论的可见性由GitHub平台规则与个人账户设置决定。'
+            : 'Downloads, source links and discussions open on GitHub, governed by GitHub platform and account visibility settings.'}</p>
           <a class="text-link" href={site.sourceRepository} target="_blank" rel="noopener noreferrer">{zh ? '查看官网源码' : 'View the website source'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
         </div>
       </div>
@@ -51,16 +51,16 @@ const zh = locale === 'zh';
           <h2 id="trademark-details">{zh ? '商标与品牌权利' : 'Trademarks & brand identity'}</h2>
         </div>
         <div class="prose">
-          <h3>{zh ? 'MIT 开源许可与商标权属的区分' : 'Separation of MIT License and trademarks'}</h3>
+          <h3>{zh ? 'MIT开源许可与商标权属的区分' : 'Separation of MIT License and trademarks'}</h3>
           <p>{zh
-            ? 'WearEars 项目核心源码采用 MIT 许可证开放。但 MIT 许可仅适用于软件代码本身，不授予使用 WearEars 名称、官方应用启动图标（App Launcher Icon）及相关视觉标识的商标许可。'
+            ? 'WearEars项目核心源码采用MIT许可证开放。MIT许可仅适用于软件代码本身，不授予使用WearEars名称、官方应用启动图标及相关视觉标识的商标许可。'
             : 'WearEars source code is licensed under the MIT License. The MIT License applies to software code only and does not grant permission to use the WearEars name, official app launcher icon, or brand identity.'}</p>
           <h3>{zh ? '合理引用与二次分发' : 'Permitted reference & forks'}</h3>
           <p>{zh
-            ? '允许在客观描述兼容性或标明原始项目出处时真实引用 WearEars 名称。任何衍生分发或第三方商业发布版本，必须移除官方应用图标并替换为独立标识，且不得暗示拥有 WearEars 官方背书。'
-            : 'Truthful nominative reference is permitted to state compatibility or cite project origin. Derivative commercial distributions must remove official brand icons and must not imply official endorsement.'}</p>
+            ? '允许在客观描述兼容性或标明原始项目出处时真实引用WearEars名称。任何衍生分发或第三方商业发布版本，必须移除官方应用图标并替换为独立标识，且不得暗示拥有WearEars官方背书；本项目亦与各耳机厂商无任何隶属或授权关系。'
+            : 'Truthful nominative reference is permitted to state compatibility or cite project origin. Derivative distributions must remove official brand icons and must not imply official endorsement; WearEars is unaffiliated with any earbud manufacturer.'}</p>
           <a class="text-link" href={site.sourceRepository + '/blob/gemini-refinement/TRADEMARKS.md'} target="_blank" rel="noopener noreferrer">
-            {zh ? '阅读完整商标政策 (TRADEMARKS.md)' : 'Read full trademark policy (TRADEMARKS.md)'} <span aria-hidden="true">↗</span>
+            {zh ? '阅读完整商标政策(TRADEMARKS.md)' : 'Read full trademark policy (TRADEMARKS.md)'} <span aria-hidden="true">↗</span>
             <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
           </a>
         </div>

@@ -566,7 +566,7 @@ html.js .home-deck:not(.is-fan-mode) .slide-section {
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: clip;
   display: flex;
   flex-direction: column;
   background: transparent;
@@ -954,6 +954,34 @@ html.js .slide-section.is-waiting .audience-rail article {
 .consumer-panel h3 { max-width: 17ch; margin-top: .95rem; font-size: clamp(2rem, 4vw, 3.65rem); letter-spacing: -.06em; }
 .consumer-panel p:not(.label), .contact-section p:not(.label) { max-width: 29rem; margin-top: 1rem; }
 .consumer-panel .button, .contact-section .button { margin-top: 1.45rem; }
+.button-ink-outline {
+  color: var(--paper);
+  background: transparent;
+  border-color: color-mix(in srgb, var(--paper) 65%, transparent);
+}
+.button-ink-outline:hover {
+  color: var(--ink);
+  background: var(--paper);
+  border-color: var(--paper);
+}
+.panel-star-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  min-height: 2.75rem;
+  margin-top: .95rem;
+  font-size: .84rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--paper) 88%, transparent);
+  text-decoration-thickness: 1px;
+}
+.panel-star-link:hover { color: var(--yellow); }
+.rail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.4rem;
+  margin-top: .2rem;
+}
 .audience-rail { padding-inline-start: clamp(1.5rem, 3.7vw, 3.6rem); }
 .audience-rail article {
   padding-block: 1.2rem;
@@ -1036,15 +1064,129 @@ html.js .slide-section.is-waiting .compatibility-section {
 
 .page-intro {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(10rem, 26%);
+  grid-template-columns: minmax(0, 1fr) minmax(10rem, 24%);
   gap: var(--gap);
-  align-items: end;
-  padding-block: clamp(3rem, 8vw, 7.5rem) clamp(2.5rem, 5vw, 4.8rem);
+  align-items: center;
+  padding-block: clamp(2.6rem, 6vw, 5.2rem) clamp(2.2rem, 4.5vw, 3.8rem);
   border-bottom: 1px solid var(--ink);
 }
-.page-intro h1 { margin-top: .85rem; font-size: clamp(2.85rem, 6.35vw, 6rem); letter-spacing: -.065em; }
+.page-intro h1 { margin-top: .85rem; font-size: clamp(2.6rem, 5.2vw, 4.9rem); letter-spacing: -.05em; }
+html[lang="zh-CN"] .page-intro h1 { font-weight: 400; font-size: clamp(2.25rem, 4.3vw, 4.1rem); letter-spacing: -.02em; line-height: 1.18; }
 .page-intro-summary { max-width: 44rem; margin-top: 1.2rem; color: var(--muted); font-size: clamp(1rem, 1.6vw, 1.19rem); }
 .page-intro .action-row { margin-top: 1.6rem; }
+.project-hero-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4.5vw, 4.2rem);
+  min-height: clamp(23rem, 36vw, 31rem);
+  padding-block: clamp(1.8rem, 3.8vw, 3.2rem);
+}
+.project-hero-title {
+  margin: 0;
+}
+.project-title-main {
+  display: block;
+  font-size: clamp(2.65rem, 1.4rem + 4.4vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.03em;
+  color: var(--ink);
+}
+.project-title-sub {
+  display: block;
+  margin-top: .55rem;
+  font-size: clamp(1.7rem, 1rem + 2.4vw, 3.3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 0;
+  color: var(--blue);
+}
+.project-actions {
+  margin-top: clamp(1.6rem, 3vw, 2.3rem);
+}
+.project-actions .button { min-width: 8.8rem; }
+.project-hero-figure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-self: end;
+  width: 100%;
+  max-width: clamp(16rem, 25vw, 22.5rem);
+  margin: 0;
+}
+.project-hero-figure .animated-icon-wrap {
+  position: relative;
+  z-index: 1;
+}
+.project-hero-figure figcaption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .55rem;
+  width: 100%;
+  margin-top: .95rem;
+  padding-inline-end: .8rem;
+  color: var(--muted);
+  font: .66rem / 1.2 var(--mono);
+  letter-spacing: .12em;
+}
+.project-hero-figure figcaption span { width: 1.5rem; height: 1px; background: var(--ink); }
+.star-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  border-block: 1px solid var(--ink);
+  transition: border-color var(--motion), background-color var(--motion);
+}
+.star-strip-main {
+  display: flex;
+  align-items: baseline;
+  gap: .9rem;
+  padding: .95rem 1.25rem .95rem 0;
+}
+.star-strip-label {
+  flex: 0 0 auto;
+  font: 600 .71rem / 1.45 var(--mono);
+  letter-spacing: .10em;
+  color: var(--blue);
+}
+.star-strip-text {
+  margin: 0;
+  font: .95rem / 1.65 var(--font);
+  color: var(--ink);
+  transition: color var(--motion);
+}
+.star-strip-action {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .95rem 0 .95rem 1.35rem;
+  border-inline-start: 1px solid var(--rule);
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--motion), color var(--motion);
+}
+.star-strip-action:hover {
+  background: var(--blue);
+  color: var(--paper);
+  padding-inline: 1.35rem;
+}
+.star-strip.is-triggered {
+  border-block-color: var(--blue);
+  background: color-mix(in srgb, var(--blue) 5%, var(--paper));
+}
+.star-strip.is-triggered .star-strip-text {
+  color: var(--blue);
+  font-weight: 600;
+}
 .page-intro-figure { display: grid; justify-items: end; align-items: start; color: var(--ink); }
 .page-intro-figure img,
 .page-intro-figure svg { width: min(100%, 13.5rem); height: auto; aspect-ratio: 1 / 1; }
@@ -1228,6 +1370,41 @@ html.js .slide-section.is-waiting .compatibility-section {
   .hero-meta .label { font-size: .59rem; }
   .capability-section, .split-content, .journal-section, .architecture-grid, .contact-section { grid-template-columns: minmax(0, 1fr); }
   .audience-grid { grid-template-columns: minmax(0, 1fr); }
+  .project-hero-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    padding-top: 1.75rem;
+    padding-bottom: 1.1rem;
+    gap: 0;
+  }
+  .project-hero-figure {
+    width: min(64vw, 15.5rem);
+    max-width: none;
+    margin: 1.65rem auto 1.1rem;
+    align-self: center;
+    align-items: center;
+  }
+  .project-hero-figure figcaption {
+    justify-content: center;
+    margin-top: .75rem;
+  }
+  .project-actions .button { flex: 1 1 8rem; }
+  .star-strip {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .star-strip-main {
+    flex-direction: column;
+    gap: .35rem;
+    padding: .85rem 0;
+  }
+  .star-strip-action {
+    border-inline-start: 0;
+    border-top: 1px solid var(--rule);
+    padding: .85rem 0;
+    justify-content: space-between;
+  }
   .audience-rail { padding: 1.4rem 0 0; }
   .page-intro { grid-template-columns: minmax(0, 1fr) minmax(4rem, 18%); gap: .6rem; }
   .page-intro h1 { font-size: clamp(2.5rem, 8.8vw, 4.45rem); }

@@ -8,13 +8,13 @@ import { appSource, issuesUrl, type Locale } from '../lib/site';
 const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 const steps = zh ? [
-  ['整理协议证据', '记录耳机型号、固件、传输方式与命令来源。标出已经验证的报文和需要核对的字段。'],
-  ['实现统一契约', '让驱动负责帧解析、设备操作和能力声明。通过 DriverRegistry 注册匹配规则。'],
-  ['分别提交验证结果', '保存离线报文检查和真机结果，明确每个型号的能力边界。'],
+  ['核对协议边界与红线', '先查阅docs/HANDOFF.md与FILE_MAP.md，确认型号、固件门控与各品牌禁发指令，严禁向陌生设备盲发私有帧。'],
+  ['实现WireDriver并注册', '在drivers/下实现协议解码与能力探测，通过confirmFeature()按回包声明能力，并在drivers/modules.json注册。'],
+  ['离线回归与真机留痕', '运行py -X utf8 build.py verify跑通16套测试与234组双语校验；支持--drivers按需裁剪品牌驱动。'],
 ] : [
-  ['Document the evidence', 'Record the model, firmware, transport and command sources. Mark verified frames and fields that need investigation.'],
-  ['Implement the shared contract', 'Keep frame parsing, device operations and capability declarations in the driver. Register its matching rules in DriverRegistry.'],
-  ['Record verification separately', 'Keep offline frame checks and hardware results distinct, with capability boundaries per model.'],
+  ['Check guardrails & docs', 'Read docs/HANDOFF.md and FILE_MAP.md for firmware gating and blocked opcodes before adding frames.'],
+  ['Implement WireDriver', 'Decode brand frames under drivers/, call confirmFeature() only after capability replies and register in drivers/modules.json.'],
+  ['Verify offline & trim', 'Run py -X utf8 build.py verify (16 suites + 234 bilingual parity checks), or trim brand builds via --drivers.'],
 ];
 ---
 
@@ -23,10 +23,11 @@ const steps = zh ? [
     <div class="deck-card deck-card-hero">
       <FallingTiles primary="yellow" secondary="blue" />
       <PageIntro label="03 / DEVELOPERS" title={zh ? '为新的设备留下接口' : 'A place for the next device'}
-        summary={zh ? 'WearEars 将界面、驱动和通信分开。统一接口承接常用操作，具体协议留在各自的驱动中。'
-          : 'WearEars separates the interface, drivers and transport. The shared contract carries common operations, while each driver owns its protocol.'}>
+        summary={zh ? 'WearEars将代码拆分为app、core与drivers三层，无需Gradle联网即可在Windows本地完成16套回归测试与驱动裁剪打包。'
+          : 'WearEars splits into app, core and drivers, compiling and running 16 test suites offline without Gradle.'}>
         <div class="action-row">
-          <a class="button button-primary" href={appSource + 'README.md#驱动标准契约'} target="_blank" rel="noopener noreferrer">{zh ? '阅读驱动契约' : 'Read the driver contract (Chinese)'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+          <a class="button button-primary" href={appSource + 'docs/HANDOFF.md'} target="_blank" rel="noopener noreferrer">{zh ? '阅读底层架构交接' : 'Read architecture handoff'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+          <a class="button button-outline" href={appSource + 'docs/FILE_MAP.md'} target="_blank" rel="noopener noreferrer">{zh ? '文件导航指南' : 'Browse file map'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
         </div>
       </PageIntro>
     </div>
@@ -52,7 +53,7 @@ const steps = zh ? [
       <div class="shell content-section split-content">
         <div class="section-lead">
           <p class="label"><span class="label-mark"></span>CONTRIBUTE</p>
-          <h2 id="contribute-title">{zh ? '贡献一个驱动' : 'Contribute a driver'}</h2>
+          <h2 id="contribute-title">{zh ? '贡献驱动与离线构建' : 'Contribute & build offline'}</h2>
           <a class="text-link" href={issuesUrl} target="_blank" rel="noopener noreferrer">{zh ? '参与项目讨论' : 'Join the project discussion'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
         </div>
         <ol class="step-list">
@@ -71,9 +72,9 @@ const steps = zh ? [
         <div class="roadmap-note">
           <p class="label"><span class="label-mark yellow"></span>{zh ? '规划中' : 'Planned'}</p>
           <div>
-            <h2 id="sdk-title">{zh ? '开发者 SDK 与独立文档站' : 'Developer SDK and documentation site'}</h2>
-            <p>{zh ? '当前的接入资料是公开源码、驱动契约和协议记录。SDK 与独立文档站属于后续路线。'
-              : 'Current integration resources are the source, driver contract and protocol records. A packaged SDK and dedicated documentation site are on the roadmap.'}</p>
+            <h2 id="sdk-title">{zh ? '扩展特性复测与独立文档' : 'Extended validation & docs roadmap'}</h2>
+            <p>{zh ? 'app、core与drivers模块化拆分已完成。后续将逐品牌完成扩展特性的真机复测，并推进独立开发者文档站。'
+              : 'The modular app/core/drivers split is live. Upcoming milestones focus on hardware validation of extended features and dedicated documentation.'}</p>
           </div>
         </div>
       </div>

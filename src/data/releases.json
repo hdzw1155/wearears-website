@@ -1,5 +1,23 @@
 [
   {
+    "tag": "v0.5.0-exp",
+    "publishedAt": "2026-11-25T01:26:44Z",
+    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.5.0-exp",
+    "prerelease": true
+  },
+  {
+    "tag": "v0.4.2",
+    "publishedAt": "2026-11-18T14:26:23Z",
+    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.4.2",
+    "prerelease": false
+  },
+  {
+    "tag": "v0.4.1",
+    "publishedAt": "2026-11-12T12:52:12Z",
+    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.4.1",
+    "prerelease": false
+  },
+  {
     "tag": "v0.4.0",
     "publishedAt": "2026-11-07T17:44:29Z",
     "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.4.0",
@@ -27,24 +45,6 @@
     "tag": "v0.2.0",
     "publishedAt": "2026-10-25T13:28:17Z",
     "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.2.0",
-    "prerelease": false
-  },
-  {
-    "tag": "v0.1.2.2",
-    "publishedAt": "2026-10-25T08:35:23Z",
-    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.1.2.2",
-    "prerelease": false
-  },
-  {
-    "tag": "v0.1.1",
-    "publishedAt": "2026-10-24T16:06:13Z",
-    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.1.1",
-    "prerelease": false
-  },
-  {
-    "tag": "v0.1.0",
-    "publishedAt": "2026-10-24T07:53:55Z",
-    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.1.0",
     "prerelease": false
   }
 ]

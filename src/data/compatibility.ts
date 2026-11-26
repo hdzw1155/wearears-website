@@ -5,7 +5,7 @@ export const brands = {
   huawei: { zh: '华为', en: 'Huawei' },
   honor: { zh: '荣耀', en: 'HONOR' },
   nicehck: { zh: '原道', en: 'NiceHCK' },
-  redmi: { zh: '小米 / Redmi', en: 'Xiaomi / Redmi' },
+  redmi: { zh: '小米/Redmi', en: 'Xiaomi / Redmi' },
   oppo: { zh: 'OPPO', en: 'OPPO' },
   edifier: { zh: '漫步者', en: 'Edifier' },
   rose: { zh: '弱水时砂', en: 'ROSESELSA' },
@@ -29,7 +29,7 @@ type DeviceRecord = {
 };
 
 const readme = appSource + 'README.md';
-const protocols = appSource + 'docs/protocol-validation.md';
+const protocols = appSource + 'docs/HANDOFF.md';
 
 // Dates and watch models stay null when the cited record has no device-level detail.
 export const compatibility: DeviceRecord[] = [

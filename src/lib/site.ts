@@ -1,6 +1,7 @@
 export const site = {
   name: 'WearEars',
   origin: 'https://wearears.com',
+  directDownloadUrl: 'https://download.wearears.com',
   appRepository: 'https://github.com/hdzw1155/WearEars',
   sourceRepository: 'https://github.com/hdzw1155/wearears-website',
   contactEmail: '',
@@ -24,7 +25,7 @@ export const navigation = ['project', 'compatibility', 'developers', 'partners',
 
 export const releasesUrl = site.appRepository + '/releases';
 export const issuesUrl = site.appRepository + '/issues';
-export const appRevision = 'da06a6b80bda8b7b303a25c65b2e9c845866200d';
+export const appRevision = 'fefa5f22109460258092888880c063f2b7f85158';
 export const appSource = site.appRepository + '/blob/' + appRevision + '/';
 
 export function pagePath(locale: Locale, page: SitePage): string {
@@ -35,15 +36,15 @@ export function pagePath(locale: Locale, page: SitePage): string {
 export const siteCopy = {
   zh: {
     lang: 'zh-CN',
-    title: 'WearEars · 声音，在腕上',
-    description: 'WearEars 是面向 Wear OS 的开源耳机控制项目。查看耳机电量、切换声学模式，探索跨品牌适配。',
+    title: 'WearEars · 声音，在腕上与掌间',
+    description: 'WearEars是面向Wear OS 3+手表与Android 11+手机的开源耳机控制项目。支持跨品牌电量读取、声学模式切换、通用特性扩展与本机单端空间音频。',
     menu: '打开导航',
     skip: '跳至主要内容',
     navigation: '主导航',
     footer: '页脚导航',
     language: 'Read in English',
     languageLabel: 'EN',
-    tagline: '把耳机控制带到手腕上。',
+    tagline: '把跨品牌耳机控制带到手表与手机。',
     pages: {
       home: '首页',
       project: '项目',
@@ -54,26 +55,26 @@ export const siteCopy = {
       privacy: '数据与隐私',
     },
     descriptions: {
-      home: '在 Wear OS 手表上查看耳机电量、切换降噪与通透。查找你的耳机型号，了解 WearEars 的开源驱动。',
-      project: '了解 WearEars 如何把耳机电量与声学控制带到 Wear OS 手表。',
-      compatibility: '按品牌、型号和证据类型查询 WearEars 的设备记录及功能范围。',
-      developers: '了解 WearEars 的 TwsClient 统一契约、驱动调度和协议验证方法。',
-      partners: '探索 WearEars 面向耳机品牌、ODM 和穿戴设备团队的联合验证与技术合作方向。',
-      blog: '查看 WearEars 的 GitHub 发布记录、项目更新和协议技术笔记。',
-      privacy: '了解 WearEars 官网的兼容性查询和外部链接如何处理数据。',
+      home: '在Wear OS 3+手表和Android 11+手机上查看耳机电量、切换降噪与音效。支持9大品牌驱动、通用特性扩展与本机单端空间音频。',
+      project: '了解WearEars如何用同一套安装包把跨品牌耳机电量、进阶声学控制与本机空间音频带到手表和手机。',
+      compatibility: '按品牌、型号和证据类型查询WearEars的真机记录、协议候选与扩展能力边界。',
+      developers: '了解WearEars的三层模块化目录结构、通用特性引擎、9大品牌驱动裁剪与Windows离线构建流程。',
+      partners: '面向耳机品牌、ODM和穿戴设备团队的联合验证与技术合作方向。',
+      blog: '查看WearEars的GitHub公开发布记录、v0.5.0-exp架构重构与底层交接文档。',
+      privacy: '了解WearEars应用的纯本地蓝牙零收集原则、官网数据处理说明与商标政策。',
     },
   },
   en: {
     lang: 'en',
-    title: 'WearEars · Sound, on your wrist',
-    description: 'WearEars brings earbud battery and listening controls to Wear OS through open-source device drivers.',
+    title: 'WearEars · Sound, on wrist & phone',
+    description: 'WearEars brings cross-brand earbud battery, listening modes, extensible features and local binaural spatial audio to Wear OS 3+ watches and Android 11+ phones.',
     menu: 'Open navigation',
     skip: 'Skip to content',
     navigation: 'Primary navigation',
     footer: 'Footer navigation',
     language: '阅读中文版',
     languageLabel: '中文',
-    tagline: 'Earbud controls, brought to your wrist.',
+    tagline: 'Cross-brand earbud controls for watch and phone.',
     pages: {
       home: 'Home',
       project: 'Project',
@@ -84,13 +85,13 @@ export const siteCopy = {
       privacy: 'Data & privacy',
     },
     descriptions: {
-      home: 'Check earbud battery and switch listening modes from Wear OS. Find your model and explore the open-source drivers.',
-      project: 'See how WearEars brings earbud battery and listening controls to a Wear OS watch.',
-      compatibility: 'Browse WearEars device records by brand, model and evidence. See which functions each record covers.',
-      developers: 'Explore the WearEars TwsClient contract, driver selection and protocol verification workflow.',
+      home: 'Check earbud battery and switch ANC modes from Wear OS 3+ watches and Android 11+ phones. Nine brand drivers, extensible features and local spatial DSP.',
+      project: 'See how WearEars delivers earbud battery, extended acoustic controls and local binaural spatial audio across watch and phone in one APK.',
+      compatibility: 'Browse WearEars device records by brand, model and evidence, along with protocol extension boundaries.',
+      developers: 'Explore the WearEars modular codebase, FeatureTransactions engine, 9 brand drivers and offline Windows build workflow.',
       partners: 'Explore joint validation and engineering collaboration for audio brands, ODMs and wearable teams.',
-      blog: 'Read WearEars GitHub releases, project updates and protocol notes.',
-      privacy: 'Learn how the WearEars website handles compatibility searches and external links.',
+      blog: 'Read WearEars GitHub releases, the v0.5.0-exp modular refactor and architecture handoff notes.',
+      privacy: 'Learn about the app zero-data-collection guarantee, website handling and trademark policy.',
     },
   },
 } as const;
