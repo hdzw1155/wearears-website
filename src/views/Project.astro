@@ -29,22 +29,20 @@ const steps = zh ? [
         </div>
 
         <div class="project-hero-stage">
-          <div class="project-hero-copy">
-            <h1 id="project-hero-title" class="project-hero-title">
-              <span class="project-title-main">{zh ? '腕上与掌间' : 'Watch & Phone'}</span>
-              <span class="project-title-sub">{zh ? '同一套声音控制' : 'Unified Earbud Control'}</span>
-            </h1>
-            <div class="action-row project-actions">
-              <a class="button button-primary" href={site.directDownloadUrl} rel="noopener noreferrer" data-direct-download>
-                {zh ? '下载' : 'Download'} <span aria-hidden="true">↓</span>
-              </a>
-              <a class="button button-outline" href={releasesUrl} target="_blank" rel="noopener noreferrer">
-                GitHub <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
-              </a>
-              <a class="text-link" href={pagePath(locale, 'compatibility')}>
-                {zh ? '查看兼容性' : 'Compatibility'} <span aria-hidden="true">→</span>
-              </a>
-            </div>
+          <h1 id="project-hero-title" class="project-hero-title">
+            <span class="project-title-main">{zh ? '腕上与掌间' : 'Watch & Phone'}</span>
+            <span class="project-title-sub">{zh ? '同一套声音控制' : 'Unified Earbud Control'}</span>
+          </h1>
+          <div class="action-row project-actions">
+            <a class="button button-primary" href={site.directDownloadUrl} rel="noopener noreferrer" data-direct-download>
+              {zh ? '下载' : 'Download'} <span aria-hidden="true">↓</span>
+            </a>
+            <a class="button button-outline" href={releasesUrl} target="_blank" rel="noopener noreferrer">
+              GitHub <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+            </a>
+            <a class="text-link" href={pagePath(locale, 'compatibility')}>
+              {zh ? '查看兼容性' : 'Compatibility'} <span aria-hidden="true">→</span>
+            </a>
           </div>
 
           <figure class="project-hero-figure">
