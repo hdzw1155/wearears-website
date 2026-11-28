@@ -3,7 +3,7 @@ import type { FanDeckController } from './fanDeck';
 /**
  * Interactive living "s" choreography in the homepage WearEars wordmark:
  * delayed droplet hop -> single slow sibling tour -> idle back-corner daydreaming,
- * plus a 5-click wiggle easter egg that toggles between Rosewood sweep & Fan deck mode.
+ * plus the 5-click wiggle easter egg that toggles between Seamless Fan-Blade Sweep & Tilting Fan Deck mode.
  */
 export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController): void {
   const slides = Array.from(homeDeck.querySelectorAll<HTMLElement>('.slide-section'));
@@ -101,7 +101,7 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
     introHopTimerId = window.setTimeout(() => {
       introHopTimerId = null;
       playIntroHop();
-    }, 1720);
+    }, 1680);
   };
 
   deck.setOnHeroUnbury(scheduleIntroHop);
@@ -159,7 +159,7 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
 
     const lookAround = async (xBase: number, slow = false) => {
       const durLook = slow ? 1950 : 1650;
-      if (!(await playAnim(
+      return playAnim(
         sEl,
         [
           { transform: `translate3d(${xBase}px, 0, 0) rotate(0deg) scale(0.97, 1.03)`, offset: 0 },
@@ -172,8 +172,7 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
         ],
         { duration: durLook, easing: 'ease-in-out', fill: 'forwards' },
         runId
-      ))) return false;
-      return true;
+      );
     };
 
     const lazyStretch = async (xBase: number) =>
@@ -205,17 +204,6 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
       ))) return;
 
       if (!(await lookAround(0))) return;
-      if (!(await playAnim(
-        sEl,
-        [
-          { transform: 'translate3d(0, 0, 0) rotate(0deg)', offset: 0 },
-          { transform: 'translate3d(-2px, -2px, 0) rotate(-10deg)', offset: 0.3 },
-          { transform: 'translate3d(2px, -2px, 0) rotate(10deg)', offset: 0.65 },
-          { transform: 'translate3d(0, 0, 0) rotate(0deg)', offset: 1 }
-        ],
-        { duration: 720, easing: 'ease-in-out', fill: 'forwards' },
-        runId
-      ))) return;
       if (!(await waitMs(320, runId))) return;
 
       const sCenter = sEl.offsetLeft + sEl.offsetWidth * 0.5;
@@ -287,19 +275,6 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
         if (!(await lazyStretch(curX))) return;
       }
       if (!(await waitMs(1600, runId))) return;
-      if (cycle % 3 === 1) {
-        if (!(await playAnim(
-          sEl,
-          [
-            { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 0 },
-            { transform: `translate3d(${curX}px, -1px, 0) rotate(-5deg)`, offset: 0.4 },
-            { transform: `translate3d(${curX}px, 0, 0) rotate(4deg)`, offset: 0.75 },
-            { transform: `translate3d(${curX}px, 0, 0) rotate(0deg)`, offset: 1 }
-          ],
-          { duration: 900, easing: 'ease-in-out', fill: 'forwards' },
-          runId
-        ))) return;
-      }
       cycle++;
     }
   };
@@ -388,6 +363,17 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
     });
 
     const dist = Math.abs(curX);
+    const finishRecovery = () => {
+      sEl.style.zIndex = '';
+      sEl.style.transform = '';
+      isRecovering = false;
+      if (pendingWiggle) {
+        pendingWiggle = false;
+        playUnlockWiggle();
+      }
+      startIdleMonitor();
+    };
+
     if (dist <= 6) {
       const snapAnim = sEl.animate(
         [
@@ -397,16 +383,7 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
         ],
         { duration: 220, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
       );
-      snapAnim.onfinish = () => {
-        sEl.style.zIndex = '';
-        sEl.style.transform = '';
-        isRecovering = false;
-        if (pendingWiggle) {
-          pendingWiggle = false;
-          playUnlockWiggle();
-        }
-        startIdleMonitor();
-      };
+      snapAnim.onfinish = finishRecovery;
       return;
     }
 
@@ -423,16 +400,7 @@ export function initHeroLivingS(homeDeck: HTMLElement, deck: FanDeckController):
       ],
       { duration: runMs, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
     );
-    runAnim.onfinish = () => {
-      sEl.style.zIndex = '';
-      sEl.style.transform = '';
-      isRecovering = false;
-      if (pendingWiggle) {
-        pendingWiggle = false;
-        playUnlockWiggle();
-      }
-      startIdleMonitor();
-    };
+    runAnim.onfinish = finishRecovery;
   };
 
   sEl.addEventListener('click', () => {

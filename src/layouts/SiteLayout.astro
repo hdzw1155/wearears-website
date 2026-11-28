@@ -25,7 +25,7 @@ const languageUrl = pagePath(other, page);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#F7F7F5" />
+    <meta name="theme-color" content="#F5F4EE" />
     <link rel="icon" type="image/svg+xml" href="/brand/mark.svg" />
     <link rel="apple-touch-icon" href="/brand/mark.svg" />
     {notFound ? <meta name="robots" content="noindex" /> : (
@@ -52,10 +52,11 @@ const languageUrl = pagePath(other, page);
   </head>
   <body>
     <a class="skip-link" href="#main-content">{copy.skip}</a>
+
     <header class="masthead">
       <div class="shell masthead-inner">
         <a class="wordmark" href={pagePath(locale, 'home')}>
-          <img src="/brand/mark.svg" width="31" height="31" alt="" />
+          <img src="/brand/mark.svg" width="30" height="30" alt="" />
           <span>WearEars</span>
         </a>
         <nav class="desktop-nav" aria-label={copy.navigation}>
@@ -67,13 +68,18 @@ const languageUrl = pagePath(other, page);
         </nav>
         <div class="masthead-actions">
           <a class="header-github" href={site.appRepository} target="_blank" rel="noopener noreferrer">
-            GitHub <span aria-hidden="true">↗</span><span class="sr-only">{locale === 'zh' ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+            GitHub <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
           </a>
           <a class="language-link" href={languageUrl} lang={siteCopy[other].lang} aria-label={copy.language}>
             {copy.languageLabel}
           </a>
           <details class="mobile-nav">
-            <summary aria-label={copy.menu} data-open-label={copy.menu} data-close-label={locale === 'zh' ? '关闭导航' : 'Close navigation'} aria-expanded="false">
+            <summary
+              aria-label={copy.menu}
+              data-open-label={copy.menu}
+              data-close-label={zh ? '关闭导航' : 'Close navigation'}
+              aria-expanded="false"
+            >
               <span class="menu-icon" aria-hidden="true"></span>
             </summary>
             <nav aria-label={copy.navigation}>
@@ -83,43 +89,74 @@ const languageUrl = pagePath(other, page);
                 </a>
               ))}
               <a href={site.appRepository} target="_blank" rel="noopener noreferrer">
-                GitHub <span aria-hidden="true">↗</span><span class="sr-only">{locale === 'zh' ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+                GitHub <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
               </a>
             </nav>
           </details>
         </div>
       </div>
+      <div class="scroll-progress-track" aria-hidden="true">
+        <div class="scroll-progress-bar"></div>
+      </div>
     </header>
+
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
+
     <footer class="site-footer">
       <div class="shell">
         <div class="footer-grid">
-          <div>
+          <div class="footer-brand">
             <a class="wordmark" href={pagePath(locale, 'home')}>
-              <img src="/brand/mark.svg" width="31" height="31" alt="" />
+              <img src="/brand/mark.svg" width="30" height="30" alt="" />
               <span>WearEars</span>
             </a>
             <p>{copy.tagline}</p>
+            <div class="chroma-bar" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
           </div>
-          <nav aria-label={copy.footer}>
-            <a href={pagePath(locale, 'developers')}>{copy.pages.developers}</a>
-            <a href={pagePath(locale, 'partners')}>{copy.pages.partners}</a>
-            <a href={pagePath(locale, 'privacy')}>{copy.pages.privacy}</a>
-            <a href={site.appRepository} target="_blank" rel="noopener noreferrer">
-              GitHub <span aria-hidden="true">↗</span><span class="sr-only">{locale === 'zh' ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
-            </a>
-            {site.contactEmail && <a href={'mailto:' + site.contactEmail}>{site.contactEmail}</a>}
-          </nav>
+
+          <div class="footer-col">
+            <h4>{zh ? '站点导航' : 'NAVIGATION'}</h4>
+            <nav aria-label={copy.footer}>
+              <a href={pagePath(locale, 'project')}>{copy.pages.project}</a>
+              <a href={pagePath(locale, 'compatibility')}>{copy.pages.compatibility}</a>
+              <a href={pagePath(locale, 'developers')}>{copy.pages.developers}</a>
+              <a href={pagePath(locale, 'partners')}>{copy.pages.partners}</a>
+              <a href={pagePath(locale, 'blog')}>{copy.pages.blog}</a>
+            </nav>
+          </div>
+
+          <div class="footer-col">
+            <h4>{zh ? '公开资源与合规' : 'RESOURCES'}</h4>
+            <nav aria-label={zh ? '公开资源' : 'Public resources'}>
+              <a href={site.directDownloadUrl} rel="noopener noreferrer">{zh ? 'Android国内直连' : 'Android direct'} <span aria-hidden="true">↓</span></a>
+              <a href={site.windowsDownloadUrl} target="_blank" rel="noopener noreferrer">{zh ? 'Windows单文件版' : 'Windows EXE'} <span aria-hidden="true">↓</span></a>
+              <a href={site.appRepository} target="_blank" rel="noopener noreferrer">
+                GitHub <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+              </a>
+              <a href="/compatibility.json">{zh ? '兼容性JSON接口' : 'compatibility.json'} <span aria-hidden="true">↗</span></a>
+              <a href={pagePath(locale, 'privacy')}>{copy.pages.privacy}</a>
+              {site.contactEmail && <a href={'mailto:' + site.contactEmail}>{site.contactEmail}</a>}
+            </nav>
+          </div>
         </div>
+
         <div class="footer-baseline">
           <span>© 2026 WearEars · {zh ? '保留所有权利' : 'All rights reserved'}</span>
-          <span><a href={pagePath(locale, 'privacy')} class="footer-legal-link">{zh ? '隐私与商标政策' : 'Privacy & Trademarks'}</a> · WEAR OS · ANDROID / MIT</span>
+          <span>
+            <a href={pagePath(locale, 'privacy')} class="footer-legal-link">{zh ? '隐私与商标政策' : 'Privacy & Trademarks'}</a>
+            {' · '}WEAR OS · ANDROID · WINDOWS · MIT
+          </span>
         </div>
       </div>
     </footer>
+
     <script>
+      import { initSiteMotion } from '../scripts/siteMotion';
+
+      initSiteMotion();
+
       const menu = document.querySelector<HTMLDetailsElement>('.mobile-nav');
       const summary = menu?.querySelector<HTMLElement>('summary');
       const openLabel = summary?.getAttribute('data-open-label') || '打开导航';

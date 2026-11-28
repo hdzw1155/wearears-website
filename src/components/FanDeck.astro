@@ -1,60 +1,100 @@
 ---
 ---
 
-<div class="home-deck" data-deck-mode="scroll-wipe">
+<div class="home-deck" data-deck-mode="scroll-wipe" data-deck-theme="paper">
   <div class="deck-stage">
     <slot />
+
+    <!-- Sculpted Single Fan Rib: Strictly matches each incoming page's exact background color + satin-brass filigree -->
     <div class="fan-sweeper" aria-hidden="true" data-fan-sweeper>
-      <svg class="fan-rib-svg" viewBox="0 0 3024 36" width="3024" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="fan-blade-svg fan-blade-main" viewBox="0 0 3024 38" width="3024" height="38" fill="none" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <clipPath id="wear-fan-rib-clip">
-            <path d="M0 12 L42 11.4 C68 10.6 92 8.2 128 8.4 C166 8.6 196 11.4 252 11.8 L3024 12.6 L3024 23.4 L252 24.2 C196 24.6 166 27.4 128 27.6 C92 27.8 68 25.4 42 24.6 L0 24 Z" />
+          <clipPath id="we-fan-rib-clip">
+            <path d="M0 12.6 L42 12 C70 11.1 96 8.3 134 8.5 C174 8.7 204 11.6 262 12.2 L3024 13.1 L3024 24.9 L262 25.8 C204 26.4 174 29.3 134 29.5 C96 29.7 70 26.9 42 26 L0 25.4 Z" />
           </clipPath>
-          <linearGradient id="wear-rosewood-body" x1="0" y1="8" x2="0" y2="28" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#9A4E38" />
-            <stop offset="14%" stop-color="#6C271B" />
-            <stop offset="46%" stop-color="#4A1710" />
-            <stop offset="82%" stop-color="#2D0C08" />
-            <stop offset="100%" stop-color="#190503" />
+          <!-- 5-stop 3D cylindrical shading matching exact incoming page surface -->
+          <linearGradient id="we-rib-body" x1="0" y1="8" x2="0" y2="30" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" style="stop-color: var(--rib-hi, #FFFFFF);" />
+            <stop offset="18%" style="stop-color: var(--rib-mid, #F8F7F2);" />
+            <stop offset="52%" style="stop-color: var(--rib-core, #F5F4EE);" />
+            <stop offset="84%" style="stop-color: var(--rib-deep, #E2DFD3);" />
+            <stop offset="100%" style="stop-color: var(--rib-edge, #C7C2B2);" />
           </linearGradient>
-          <linearGradient id="wear-rosewood-grain-wash" x1="0" y1="0" x2="2200" y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#2A0B07" stop-opacity="0.16" />
-            <stop offset="18%" stop-color="#7D3222" stop-opacity="0.12" />
-            <stop offset="42%" stop-color="#1F0704" stop-opacity="0.22" />
-            <stop offset="68%" stop-color="#8B3B28" stop-opacity="0.10" />
-            <stop offset="100%" stop-color="#240906" stop-opacity="0.20" />
+          <!-- Subtle longitudinal tone modulation -->
+          <linearGradient id="we-rib-wash" x1="0" y1="0" x2="2200" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#000000" stop-opacity="0.06" />
+            <stop offset="18%" stop-color="#FFFFFF" stop-opacity="0.08" />
+            <stop offset="44%" stop-color="#000000" stop-opacity="0.07" />
+            <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.06" />
+            <stop offset="100%" stop-color="#000000" stop-opacity="0.06" />
           </linearGradient>
-          <linearGradient id="wear-antique-brass" x1="0" y1="8" x2="0" y2="28" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#E7C278" />
-            <stop offset="35%" stop-color="#C29140" />
-            <stop offset="72%" stop-color="#875E1D" />
-            <stop offset="100%" stop-color="#583B0E" />
+          <!-- Warm antique satin-brass gradient (high contrast on both Ivory & Obsidian) -->
+          <linearGradient id="we-satin-brass" x1="0" y1="8" x2="0" y2="30" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#F2D794" />
+            <stop offset="32%" stop-color="#C8963E" />
+            <stop offset="72%" stop-color="#8A611C" />
+            <stop offset="100%" stop-color="#53370B" />
           </linearGradient>
-          <radialGradient id="wear-brass-pin" cx="0.38" cy="0.35" r="0.65">
-            <stop offset="0%" stop-color="#F0D08C" />
-            <stop offset="55%" stop-color="#BA8838" />
-            <stop offset="100%" stop-color="#664413" />
+          <!-- Domed brass pivot rivet -->
+          <radialGradient id="we-brass-pin" cx="0.35" cy="0.32" r="0.68">
+            <stop offset="0%" stop-color="#FCE8B6" />
+            <stop offset="50%" stop-color="#C7933B" />
+            <stop offset="100%" stop-color="#61400F" />
           </radialGradient>
         </defs>
-        <g clip-path="url(#wear-fan-rib-clip)">
-          <rect x="0" y="7" width="3024" height="22" fill="url(#wear-rosewood-body)" />
-          <rect x="0" y="7" width="3024" height="22" fill="url(#wear-rosewood-grain-wash)" />
-          <path d="M0 14.2 C240 12.8 480 15.6 740 13.8 C1020 12.2 1320 15.4 1660 13.9 C2020 12.6 2480 15.1 3024 13.7" stroke="#180503" stroke-opacity="0.30" stroke-width="1.05" />
-          <path d="M0 17.5 C190 19.0 420 16.0 690 17.8 C980 19.4 1280 16.3 1620 17.9 C1980 19.3 2450 16.5 3024 18.0" stroke="#9E523B" stroke-opacity="0.18" stroke-width="0.9" />
-          <path d="M0 20.4 C270 19.1 560 22.1 880 20.2 C1210 18.7 1560 21.8 1940 20.1 C2340 18.9 2680 21.6 3024 20.3" stroke="#140402" stroke-opacity="0.34" stroke-width="1.2" />
-          <path d="M48 11.2 C160 11.8 340 10.6 560 12.1 C820 13.2 1140 11.0 1520 12.4 C1920 13.6 2440 11.6 3024 12.8" stroke="#C87E5E" stroke-opacity="0.20" stroke-width="0.7" />
-          <rect x="66" y="7" width="2.4" height="22" fill="url(#wear-antique-brass)" />
-          <rect x="64.8" y="7" width="0.8" height="22" fill="#180503" fill-opacity="0.55" />
-          <rect x="68.8" y="7" width="0.8" height="22" fill="#180503" fill-opacity="0.55" />
-          <rect x="158" y="7" width="1.3" height="22" fill="url(#wear-antique-brass)" fill-opacity="0.82" />
+
+        <g clip-path="url(#we-fan-rib-clip)">
+          <!-- Sculpted page-colored body -->
+          <rect x="0" y="7" width="3024" height="24" fill="url(#we-rib-body)" />
+          <rect x="0" y="7" width="3024" height="24" fill="url(#we-rib-wash)" />
+
+          <!-- Subtle carved longitudinal grain lines -->
+          <path d="M0 14.8 C240 13.4 480 16.2 760 14.4 C1040 12.8 1340 16.0 1680 14.5 C2040 13.2 2480 15.7 3024 14.3" style="stroke: var(--rib-grain-dark, rgba(17, 19, 23, 0.09));" stroke-width="1.0" />
+          <path d="M0 18.4 C190 19.9 420 16.8 690 18.6 C980 20.2 1280 17.1 1620 18.7 C1980 20.1 2450 17.3 3024 18.8" style="stroke: var(--rib-grain-light, rgba(255, 255, 255, 0.65));" stroke-width="0.9" />
+          <path d="M0 21.8 C270 20.5 560 23.4 880 21.6 C1210 20.1 1560 23.1 1940 21.5 C2340 20.3 2680 22.9 3024 21.7" style="stroke: var(--rib-grain-dark, rgba(17, 19, 23, 0.09));" stroke-width="1.1" />
+
+          <!-- Primary hinge collar: satin brass band + twin inlay seams + secondary gold hairline -->
+          <rect x="64.5" y="7" width="0.9" height="24" fill="#111317" fill-opacity="0.38" />
+          <rect x="65.4" y="7" width="3.1" height="24" fill="url(#we-satin-brass)" />
+          <rect x="68.5" y="7" width="0.9" height="24" fill="#111317" fill-opacity="0.38" />
+          <rect x="72.5" y="7" width="1.15" height="24" fill="url(#we-satin-brass)" fill-opacity="0.86" />
+
+          <!-- Restrained Bauhaus 45° diamond filigree inlay on the grip belly -->
+          <path d="M94 19 L115 19 M141 19 L156 19" stroke="url(#we-satin-brass)" stroke-opacity="0.82" stroke-width="1.05" stroke-linecap="round" />
+          <path d="M128 13.8 L133.6 19 L128 24.2 L122.4 19 Z" fill="none" stroke="url(#we-satin-brass)" stroke-width="1.2" />
+          <path d="M128 16.6 L130.4 19 L128 21.4 L125.6 19 Z" fill="url(#we-satin-brass)" />
+
+          <!-- Waist transition ferrule ring -->
+          <rect x="165.8" y="7" width="0.85" height="24" fill="#111317" fill-opacity="0.36" />
+          <rect x="166.7" y="7" width="2.0" height="24" fill="url(#we-satin-brass)" />
+          <rect x="168.7" y="7" width="0.85" height="24" fill="#111317" fill-opacity="0.36" />
+
+          <!-- Refined mid-shaft brass inlay collars & subtle diamond mark along the long span -->
+          <rect x="417" y="7" width="1.6" height="24" fill="url(#we-satin-brass)" fill-opacity="0.88" />
+          <rect x="421.2" y="7" width="0.85" height="24" fill="url(#we-satin-brass)" fill-opacity="0.68" />
+          <rect x="858" y="7" width="1.5" height="24" fill="url(#we-satin-brass)" fill-opacity="0.78" />
+          <rect x="862" y="7" width="0.8" height="24" fill="url(#we-satin-brass)" fill-opacity="0.58" />
+          <rect x="1320" y="7" width="1.35" height="24" fill="url(#we-satin-brass)" fill-opacity="0.68" />
         </g>
-        <path d="M0 12.2 L42 11.6 C68 10.8 92 8.4 128 8.6 C166 8.8 196 11.6 252 12.0 L3024 12.8" stroke="#E2AC88" stroke-opacity="0.38" stroke-width="0.85" />
-        <path d="M0 23.8 L42 24.4 C68 25.2 92 27.6 128 27.4 C166 27.2 196 24.4 252 24.0 L3024 23.2" stroke="#120302" stroke-opacity="0.75" stroke-width="0.95" />
-        <circle cx="48" cy="18" r="2.8" fill="url(#wear-brass-pin)" stroke="#190503" stroke-opacity="0.65" stroke-width="0.7" />
+
+        <!-- Crisp top rim & sculpted bottom edge so page-colored ivory rib stands out unmistakably -->
+        <path d="M0 12.8 L42 12.2 C70 11.3 96 8.5 134 8.7 C174 8.9 204 11.8 262 12.4 L3024 13.3" style="stroke: var(--rib-rim, #FFFFFF);" stroke-opacity="0.78" stroke-width="1.0" />
+        <path d="M0 25.2 L42 25.8 C70 26.7 96 29.5 134 29.3 C174 29.1 204 26.2 262 25.6 L3024 24.7" style="stroke: var(--rib-bottom-edge, rgba(17, 19, 23, 0.36));" stroke-width="1.2" />
+
+        <!-- Recessed bezel + domed satin-brass pivot pin -->
+        <circle cx="48" cy="19" r="4.1" fill="#111317" fill-opacity="0.28" />
+        <circle cx="48" cy="19" r="3.2" fill="url(#we-brass-pin)" stroke="#3A2508" stroke-opacity="0.65" stroke-width="0.75" />
       </svg>
     </div>
+
+    <!-- Minimal Swiss Chapter Index Rail -->
+    <nav class="deck-rail" aria-label="Section navigation" data-deck-rail></nav>
   </div>
+
   <div class="deck-scroll-spacer" aria-hidden="true" data-deck-spacer></div>
+
+  <!-- Brief toast for 5-click 's' easter egg -->
+  <div class="deck-mode-toast" role="status" aria-live="polite" data-deck-toast></div>
 </div>
 
 <script>

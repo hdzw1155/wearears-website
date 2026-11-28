@@ -9,20 +9,20 @@ const { locale } = Astro.props;
 const zh = locale === 'zh';
 ---
 
-<div class="star-strip" data-star-ledger>
+<div class="star-strip" id="download" data-star-ledger>
   <div class="star-strip-main">
     <span class="star-strip-label">STAR</span>
     <p
       class="star-strip-text"
       data-star-text
       data-default-text={zh
-        ? '能去GitHub上给作者点颗小星星吗？您的支持是我更新最大的动力，感谢您的认可'
+        ? '能去GitHub上给作者点颗小星星吗？您的支持是我更新最大的动力，感谢您的认可。'
         : 'Could you drop a Star on GitHub? Your support keeps updates going—thank you!'}
       data-triggered-text={zh
-        ? '已拉起下载，感谢您对我们的认可，我们还将继续开发，让各位的生活更加便利'
-        : 'Download started. Thank you for your support—we will keep improving WearEars to make daily life easier.'}
+        ? '已拉起下载，感谢您对我们的认可，我们还将继续开发，让日常使用更加便利。'
+        : 'Download started. Thank you for your support—we will keep improving WearEars.'}
     >{zh
-      ? '能去GitHub上给作者点颗小星星吗？您的支持是我更新最大的动力，感谢您的认可'
+      ? '能去GitHub上给作者点颗小星星吗？您的支持是我更新最大的动力，感谢您的认可。'
       : 'Could you drop a Star on GitHub? Your support keeps updates going—thank you!'}</p>
   </div>
   <a

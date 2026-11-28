@@ -5,18 +5,26 @@ interface Props {
   label: string;
   title: string;
   summary: string;
+  meta?: string;
 }
-const { label, title, summary } = Astro.props;
+const { label, title, summary, meta = 'WEAREARS · OPEN SOURCE' } = Astro.props;
 ---
 
-<header class="page-intro shell">
-  <div class="page-intro-main">
-    <p class="label"><span class="label-mark"></span>{label}</p>
-    <h1>{title}</h1>
-    <p class="page-intro-summary">{summary}</p>
-    <slot />
+<section class="page-intro-band">
+  <div class="shell">
+    <div class="page-intro-index label">
+      <span><i class="label-mark" aria-hidden="true"></i> {label}</span>
+      <span class="hero-index-right">{meta}</span>
+    </div>
+    <header class="page-intro">
+      <div class="page-intro-main" data-reveal>
+        <h1>{title}</h1>
+        <p class="page-intro-summary">{summary}</p>
+        <slot />
+      </div>
+      <div class="page-intro-figure">
+        <AnimatedAppIcon size={184} interactive={true} />
+      </div>
+    </header>
   </div>
-  <div class="page-intro-figure">
-    <AnimatedAppIcon size={220} interactive={true} />
-  </div>
-</header>
+</section>

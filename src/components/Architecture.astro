@@ -5,35 +5,35 @@ const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 const layers = [
   {
-    title: zh ? '界面、双端适配与安全门禁' : 'UI, Dual-Device & Safety Gates',
-    code: 'MainActivity · SafetyGates · Tiles',
+    title: zh ? '交互展示与安全门禁' : 'Interaction & Safety Gates',
+    code: 'MainActivity · DesktopApp · SafetyGates',
     body: zh
-      ? '自适应手表圆屏与手机竖屏，四套皮肤统一，内置70%音量护栏与查找耳机三层保护。'
-      : 'Adapts between round watches and portrait phones across 4 themes with 70% volume and wear-safety gates.',
+      ? '手表圆屏、手机竖屏、纯黑眼镜HUD、Windows托盘与磁贴共用四套皮肤；前置70%音量护栏与查找耳机入耳三层保护。'
+      : 'Round watch, portrait phone, pure-black HUD, Windows tray and tiles share four themes behind a 70% volume guard and three-layer wear protection.',
     source: 'app/src/com/hdz/wearcontrol/MainActivity.java',
   },
   {
-    title: zh ? '协调、短连接与特性引擎' : 'Hub, Burst Mode & Feature Engine',
-    code: 'ControlHub · FeatureTransactions',
+    title: zh ? '统一契约与核心规则' : 'Unified Contract & Core Rules',
+    code: 'TwsClient · ControlHub · FeatureTransactions',
     body: zh
-      ? '手机端3.8秒按需释放RFCOMM并设12秒防抢占守卫，14类扩展特性隔离事务。'
-      : 'Phones release RFCOMM after 3.8s idle with a 12s anti-hijack guard; 14 feature IDs run in isolated lanes.',
+      ? '纯JVM统一连接、电量与能力位契约，管理选机、真实状态、主降噪与14类扩展特性隔离事务，以及手机按需短连接与局域网协同规则。'
+      : 'Pure JVM contract for connections, battery and capability flags, coordinating selection, state, 14 isolated feature lanes, quick-park burst mode and local LAN rules.',
     source: 'core/src/com/hdz/wearcontrol/FeatureTransactions.java',
   },
   {
-    title: zh ? '九品牌驱动与构建裁剪' : 'Nine Brand Drivers & Trimming',
-    code: 'DriverRegistry · modules.json',
+    title: zh ? '驱动调度与品牌协议' : 'Driver Dispatch & Brand Protocols',
+    code: 'DriverRegistry · WireDriver · modules.json',
     body: zh
-      ? '编译期按需裁剪9个品牌驱动，独立线程运行，探测确认能力后才开放写入。'
-      : 'Compile-time trimming across 9 brand drivers; per-link threads confirm capability before writes.',
+      ? '根据设备信息匹配9大品牌私有驱动，支持编译期按需裁剪；独立线程按探测回包确认能力后再开放写入，并在编码层硬拦截禁发指令。'
+      : 'Matches 9 brand drivers with compile-time trimming; per-link threads confirm capability replies before enabling writes and hard-block unsafe opcodes.',
     source: 'app/src/com/hdz/wearcontrol/DriverRegistry.java',
   },
   {
-    title: zh ? '传输链路与本机声学内核' : 'Transport & Binaural HRTF Kernel',
-    code: 'RfcommLink · GattPump · 48kHz HRTF',
+    title: zh ? '设备通信与声学底座' : 'Device Transport & Acoustic Kernel',
+    code: 'RfcommLink · GattPump · BtBridge · 48kHz HRTF',
     body: zh
-      ? 'RFCOMM/GATT与标准蓝牙兜底，内嵌纯Java零GC 48kHz双耳HRTF内核。'
-      : 'RFCOMM/GATT and standard Bluetooth fallback paired with a zero-GC 48 kHz Java binaural kernel.',
+      ? '底层执行RFCOMM、BLE GATT、Windows原生蓝牙桥与标准蓝牙整机电量兜底，并内嵌本机单端空间音频与48kHz零GC双耳HRTF内核。'
+      : 'Handles RFCOMM, BLE GATT, the native Windows Bluetooth bridge and standard battery fallback alongside local spatial DSP and the zero-GC 48 kHz binaural HRTF kernel.',
     source: 'core/src/com/hdz/wearcontrol/WearEarsBinauralKernel.java',
   },
 ];

@@ -1,0 +1,636 @@
+---
+import { brands, compatibility } from '../data/compatibility';
+import { pagePath, type Locale } from '../lib/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const zh = locale === 'zh';
+
+const forms = [
+  {
+    id: 'watch',
+    label: zh ? '手表' : 'Watch',
+    sub: 'WEAR OS 3+',
+    badge: zh ? 'ROUND OLED · 4套新皮肤可点' : 'ROUND OLED · 4 LIVE THEMES',
+  },
+  {
+    id: 'phone',
+    label: zh ? '手机' : 'Phone',
+    sub: 'ANDROID 11+',
+    badge: zh ? 'PORTRAIT · 4套新皮肤实时切换' : 'PORTRAIT · 4 LIVE THEMES',
+  },
+  {
+    id: 'windows',
+    label: 'Windows',
+    sub: zh ? '托盘单文件' : 'TRAY EXE',
+    badge: zh ? 'WIN11 托盘 · 22.5MB 免装JAVA' : 'WIN11 TRAY · 22.5MB ZERO-JAVA',
+  },
+  {
+    id: 'hud',
+    label: zh ? '眼镜·HUD' : 'AR · HUD',
+    sub: 'XR / TV',
+    badge: zh ? '#000000 光波导双栏 · DPAD' : '#000000 WAVEGUIDE · DPAD',
+  },
+] as const;
+
+const skins = [
+  { id: 'suprematist', label: zh ? '至上' : 'Suprematist', code: 'SUPREMATIST', swatch: '#0D4FB8' },
+  { id: 'minimal', label: zh ? '新极简' : 'Minimal', code: 'NEO MINIMAL', swatch: '#F5B841' },
+  { id: 'classic', label: zh ? '新经典' : 'Classic', code: 'NEO CLASSIC', swatch: '#4C8DFF' },
+  { id: 'liquid', label: zh ? '新液位' : 'Liquid', code: 'NEO LIQUID', swatch: '#5EDDA6' },
+] as const;
+
+const winViews = {
+  suprematist: {
+    src: '/showcase/win-supreme.png',
+    alt: zh ? 'WearEars Windows托盘浮窗至上主义皮肤' : 'WearEars Windows tray card in Suprematist theme',
+    caption: zh ? 'Windows 托盘卡片 · 至上主义 · 7段斜格电量与斜切降噪' : 'Windows Tray · Suprematist · 7-segment bars & skewed ANC',
+  },
+  minimal: {
+    src: '/showcase/win-minimal.png',
+    alt: zh ? 'WearEars Windows托盘浮窗新极简皮肤' : 'WearEars Windows tray card in New Minimal theme',
+    caption: zh ? 'Windows 托盘卡片 · 新极简 · 琥珀暗金2+1电量与DeepX' : 'Windows Tray · Minimal · Amber 2+1 bento & DeepX EQ',
+  },
+  classic: {
+    src: '/showcase/win-classic.png',
+    alt: zh ? 'WearEars Windows托盘浮窗新经典皮肤' : 'WearEars Windows tray card in New Classic theme',
+    caption: zh ? 'Windows 托盘卡片 · 新经典 · 深蓝胶囊环与实测扩展能力' : 'Windows Tray · Classic · Cobalt rings & probed features',
+  },
+  liquid: {
+    src: '/showcase/win-liquid.png',
+    alt: zh ? 'WearEars Windows托盘浮窗新液位皮肤' : 'WearEars Windows tray card in New Liquid theme',
+    caption: zh ? 'Windows 托盘卡片 · 新液位 · 翡翠双层波浪液位与低延迟' : 'Windows Tray · Liquid · Emerald wave capsules & low-latency',
+  },
+} as const;
+
+const eqPresets = zh ? ['标准', '人声', '低音', '高音'] : ['Std', 'Voice', 'Bass', 'High'];
+
+const brandEntries = (Object.entries(brands) as Array<[keyof typeof brands, { zh: string; en: string }]>).map(
+  ([key, names]) => {
+    const hasHardware = compatibility.some((item) => item.brand === key && item.evidence === 'hardware');
+    return {
+      key,
+      name: names[locale],
+      hasHardware,
+      href: `${pagePath(locale, 'compatibility')}?brand=${key}`,
+    };
+  }
+);
+---
+
+<div class="shell section-band-tight specimen-layout showcase-layout" data-product-showcase>
+  <div class="specimen-controls" data-reveal>
+    <div>
+      <p class="label"><span class="label-mark yellow"></span>02 / PRODUCT SHOWCASE</p>
+      <h2 id="specimen-title">{zh ? '四端新界面，四套皮肤' : 'Four screens. Four live themes'}</h2>
+    </div>
+
+    <div class="control-group" role="group" aria-label={zh ? '切换产品终端形态' : 'Switch product device form'}>
+      <span class="control-group-title">{zh ? 'A · 终端形态 / FORM FACTOR' : 'A · FORM FACTOR'}</span>
+      <div class="segmented-grid">
+        {forms.map((form, idx) => (
+          <button
+            type="button"
+            class="seg-btn seg-btn-form"
+            data-form-btn={form.id}
+            data-form-badge={form.badge}
+            aria-pressed={idx === 0 ? 'true' : 'false'}
+          >
+            <span class="seg-main">{form.label}</span>
+            <span class="seg-sub">{form.sub}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="control-group" role="group" aria-label={zh ? '切换真实界面皮肤' : 'Switch interface theme'}>
+      <span class="control-group-title">{zh ? 'B · 新版皮肤 / LIVE THEME' : 'B · LIVE THEME'}</span>
+      <div class="segmented-grid">
+        {skins.map((skin, idx) => (
+          <button
+            type="button"
+            class="seg-btn"
+            data-skin-btn={skin.id}
+            data-skin-code={skin.code}
+            aria-pressed={idx === 0 ? 'true' : 'false'}
+          >
+            <span>{skin.label}</span>
+            <span class="seg-swatch" style={`background:${skin.swatch};`} aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="showcase-facts">
+      <div><strong>9</strong><span>{zh ? '品牌驱动' : 'Drivers'}</span></div>
+      <div><strong>4×4</strong><span>{zh ? '形态×皮肤' : 'Forms×Skins'}</span></div>
+      <div><strong>0</strong><span>{zh ? '云端依赖' : 'Cloud calls'}</span></div>
+    </div>
+
+    <p class="specimen-footnote">
+      {zh
+        ? 'v0.5.0-exp-C 全新UI实时交互模拟 · 画面内降噪/音效/开关均可直接点击'
+        : 'Interactive v0.5.0-exp-C UI simulator · Click ANC, EQ & toggles inside the device'}
+    </p>
+  </div>
+
+  <div class="console-board showcase-board" data-showcase-board data-form="watch" data-skin="suprematist" data-mode="anc">
+    <div class="console-topbar">
+      <span class="console-id">
+        <span class="live-dot green" aria-hidden="true"></span>
+        <span data-showcase-title>WATCH · SUPREMATIST</span>
+      </span>
+      <span class="console-mode-pill" data-showcase-badge>{forms[0].badge}</span>
+    </div>
+
+    <div class="showcase-stage">
+      <!-- =========================================================
+           1. WEAR OS ROUND WATCH — LIVE 4-SKIN INTERACTIVE SIMULATOR
+           ========================================================= -->
+      <div class="showcase-panel is-active" data-panel="watch">
+        <div class="watch-chassis">
+          <span class="watch-pusher pusher-top" aria-hidden="true"></span>
+          <span class="watch-pusher pusher-bot" aria-hidden="true"></span>
+          <div class="watch-screen" data-ui-skin="suprematist" data-ui-mode="anc">
+            <!-- 1A. Watch Suprematist (SuprematistDialView 1:1 Geometry) -->
+            <div class="w-skin w-skin-suprematist">
+              <div class="sup-head">
+                <div class="sup-brand">
+                  <span class="sup-mark" aria-hidden="true"></span>
+                  <span class="sup-word">WearEars</span>
+                </div>
+                <span class="sup-ref" aria-hidden="true">↻</span>
+              </div>
+              <div class="sup-mid-row">
+                <div class="sup-conn">
+                  <span class="sup-status"><i class="sup-sq"></i>{zh ? '已连接' : 'Linked'}</span>
+                  <span class="sup-model">Air3 Pro</span>
+                </div>
+                <div class="sup-anc-row" role="group" aria-label={zh ? '手表至上降噪' : 'Watch Suprematist ANC'}>
+                  <button type="button" class="sup-para is-on" data-sim-mode="anc"><span>{zh ? '降噪' : 'ANC'}</span></button>
+                  <button type="button" class="sup-para" data-sim-mode="aware"><span>{zh ? '通透' : 'TR'}</span></button>
+                  <button type="button" class="sup-para" data-sim-mode="off"><span>{zh ? '关闭' : 'OFF'}</span></button>
+                </div>
+              </div>
+              <div class="sup-batt-stack">
+                <div class="sup-batt-row">
+                  <span class="sup-tag tag-red">{zh ? '左' : 'L'}</span>
+                  <div class="sup-segs seg-red" aria-hidden="true">
+                    <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="half"></i>
+                  </div>
+                  <span class="sup-pct">92%</span>
+                </div>
+                <div class="sup-batt-row">
+                  <span class="sup-tag tag-blue">{zh ? '右' : 'R'}</span>
+                  <div class="sup-segs seg-blue" aria-hidden="true">
+                    <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="half"></i>
+                  </div>
+                  <span class="sup-pct">90%</span>
+                </div>
+                <div class="sup-batt-row">
+                  <span class="sup-tag tag-yel">{zh ? '盒' : 'C'}</span>
+                  <div class="sup-segs seg-yel" aria-hidden="true">
+                    <i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="half"></i><i></i>
+                  </div>
+                  <span class="sup-pct">78%</span>
+                </div>
+              </div>
+              <div class="sup-vol-row">
+                <svg class="sup-svg-icon" viewBox="0 0 16 16" width="10" height="10" aria-hidden="true">
+                  <path d="M2 6h3l4-3v10l-4-3H2zM11.5 5.2a4 4 0 0 1 0 5.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" />
+                </svg>
+                <div class="sup-vol-track"><span class="sup-vol-fill" style="width: 58%;"></span></div>
+                <svg class="sup-svg-icon" viewBox="0 0 16 16" width="10" height="10" aria-hidden="true">
+                  <rect x="3" y="7" width="10" height="7" fill="none" stroke="currentColor" stroke-width="1.6" />
+                  <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" fill="none" stroke="currentColor" stroke-width="1.6" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- 1B. Watch Neo Series (Minimal / Classic / Liquid) -->
+            <div class="w-skin w-skin-neo">
+              <div class="neo-w-head">
+                <span class="neo-w-dot"></span>
+                <span>vivo TWS Air3 Pro</span>
+              </div>
+
+              <!-- Minimal 2+1 Amber Bento -->
+              <div class="neo-batt neo-batt-minimal">
+                <div class="nb-card">
+                  <span class="nb-lbl">{zh ? '左耳' : 'L'}</span>
+                  <strong class="nb-num">92%</strong>
+                  <span class="nb-bar"><i style="width:92%;"></i></span>
+                </div>
+                <div class="nb-card">
+                  <span class="nb-lbl">{zh ? '右耳' : 'R'}</span>
+                  <strong class="nb-num">90%</strong>
+                  <span class="nb-bar"><i style="width:90%;"></i></span>
+                </div>
+                <div class="nb-card nb-wide">
+                  <div class="nb-wide-top">
+                    <span class="nb-lbl">{zh ? '充电盒' : 'CASE'}</span>
+                    <svg class="sim-bolt" viewBox="0 0 12 16" width="8" height="11" aria-hidden="true"><path d="M7 1L1 9h4l-1 6 7-8H7z" fill="currentColor" /></svg>
+                    <strong class="nb-num-sm">78%</strong>
+                  </div>
+                  <span class="nb-bar"><i style="width:78%;"></i></span>
+                </div>
+              </div>
+
+              <!-- Classic Triple Capsule Rings -->
+              <div class="neo-batt neo-batt-classic">
+                <div class="nc-ring">
+                  <svg viewBox="0 0 64 56" aria-hidden="true">
+                    <rect x="4" y="4" width="56" height="48" rx="16" class="nc-track" />
+                    <rect x="4" y="4" width="56" height="48" rx="16" class="nc-prog" pathLength="100" stroke-dasharray="92 100" />
+                  </svg>
+                  <strong>92</strong>
+                  <span>{zh ? '左耳' : 'L'}</span>
+                </div>
+                <div class="nc-ring">
+                  <svg viewBox="0 0 64 56" aria-hidden="true">
+                    <rect x="4" y="4" width="56" height="48" rx="16" class="nc-track" />
+                    <rect x="4" y="4" width="56" height="48" rx="16" class="nc-prog" pathLength="100" stroke-dasharray="90 100" />
+                  </svg>
+                  <strong>90</strong>
+                  <span>{zh ? '右耳' : 'R'}</span>
+                </div>
+                <div class="nc-ring is-chg">
+                  <svg viewBox="0 0 64 56" aria-hidden="true">
+                    <rect x="4" y="4" width="56" height="48" rx="16" class="nc-track" />
+                    <rect x="4" y="4" width="56" height="48" rx="16" class="nc-prog" pathLength="100" stroke-dasharray="78 100" />
+                  </svg>
+                  <strong>78</strong>
+                  <span class="nc-chg-lbl">{zh ? '盒' : 'C'}<svg class="sim-bolt" viewBox="0 0 12 16" width="7" height="10" aria-hidden="true"><path d="M7 1L1 9h4l-1 6 7-8H7z" fill="currentColor" /></svg></span>
+                </div>
+              </div>
+
+              <!-- Liquid Triple Animated Glass Wave Capsules -->
+              <div class="neo-batt neo-batt-liquid">
+                <div class="nl-cell">
+                  <div class="nl-capsule" style="--lvl: 92%;">
+                    <span class="nl-wave nl-wave-back"></span>
+                    <span class="nl-wave nl-wave-front"></span>
+                    <strong>92</strong>
+                  </div>
+                  <span>{zh ? '左耳' : 'L'}</span>
+                </div>
+                <div class="nl-cell">
+                  <div class="nl-capsule" style="--lvl: 90%;">
+                    <span class="nl-wave nl-wave-back"></span>
+                    <span class="nl-wave nl-wave-front"></span>
+                    <strong>90</strong>
+                  </div>
+                  <span>{zh ? '右耳' : 'R'}</span>
+                </div>
+                <div class="nl-cell is-chg">
+                  <div class="nl-capsule" style="--lvl: 78%;">
+                    <span class="nl-wave nl-wave-back"></span>
+                    <span class="nl-wave nl-wave-front"></span>
+                    <svg class="nl-bolt sim-bolt" viewBox="0 0 12 16" width="8" height="11" aria-hidden="true"><path d="M7 1L1 9h4l-1 6 7-8H7z" fill="currentColor" /></svg>
+                    <strong>78</strong>
+                  </div>
+                  <span>{zh ? '充电盒' : 'CASE'}</span>
+                </div>
+              </div>
+
+              <!-- Neo Spring Segmented Noise Slider -->
+              <div class="neo-seg" data-sim-seg role="group" aria-label={zh ? '手表降噪滑档器' : 'Watch noise slider'}>
+                <span class="neo-seg-thumb" aria-hidden="true"></span>
+                <button type="button" data-sim-mode="off">{zh ? '关闭' : 'Off'}</button>
+                <button type="button" data-sim-mode="aware">{zh ? '通透' : 'Aware'}</button>
+                <button type="button" data-sim-mode="anc">{zh ? '降噪' : 'ANC'}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="showcase-cap" data-watch-cap>
+          {zh ? 'Wear OS 圆表 · 至上主义 · 斜切三态降噪与7段斜格电量' : 'Wear OS Round · Suprematist · Skewed ANC & 7-segment bars'}
+        </p>
+      </div>
+
+      <!-- =========================================================
+           2. ANDROID 11+ PHONE — LIVE 4-SKIN INTERACTIVE SIMULATOR
+           ========================================================= -->
+      <div class="showcase-panel" data-panel="phone">
+        <div class="phone-stage-grid">
+          <div class="phone-shell">
+            <div class="phone-screen" data-ui-skin="suprematist" data-ui-mode="anc">
+              <div class="ph-bar">
+                <span class="ph-title">WearEars</span>
+                <span class="ph-icons" aria-hidden="true">↻ &nbsp; ⚙</span>
+              </div>
+
+              <div class="ph-card ph-conn">
+                <div class="ph-conn-top">
+                  <span class="ph-dot"></span>
+                  <span>{zh ? '已连接 · 短连接待命' : 'Linked · Quick-Park'}</span>
+                </div>
+                <strong>vivo TWS Air3 Pro</strong>
+                <span class="ph-meta">2.5.9 · BT 2 (Watch7)</span>
+              </div>
+
+              <!-- Phone Battery morphs across all 4 skins! -->
+              <div class="ph-card ph-batt-wrap">
+                <!-- Suprematist 7-seg -->
+                <div class="ph-batt-sup">
+                  <div class="sup-batt-row"><span class="sup-tag tag-red">{zh ? '左' : 'L'}</span><div class="sup-segs seg-red"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="half"></i></div><span class="sup-pct">92%</span></div>
+                  <div class="sup-batt-row"><span class="sup-tag tag-blue">{zh ? '右' : 'R'}</span><div class="sup-segs seg-blue"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="half"></i></div><span class="sup-pct">90%</span></div>
+                  <div class="sup-batt-row"><span class="sup-tag tag-yel">{zh ? '盒' : 'C'}</span><div class="sup-segs seg-yel"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="half"></i><i></i></div><span class="sup-pct">78%</span></div>
+                </div>
+                <!-- Minimal 2+1 -->
+                <div class="neo-batt neo-batt-minimal ph-batt-neo">
+                  <div class="nb-card"><span class="nb-lbl">{zh ? '左耳' : 'L'}</span><strong class="nb-num">92%</strong><span class="nb-bar"><i style="width:92%;"></i></span></div>
+                  <div class="nb-card"><span class="nb-lbl">{zh ? '右耳' : 'R'}</span><strong class="nb-num">90%</strong><span class="nb-bar"><i style="width:90%;"></i></span></div>
+                  <div class="nb-card nb-wide"><div class="nb-wide-top"><span class="nb-lbl">{zh ? '充电盒' : 'CASE'}</span><svg class="sim-bolt" viewBox="0 0 12 16" width="8" height="11" aria-hidden="true"><path d="M7 1L1 9h4l-1 6 7-8H7z" fill="currentColor" /></svg><strong class="nb-num-sm">78%</strong></div><span class="nb-bar"><i style="width:78%;"></i></span></div>
+                </div>
+                <!-- Classic 3 rings -->
+                <div class="neo-batt neo-batt-classic ph-batt-neo">
+                  <div class="nc-ring"><svg viewBox="0 0 64 56"><rect x="4" y="4" width="56" height="48" rx="16" class="nc-track"/><rect x="4" y="4" width="56" height="48" rx="16" class="nc-prog" pathLength="100" stroke-dasharray="92 100"/></svg><strong>92</strong><span>{zh ? '左耳' : 'L'}</span></div>
+                  <div class="nc-ring"><svg viewBox="0 0 64 56"><rect x="4" y="4" width="56" height="48" rx="16" class="nc-track"/><rect x="4" y="4" width="56" height="48" rx="16" class="nc-prog" pathLength="100" stroke-dasharray="90 100"/></svg><strong>90</strong><span>{zh ? '右耳' : 'R'}</span></div>
+                  <div class="nc-ring is-chg"><svg viewBox="0 0 64 56"><rect x="4" y="4" width="56" height="48" rx="16" class="nc-track"/><rect x="4" y="4" width="56" height="48" rx="16" class="nc-prog" pathLength="100" stroke-dasharray="78 100"/></svg><strong>78</strong><span class="nc-chg-lbl">{zh ? '盒' : 'C'}<svg class="sim-bolt" viewBox="0 0 12 16" width="7" height="10" aria-hidden="true"><path d="M7 1L1 9h4l-1 6 7-8H7z" fill="currentColor" /></svg></span></div>
+                </div>
+                <!-- Liquid 3 capsules -->
+                <div class="neo-batt neo-batt-liquid ph-batt-neo">
+                  <div class="nl-cell"><div class="nl-capsule" style="--lvl: 92%;"><span class="nl-wave nl-wave-back"></span><span class="nl-wave nl-wave-front"></span><strong>92</strong></div><span>{zh ? '左耳' : 'L'}</span></div>
+                  <div class="nl-cell"><div class="nl-capsule" style="--lvl: 90%;"><span class="nl-wave nl-wave-back"></span><span class="nl-wave nl-wave-front"></span><strong>90</strong></div><span>{zh ? '右耳' : 'R'}</span></div>
+                  <div class="nl-cell is-chg"><div class="nl-capsule" style="--lvl: 78%;"><span class="nl-wave nl-wave-back"></span><span class="nl-wave nl-wave-front"></span><svg class="nl-bolt sim-bolt" viewBox="0 0 12 16" width="8" height="11" aria-hidden="true"><path d="M7 1L1 9h4l-1 6 7-8H7z" fill="currentColor" /></svg><strong>78</strong></div><span>{zh ? '充电盒' : 'C'}</span></div>
+                </div>
+              </div>
+
+              <!-- Phone Noise Control -->
+              <div class="ph-card">
+                <div class="sup-anc-row ph-anc-sup">
+                  <button type="button" class="sup-para is-on" data-sim-mode="anc"><span>{zh ? '降噪' : 'ANC'}</span></button>
+                  <button type="button" class="sup-para" data-sim-mode="aware"><span>{zh ? '通透' : 'Aware'}</span></button>
+                  <button type="button" class="sup-para" data-sim-mode="off"><span>{zh ? '关闭' : 'Off'}</span></button>
+                </div>
+                <div class="neo-seg ph-anc-neo" data-sim-seg>
+                  <span class="neo-seg-thumb" aria-hidden="true"></span>
+                  <button type="button" data-sim-mode="off">{zh ? '关闭' : 'Off'}</button>
+                  <button type="button" data-sim-mode="aware">{zh ? '通透' : 'Aware'}</button>
+                  <button type="button" data-sim-mode="anc">{zh ? '降噪' : 'ANC'}</button>
+                </div>
+              </div>
+
+              <!-- Phone DeepX EQ -->
+              <div class="ph-card">
+                <span class="ph-sec-lbl">DeepX EQ</span>
+                <div class="ph-chips" role="group" aria-label="DeepX EQ">
+                  {eqPresets.map((preset, i) => (
+                    <button type="button" class={`ph-chip${i === 1 ? ' is-on' : ''}`} data-sim-eq={i}>{preset}</button>
+                  ))}
+                </div>
+              </div>
+
+              <!-- Phone Extended Toggles -->
+              <div class="ph-card ph-toggles">
+                <button type="button" class="ph-toggle-row is-on" data-sim-toggle aria-pressed="true">
+                  <span>{zh ? '游戏低延迟' : 'Low latency'}</span>
+                  <i class="ph-sw" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="ph-toggle-row is-on" data-sim-toggle aria-pressed="true">
+                  <span>{zh ? '佩戴检测' : 'Wear detect'}</span>
+                  <i class="ph-sw" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="phone-specs">
+            <span class="hud-kicker">ANDROID 11+ · ONE APK</span>
+            <strong>{zh ? '四套皮肤完整同步' : 'All 4 themes in sync'}</strong>
+            <ul class="phone-spec-tags">
+              <li>{zh ? '按需短连接快撤' : 'Quick-park burst'}</li>
+              <li>{zh ? '细分降噪+抗风噪' : 'Fine ANC + Wind'}</li>
+              <li>{zh ? '48kHz 360°双耳' : '48kHz 360° Lab'}</li>
+              <li>{zh ? '内网防火墙' : 'LAN Firewall'}</li>
+              <li>{zh ? '入耳拦截响铃' : 'In-ear block'}</li>
+              <li>{zh ? '开发者选项' : 'Dev options'}</li>
+            </ul>
+            <p class="showcase-cap">
+              {zh ? '点左侧切换四套皮肤 · 直接点击手机内按钮体验交互' : 'Switch themes left · Click buttons inside phone'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================
+           3. WINDOWS 11 TRAY CARD — 4 AUTHENTIC CODE-RENDERED SKINS
+           ========================================================= -->
+      <div class="showcase-panel" data-panel="windows">
+        <div class="win-stage-grid">
+          <div class="showcase-win-stage">
+            {Object.entries(winViews).map(([skinId, item]) => (
+              <figure class={`showcase-win-frame${skinId === 'suprematist' ? ' is-current' : ''}`} data-win-skin={skinId}>
+                <div class="win-card-shell">
+                  <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />
+                </div>
+                <div class="win-tray-bar" aria-hidden="true">
+                  <span class="win-tray-chip">
+                    <span class="win-tray-dot"></span>
+                    <span>WearEars · L92 R90 · ANC</span>
+                  </span>
+                  <span class="win-tray-clock">15:08</span>
+                </div>
+              </figure>
+            ))}
+          </div>
+
+          <div class="phone-specs">
+            <span class="hud-kicker">WINDOWS 11 · STANDALONE EXE</span>
+            <strong>{zh ? '22.5MB 免装Java托盘' : '22.5 MB Zero-Java Tray'}</strong>
+            <ul class="phone-spec-tags">
+              <li>{zh ? '系统托盘常驻' : 'System tray'}</li>
+              <li>{zh ? '自动优选耳机' : 'Auto headset'}</li>
+              <li>{zh ? '原生RFCOMM桥' : 'Native RFCOMM'}</li>
+              <li>{zh ? '四套同步皮肤' : '4 synced skins'}</li>
+              <li>{zh ? '内网防火墙' : 'LAN Firewall'}</li>
+              <li>{zh ? '双击即用' : 'Single EXE'}</li>
+            </ul>
+            <p class="showcase-cap">
+              {zh ? '由v0.5.0-exp-C真实桌面客户端代码直接渲染 · 点左侧切换四套皮肤' : 'Rendered directly from v0.5.0-exp-C desktop code · Switch 4 skins left'}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================
+           4. OPTICAL WAVEGUIDE AR / XR / TV PURE-BLACK DUAL-PANE HUD
+           ========================================================= -->
+      <div class="showcase-panel" data-panel="hud">
+        <div class="hud-device" data-hud-mode="anc">
+          <div class="hud-col-left">
+            <div class="hud-top">
+              <span class="live-dot green" aria-hidden="true"></span>
+              <span>HUD // 0% GLARE</span>
+            </div>
+            <strong class="hud-dev-name">vivo TWS Air3 Pro</strong>
+            <div class="hud-batt-grid">
+              <div><span>L</span><b>92%</b></div>
+              <div><span>R</span><b>90%</b></div>
+              <div><span>BOX</span><b>78%</b></div>
+            </div>
+            <span class="hud-mesh-tag">{zh ? 'LAN MESH · 192.168.1.24' : 'LAN MESH · LOCAL ONLY'}</span>
+          </div>
+          <div class="hud-col-right">
+            <span class="hud-kicker">{zh ? 'DPAD / 镜腿 / 蓝牙戒指快捷键' : 'DPAD / TEMPLE / RING SHORTCUTS'}</span>
+            <div class="hud-mode-row" role="group" aria-label={zh ? 'HUD降噪体验' : 'HUD noise mode demo'}>
+              <button type="button" class="hud-key is-focused" data-sim-mode="anc">
+                <kbd>1</kbd><span>{zh ? '降噪' : 'ANC'}</span>
+              </button>
+              <button type="button" class="hud-key" data-sim-mode="aware">
+                <kbd>2</kbd><span>{zh ? '通透' : 'Aware'}</span>
+              </button>
+              <button type="button" class="hud-key" data-sim-mode="off">
+                <kbd>3</kbd><span>{zh ? '关闭' : 'Off'}</span>
+              </button>
+            </div>
+            <div class="hud-meta-line">
+              <span>#000000 PURE BLACK</span>
+              <span>38% / 62% SPLIT</span>
+            </div>
+          </div>
+        </div>
+        <p class="showcase-cap">
+          {zh ? '光波导纯黑双栏HUD · 远程寻机响铃五层硬拦截' : 'Pure-black waveguide HUD · 5-layer remote ring hard block'}
+        </p>
+      </div>
+    </div>
+
+    <div class="brand-driver-strip" aria-label={zh ? '品牌驱动索引' : 'Brand driver index'}>
+      {brandEntries.map((entry) => (
+        <a class="brand-chip" href={entry.href}>
+          <span
+            class={`chip-dot ${entry.hasHardware ? 'verified' : 'candidate'}`}
+            aria-hidden="true"
+          ></span>
+          <span>{entry.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-showcase]').forEach((root) => {
+    const board = root.querySelector<HTMLElement>('[data-showcase-board]');
+    const titleEl = root.querySelector<HTMLElement>('[data-showcase-title]');
+    const badgeEl = root.querySelector<HTMLElement>('[data-showcase-badge]');
+    const watchCapEl = root.querySelector<HTMLElement>('[data-watch-cap]');
+    const formBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-form-btn]'));
+    const skinBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-skin-btn]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'));
+    const uiScreens = Array.from(root.querySelectorAll<HTMLElement>('[data-ui-skin]'));
+    const winFrames = Array.from(root.querySelectorAll<HTMLElement>('[data-win-skin]'));
+    const modeBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sim-mode]'));
+    const eqBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sim-eq]'));
+    const toggleBtns = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-sim-toggle]'));
+    if (!board) return;
+
+    const isZh = document.documentElement.lang.startsWith('zh');
+    let currentForm = 'watch';
+    let currentSkin = 'suprematist';
+    let currentSkinCode = 'SUPREMATIST';
+    let currentMode = 'anc';
+
+    const formLabelMap: Record<string, string> = {
+      watch: 'WATCH',
+      phone: 'PHONE',
+      windows: 'WINDOWS',
+      hud: 'AR · HUD',
+    };
+
+    const watchCaptions: Record<string, string> = isZh ? {
+      suprematist: 'Wear OS 圆表 · 至上主义 · 斜切三态降噪与7段斜格电量',
+      minimal: 'Wear OS 圆表 · 新极简 · 琥珀暗金2+1便当格与弹性滑块',
+      classic: 'Wear OS 圆表 · 新经典 · 深蓝圆角胶囊环与钴蓝滑块',
+      liquid: 'Wear OS 圆表 · 新液位 · 玻璃胶囊双层波浪实时动画',
+    } : {
+      suprematist: 'Wear OS Round · Suprematist · Skewed ANC & 7-segment bars',
+      minimal: 'Wear OS Round · Minimal · Amber 2+1 bento & spring slider',
+      classic: 'Wear OS Round · Classic · Cobalt capsule rings & slider',
+      liquid: 'Wear OS Round · Liquid · Live dual-wave glass capsules',
+    };
+
+    const syncUI = () => {
+      board.dataset.form = currentForm;
+      board.dataset.skin = currentForm === 'hud' ? 'minimal' : currentSkin;
+      board.dataset.mode = currentMode;
+
+      if (titleEl) {
+        titleEl.textContent = `${formLabelMap[currentForm] || 'WEAREARS'} · ${currentForm === 'hud' ? 'SWISS #000000' : currentSkinCode}`;
+      }
+      if (watchCapEl && watchCaptions[currentSkin]) {
+        watchCapEl.textContent = watchCaptions[currentSkin];
+      }
+
+      panels.forEach((p) => p.classList.toggle('is-active', p.dataset.panel === currentForm));
+      uiScreens.forEach((s) => {
+        s.dataset.uiSkin = currentSkin;
+        s.dataset.uiMode = currentMode;
+      });
+      winFrames.forEach((f) => f.classList.toggle('is-current', f.dataset.winSkin === currentSkin));
+      skinBtns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.skinBtn === currentSkin ? 'true' : 'false'));
+      formBtns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.formBtn === currentForm ? 'true' : 'false'));
+
+      modeBtns.forEach((b) => {
+        const active = b.dataset.simMode === currentMode;
+        b.classList.toggle('is-on', active);
+        b.classList.toggle('is-focused', active);
+      });
+    };
+
+    formBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const form = btn.dataset.formBtn;
+        if (!form) return;
+        currentForm = form;
+        if (badgeEl && btn.dataset.formBadge) badgeEl.textContent = btn.dataset.formBadge;
+        syncUI();
+      });
+    });
+
+    skinBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const skin = btn.dataset.skinBtn;
+        if (!skin) return;
+        currentSkin = skin;
+        if (btn.dataset.skinCode) currentSkinCode = btn.dataset.skinCode;
+        if (currentForm === 'hud') {
+          currentForm = 'watch';
+          const watchBtn = formBtns.find((b) => b.dataset.formBtn === 'watch');
+          if (badgeEl && watchBtn?.dataset.formBadge) badgeEl.textContent = watchBtn.dataset.formBadge;
+        }
+        syncUI();
+      });
+    });
+
+    modeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.simMode;
+        if (!mode) return;
+        currentMode = mode;
+        syncUI();
+      });
+    });
+
+    eqBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        eqBtns.forEach((b) => b.classList.toggle('is-on', b === btn));
+      });
+    });
+
+    toggleBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const next = !btn.classList.contains('is-on');
+        btn.classList.toggle('is-on', next);
+        btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+      });
+    });
+
+    syncUI();
+  });
+</script>

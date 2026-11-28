@@ -1,5 +1,17 @@
 [
   {
+    "tag": "v0.5.0-exp-C",
+    "publishedAt": "2026-11-26T08:46:39Z",
+    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.5.0-exp-C",
+    "prerelease": true
+  },
+  {
+    "tag": "v0.5.0-exp-B",
+    "publishedAt": "2026-11-26T08:22:17Z",
+    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.5.0-exp-B",
+    "prerelease": true
+  },
+  {
     "tag": "v0.5.0-exp",
     "publishedAt": "2026-11-25T01:26:44Z",
     "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.5.0-exp",
@@ -33,18 +45,6 @@
     "tag": "v0.3.0",
     "publishedAt": "2026-10-27T18:27:00Z",
     "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.3.0",
-    "prerelease": false
-  },
-  {
-    "tag": "v0.2.1",
-    "publishedAt": "2026-10-25T13:36:12Z",
-    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.2.1",
-    "prerelease": false
-  },
-  {
-    "tag": "v0.2.0",
-    "publishedAt": "2026-10-25T13:28:17Z",
-    "url": "https://github.com/hdzw1155/WearEars/releases/tag/v0.2.0",
     "prerelease": false
   }
 ]

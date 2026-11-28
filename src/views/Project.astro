@@ -1,53 +1,111 @@
 ---
 import AnimatedAppIcon from '../components/AnimatedAppIcon.astro';
 import DownloadBay from '../components/DownloadBay.astro';
-import FanDeck from '../components/FanDeck.astro';
 import FallingTiles from '../components/FallingTiles.astro';
-import { pagePath, releasesUrl, site, type Locale } from '../lib/site';
+import FanDeck from '../components/FanDeck.astro';
+import { releasesUrl, site, type Locale } from '../lib/site';
 
 const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
-const steps = zh ? [
-  ['配对耳机', '在Wear OS 3+手表或Android 11+手机的系统蓝牙中完成配对并连上耳机。'],
-  ['获取并安装APK', '点击「下载」或从GitHub获取带版本号的.apk安装包；反复下载若被改名为.apk.1会被ADB拒装，官方包延续v0.4.x签名可直接覆盖。'],
-  ['确认安全提示后使用', '首次打开需确认免责声明。标有「实验」的功能及查找耳机首次试用前，请先摘下耳机并调低系统音量。'],
+
+const specs = zh ? [
+  {
+    index: '01',
+    title: '四端形态，四套皮肤',
+    body: '手表、手机、智能眼镜纯黑HUD与Windows 22.5MB独立托盘版统一至上、新极简、新经典与新液位四套视觉，按探测开放细分降噪、抗风噪、EQ、空间音频与查找耳机。',
+  },
+  {
+    index: '02',
+    title: '局域网协同与内网防火墙',
+    body: '同局域网多端通过4位PIN本地互联，零云端免抢蓝牙通道；「开发者选项」内置应用层内网防火墙（同子网、白名单、只读模式与防爆破封禁），手机端支持空闲快撤短连接。',
+  },
+  {
+    index: '03',
+    title: '本机空间音频与安全红线',
+    body: '360°双耳HRTF试听实验室支持任意蓝牙耳机，硬件或系统Spatializer开启时自动避让；全端内置70%音量护栏、入耳拦截响铃，局域网远程永久硬禁查找耳机。',
+  },
 ] : [
-  ['Pair the earbuds', 'Pair and connect your earbuds in system Bluetooth settings on Wear OS 3+ or Android 11+.'],
-  ['Get and install the APK', 'Click Download above or get a versioned .apk from GitHub (avoid .apk.1 renames for ADB). Official releases preserve v0.4.x signatures for in-place upgrades.'],
-  ['Review safety gates', 'Confirm the disclaimer on first launch. Remove earbuds and lower volume before testing [Experimental] features or Find My Buds.'],
+  {
+    index: '01',
+    title: 'Four screens, four themes',
+    body: 'Wear OS 3+, Android 11+, pure-black AR/TV HUD and the standalone 22.5 MB Windows tray EXE share Suprematist, Minimal, Classic and Liquid skins with probed extended controls.',
+  },
+  {
+    index: '02',
+    title: 'Local LAN Mesh & Firewall',
+    body: 'Coordinate multiple local screens over 4-digit PIN without cloud servers or RFCOMM fights, protected by an app-layer LAN firewall in Developer Options and quick-park burst mode on phones.',
+  },
+  {
+    index: '03',
+    title: 'Spatial DSP & Hearing Guardrails',
+    body: 'The 48 kHz 360° binaural lab works on any headset while auto-bypassing OS/hardware spatializers; paired with a 70% volume guard, in-ear block and 5-layer remote ring prohibition.',
+  },
+];
+
+const steps = zh ? [
+  ['Android手表/手机/眼镜同包安装', '配对蓝牙后点击上方「Android直连」下载带版本号的.apk（避免.apk.1重命名）；官方包延续v0.4.x签名可直接覆盖升级。'],
+  ['Windows单文件双击即用', '点击「Windows单文件」获取22.5MB独立EXE，无需安装Java，启动后常驻任务栏右下角通知区并自动优选连接已配对耳机。'],
+  ['确认安全提示后使用', '首次打开需确认听觉安全免责声明；标有「实验」的功能及查找耳机首次试用前请先摘下耳机并调低音量。'],
+] : [
+  ['Install one Android APK', 'Pair earbuds in Bluetooth settings, then download the versioned .apk (avoid .apk.1 renames for ADB). Official releases keep v0.4.x signatures for in-place upgrades.'],
+  ['Run standalone Windows EXE', 'Download the 22.5 MB single-file Windows EXE with zero Java setup. It docks cleanly in the system tray and auto-selects paired earbuds.'],
+  ['Review hearing safety gates', 'Confirm the disclaimer on first launch. Remove earbuds and lower system volume before testing [Experimental] features or Find My Buds.'],
 ];
 ---
 
 <FanDeck>
   <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-labelledby="project-hero-title">
-    <div class="deck-card deck-card-hero">
+    <div class="deck-card deck-card-hero hero-section">
       <FallingTiles primary="yellow" secondary="blue" />
-      <div class="hero shell project-hero">
+      <div class="shell hero-shell">
         <div class="hero-index label">
           <span><i class="label-mark" aria-hidden="true"></i> 01 / THE PROJECT</span>
-          <span class="hero-index-side">WEAR OS 3+ <span class="hero-cross">×</span> ANDROID 11+ <span class="hero-cross">×</span> TWS</span>
+          <span class="hero-index-right">
+            <span>WATCH <span class="hero-cross">×</span> PHONE <span class="hero-cross">×</span> WIN <span class="hero-cross">×</span> HUD</span>
+          </span>
         </div>
 
         <div class="project-hero-stage">
           <h1 id="project-hero-title" class="project-hero-title">
-            <span class="project-title-main">{zh ? '腕上与掌间' : 'Watch & Phone'}</span>
+            <span class="project-title-main">{zh ? '腕上、掌间与桌面' : 'Watch, Phone & Win'}</span>
             <span class="project-title-sub">{zh ? '同一套声音控制' : 'Unified Earbud Control'}</span>
           </h1>
+
           <div class="action-row project-actions">
-            <a class="button button-primary" href={site.directDownloadUrl} rel="noopener noreferrer" data-direct-download>
-              {zh ? '下载' : 'Download'} <span aria-hidden="true">↓</span>
+            <a class="button button-primary" data-arrow="down" href={site.directDownloadUrl} rel="noopener noreferrer" data-direct-download>
+              <span>{zh ? 'Android直连' : 'Android APK'}</span>
+              <span class="btn-arrow" aria-hidden="true">↓</span>
             </a>
-            <a class="button button-outline" href={releasesUrl} target="_blank" rel="noopener noreferrer">
-              GitHub <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+            <a class="button button-outline" data-arrow="down" href={site.windowsDownloadUrl} target="_blank" rel="noopener noreferrer" data-direct-download>
+              <span>{zh ? 'Windows单文件' : 'Windows EXE'}</span>
+              <span class="btn-arrow" aria-hidden="true">↓</span>
+              <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
             </a>
-            <a class="text-link" href={pagePath(locale, 'compatibility')}>
-              {zh ? '查看兼容性' : 'Compatibility'} <span aria-hidden="true">→</span>
+            <a class="text-link" href={releasesUrl} target="_blank" rel="noopener noreferrer">
+              GitHub Releases <span aria-hidden="true">↗</span>
+              <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
             </a>
           </div>
 
-          <figure class="project-hero-figure">
-            <AnimatedAppIcon size={440} />
-            <figcaption>FIG. 02 <span></span> WATCH &amp; PHONE APK</figcaption>
+          <figure class="specimen-plate project-hero-figure">
+            <div class="specimen-plate-stage">
+              <AnimatedAppIcon size={340} />
+            </div>
+            <figcaption class="specimen-plate-caption">
+              <span class="specimen-caption-left">
+                <span class="chroma-bar" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                <span>FIG. 02 · APK + EXE</span>
+              </span>
+              <button
+                type="button"
+                class="specimen-replay-btn"
+                data-icon-replay
+                aria-label={zh ? '重播图标构造动画' : 'Replay icon animation'}
+              >
+                <span aria-hidden="true">↻</span>
+                <span>{zh ? '重绘' : 'REPLAY'}</span>
+              </button>
+            </figcaption>
           </figure>
         </div>
 
@@ -57,24 +115,28 @@ const steps = zh ? [
   </section>
 
   <section class="slide-section deck-sheet" data-slide data-slide-index="1" aria-labelledby="experience-title">
-    <div class="deck-card deck-paper deck-fan-right">
+    <div class="deck-card deck-sunk deck-fan-right">
       <FallingTiles primary="green" secondary="yellow" />
-      <div class="shell content-section split-content">
-        <div class="section-lead">
-          <p class="label"><span class="label-mark"></span>THE EXPERIENCE</p>
-          <h2 id="experience-title">{zh ? '双端统一 边界清晰' : 'Unified UI, honest boundaries'}</h2>
+      <div class="shell section-band-tight">
+        <div class="section-header-bar" data-reveal>
+          <div>
+            <p class="label"><span class="label-mark green"></span>THE EXPERIENCE</p>
+            <h2 id="experience-title">{zh ? '多端统一，边界清晰' : 'Unified UI, honest boundaries'}</h2>
+          </div>
+          <a class="text-link" href={site.appRepository} target="_blank" rel="noopener noreferrer">
+            {zh ? '在GitHub查看项目' : 'View on GitHub'} <span aria-hidden="true">↗</span>
+            <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+          </a>
         </div>
-        <div class="prose">
-          <p class="lead">{zh
-            ? 'v0.5.0-exp将至上、新极简、新经典与新液位四套界面统一到手表与手机双端，并接入通用特性引擎，按探测开放降噪档位、抗风噪、内置EQ、硬件空间音频与查找耳机。'
-            : 'v0.5.0-exp unifies four themes across watch and phone while probing fine ANC levels, wind-noise control, EQ, hardware spatial audio and find-my-buds.'}</p>
-          <p>{zh
-            ? '手机端默认启用按需短连接（同步后空闲3.8秒自动归还RFCOMM通道，点击再唤醒并设12秒防抢占守卫），解决国产系统后台抢占导致的闪烁耗电；手表端保持常连与磁贴实时刷新。'
-            : 'Phones default to on-demand burst links (3.8s idle release + 12s anti-hijack guard) to prevent system Bluetooth fighting, while watches stay persistently connected with live tiles.'}</p>
-          <p>{zh
-            ? '本机单端空间音频与360°双耳HRTF实验室支持任意蓝牙耳机，但仅作用于当前设备本机播放的媒体流；开启硬件或系统自带Spatializer时自动旁路。内置70%音量护栏与查找耳机佩戴拦截。'
-            : 'Local spatial DSP and the 360° binaural lab work with any headset for local media playback, auto-bypassing when hardware or OS Spatializer is active, alongside a 70% volume guard and wear-safety gates.'}</p>
-          <a class="text-link" href={site.appRepository} target="_blank" rel="noopener noreferrer">{zh ? '在GitHub查看项目' : 'View the project on GitHub'} <span aria-hidden="true">↗</span><span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span></a>
+
+        <div class="spec-trio">
+          {specs.map((spec) => (
+            <article class="spec-card">
+              <span class="entry-index">{spec.index}</span>
+              <h3>{spec.title}</h3>
+              <p>{spec.body}</p>
+            </article>
+          ))}
         </div>
       </div>
     </div>
@@ -83,14 +145,21 @@ const steps = zh ? [
   <section class="slide-section deck-sheet" data-slide data-slide-index="2" aria-labelledby="getting-started">
     <div class="deck-card deck-paper deck-fan-left">
       <FallingTiles primary="blue" secondary="red" />
-      <div class="shell content-section split-content ruled">
-        <div class="section-lead">
-          <p class="label"><span class="label-mark"></span>GETTING STARTED</p>
+      <div class="shell section-band-tight split-content">
+        <div class="section-lead" data-reveal>
+          <p class="label"><span class="label-mark yellow"></span>GETTING STARTED</p>
           <h2 id="getting-started">{zh ? '开始使用' : 'Getting started'}</h2>
+          <p>{zh ? '三步完成安装与首次安全检查，手表与手机共用同一个安装包。' : 'Three steps to install and verify safety gates using a single shared APK.'}</p>
         </div>
         <ol class="step-list">
           {steps.map(([title, body], index) => (
-            <li><span class="entry-index">0{index + 1}</span><div><h3>{title}</h3><p>{body}</p></div></li>
+            <li>
+              <span class="entry-index">0{index + 1}</span>
+              <div>
+                <h3>{title}</h3>
+                <p>{body}</p>
+              </div>
+            </li>
           ))}
         </ol>
       </div>
