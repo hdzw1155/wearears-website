@@ -8,8 +8,8 @@ import { issuesUrl, type Locale } from '../lib/site';
 const { locale } = Astro.props as { locale: Locale };
 const zh = locale === 'zh';
 const labels = zh
-  ? ['品牌', '耳机型号', '验证手表', '电量读取', '降噪控制', '通透模式', '证据类型', '验证日期']
-  : ['Brand', 'Earbud model', 'Test watch', 'Battery', 'ANC controls', 'Transparency', 'Evidence', 'Verified on'];
+  ? ['品牌', '耳机型号', '验证手表', '电量读取', '降噪控制', '通透模式', '进阶功能', '证据类型', '验证日期']
+  : ['Brand', 'Earbud model', 'Test watch', 'Battery', 'ANC controls', 'Transparency', 'Extended', 'Evidence', 'Verified on'];
 const missing = zh ? '未记录' : 'Unrecorded';
 const capability = capabilityLabels[locale];
 const evidence = evidenceLabels[locale];
@@ -161,10 +161,14 @@ const brandCount = Object.keys(brands).length;
                 </td>
                 <td role="cell">
                   <span class="field-label" aria-hidden="true">{labels[6]}</span>
-                  <span class={'evidence-tag ' + record.evidence}>{evidence[record.evidence]}</span>
+                  <span class="cap-pill"><span class={`cap-dot ${record.extended}`} aria-hidden="true"></span>{capability[record.extended]}</span>
                 </td>
                 <td role="cell">
                   <span class="field-label" aria-hidden="true">{labels[7]}</span>
+                  <span class={'evidence-tag ' + record.evidence}>{evidence[record.evidence]}</span>
+                </td>
+                <td role="cell">
+                  <span class="field-label" aria-hidden="true">{labels[8]}</span>
                   {record.verifiedOn ? <time datetime={record.verifiedOn}>{record.verifiedOn}</time> : missing}
                 </td>
               </tr>

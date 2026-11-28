@@ -23,6 +23,7 @@ type DeviceRecord = {
   battery: Capability;
   noise: Capability;
   transparency: Capability;
+  extended: Capability;
   evidence: Evidence;
   verifiedOn: string | null;
   source: string;
@@ -34,83 +35,83 @@ const protocols = appSource + 'docs/HANDOFF.md';
 // Dates and watch models stay null when the cited record has no device-level detail.
 export const compatibility: DeviceRecord[] = [
   {
-    brand: 'vivo', model: 'TWS Air3 Pro', watch: 'Galaxy Watch7',
-    battery: 'components', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
-    brand: 'sony', model: 'WF-1000XM5', watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
-    brand: 'redmi', model: 'Redmi Buds 6', aliases: ['红米 Buds 6'], watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
-    brand: 'oppo', model: 'Enco Air5 Pro', aliases: ['OPPO Enco Air5 Pro'], watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
-    brand: 'oppo', model: 'Enco Free4', aliases: ['OPPO Enco Free4'], watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
-    brand: 'honor', model: 'HONOR Earbuds X9', aliases: ['荣耀 Earbuds X9'], watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
     brand: 'huawei', model: 'FreeBuds 6i', watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
-    evidence: 'hardware', verifiedOn: null, source: readme,
-  },
-  {
-    brand: 'nicehck', model: 'OriG in', aliases: ['原点', '原道原点', 'Origin'], watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'verified',
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'verified',
     evidence: 'hardware', verifiedOn: null, source: readme,
   },
   {
     brand: 'huawei', model: 'FreeBuds SE 4 ANC', watch: null,
-    battery: 'verified', noise: 'verified', transparency: 'offOnly',
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'verified',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'vivo', model: 'TWS Air3 Pro', watch: 'Galaxy Watch7',
+    battery: 'components', noise: 'verified', transparency: 'verified', extended: 'candidate',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'sony', model: 'WF-1000XM5', watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'candidate',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'redmi', model: 'Redmi Buds 6', aliases: ['红米 Buds 6'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'candidate',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'oppo', model: 'Enco Air5 Pro', aliases: ['OPPO Enco Air5 Pro'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'candidate',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'oppo', model: 'Enco Free4', aliases: ['OPPO Enco Free4'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'candidate',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'honor', model: 'HONOR Earbuds X9', aliases: ['荣耀 Earbuds X9'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'candidate',
+    evidence: 'hardware', verifiedOn: null, source: readme,
+  },
+  {
+    brand: 'nicehck', model: 'OriG in', aliases: ['原点', '原道原点', 'Origin'], watch: null,
+    battery: 'verified', noise: 'verified', transparency: 'verified', extended: 'candidate',
     evidence: 'hardware', verifiedOn: null, source: readme,
   },
   {
     brand: 'redmi', model: 'Redmi Buds 5', watch: null,
-    battery: 'candidate', noise: 'candidate', transparency: 'candidate',
+    battery: 'candidate', noise: 'candidate', transparency: 'candidate', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
   {
     brand: 'redmi', model: 'Redmi Buds 6 Lite', watch: null,
-    battery: 'candidate', noise: 'candidate', transparency: 'candidate',
+    battery: 'candidate', noise: 'candidate', transparency: 'candidate', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
   {
     brand: 'oppo', model: 'Enco Air3 Pro', watch: null,
-    battery: 'candidate', noise: 'candidate', transparency: 'candidate',
+    battery: 'candidate', noise: 'candidate', transparency: 'candidate', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
   {
     brand: 'edifier', model: 'FitBuds Turbo', watch: null,
-    battery: 'candidate', noise: 'unknown', transparency: 'unknown',
+    battery: 'candidate', noise: 'unknown', transparency: 'unknown', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
   {
     brand: 'rose', model: 'CERAMICS-MK2', watch: null,
-    battery: 'candidate', noise: 'candidate', transparency: 'candidate',
+    battery: 'candidate', noise: 'candidate', transparency: 'candidate', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
   {
     brand: 'sony', model: 'WH-CH720N', watch: null,
-    battery: 'candidate', noise: 'candidate', transparency: 'candidate',
+    battery: 'candidate', noise: 'candidate', transparency: 'candidate', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
   {
     brand: 'technics', model: 'EAH-AZ80', watch: null,
-    battery: 'candidate', noise: 'candidate', transparency: 'candidate',
+    battery: 'candidate', noise: 'candidate', transparency: 'candidate', extended: 'candidate',
     evidence: 'prototype', verifiedOn: null, source: protocols,
   },
 ];

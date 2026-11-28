@@ -3601,8 +3601,8 @@ html[lang="zh-CN"] .page-intro h1 {
   letter-spacing: 0.06em;
   color: var(--muted);
 }
-.device-table thead th:nth-child(2) { width: 19%; }
-.device-table thead th:nth-child(7) { width: 14%; }
+.device-table thead th:nth-child(2) { width: 17%; }
+.device-table thead th:nth-child(8) { width: 13%; }
 .device-table tbody tr {
   border-bottom: 1px solid var(--rule);
   transition: background-color var(--motion);
@@ -3834,9 +3834,9 @@ html[lang="zh-CN"] .page-intro h1 {
     border-bottom: 1px solid var(--rule);
     margin-bottom: 0.15rem;
   }
+  .device-table td:nth-last-child(2),
   .device-table td:last-child {
-    grid-column: 1 / -1;
-    padding-top: 0.4rem;
+    padding-top: 0.45rem;
     border-top: 1px dashed var(--rule);
   }
   .device-table th, .device-table td {

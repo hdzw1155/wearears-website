@@ -2,7 +2,7 @@ export const site = {
   name: 'WearEars',
   origin: 'https://wearears.com',
   directDownloadUrl: 'https://download.wearears.com',
-  windowsDownloadUrl: 'https://github.com/hdzw1155/WearEars/releases/download/v0.5.0-exp-C/WearEars-0.5.0-exp-C-Windows.exe',
+  windowsDownloadUrl: 'https://github.com/hdzw1155/WearEars/releases/download/v0.5.0/WearEars-0.5.0-Windows.exe',
   appRepository: 'https://github.com/hdzw1155/WearEars',
   sourceRepository: 'https://github.com/hdzw1155/wearears-website',
   contactEmail: '',
@@ -26,7 +26,7 @@ export const navigation = ['project', 'compatibility', 'developers', 'partners',
 
 export const releasesUrl = site.appRepository + '/releases';
 export const issuesUrl = site.appRepository + '/issues';
-export const appRevision = '2bde754';
+export const appRevision = '7b16109';
 export const appSource = site.appRepository + '/blob/' + appRevision + '/';
 
 export function pagePath(locale: Locale, page: SitePage): string {
@@ -61,7 +61,7 @@ export const siteCopy = {
       compatibility: '按品牌、型号和证据类型查询WearEars的真机记录、协议候选与扩展能力边界。',
       developers: '了解WearEars的四层模块化结构、9大品牌驱动裁剪、局域网防火墙与Windows离线构建流程。',
       partners: '面向耳机品牌、ODM和穿戴设备团队的联合验证与技术合作方向。',
-      blog: '查看WearEars的GitHub公开发布记录、v0.5.0-exp-C多端协同与Windows桌面端演进。',
+      blog: '查看WearEars的GitHub公开发布记录、v0.5.0正式版多端协同与Windows桌面端演进。',
       privacy: '了解WearEars应用的纯本地蓝牙零收集原则、官网数据处理说明与商标政策。',
     },
   },
@@ -91,7 +91,7 @@ export const siteCopy = {
       compatibility: 'Browse WearEars device records by brand, model and evidence, along with protocol extension boundaries.',
       developers: 'Explore WearEars modular codebase, 9 trimmable brand drivers, LAN firewall and offline Windows builds.',
       partners: 'Explore joint validation and engineering collaboration for audio brands, ODMs and wearable teams.',
-      blog: 'Read WearEars GitHub releases, v0.5.0-exp-C multi-device mesh and Windows desktop engineering notes.',
+      blog: 'Read WearEars GitHub releases, v0.5.0 multi-device mesh and Windows desktop engineering notes.',
       privacy: 'Learn about the app zero-data-collection guarantee, website handling and trademark policy.',
     },
   },
