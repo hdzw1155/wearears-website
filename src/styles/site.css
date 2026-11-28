@@ -880,6 +880,8 @@ html.js .slide-section.is-waiting .architecture-layer {
 html.js .slide-section.is-waiting .capability-list li,
 html.js .slide-section.is-waiting .step-list li,
 html.js .slide-section.is-waiting .note-grid li,
+html.js .slide-section.is-waiting .os-repo-grid li,
+html.js .slide-section.is-waiting .os-tech-grid li,
 html.js .slide-section.is-waiting .matrix-cell,
 html.js .slide-section.is-waiting .spec-card,
 html.js .slide-section.is-waiting .release-list li,
@@ -896,6 +898,8 @@ html.js .slide-section.is-waiting .compatibility-section {
 .slide-section.is-active .capability-list li,
 .slide-section.is-active .step-list li,
 .slide-section.is-active .note-grid li,
+.slide-section.is-active .os-repo-grid li,
+.slide-section.is-active .os-tech-grid li,
 .slide-section.is-active .matrix-cell,
 .slide-section.is-active .spec-card,
 .slide-section.is-active .release-list li,
@@ -905,6 +909,8 @@ html.js .slide-section.is-waiting .compatibility-section {
 .capability-list li:nth-child(1),
 .step-list li:nth-child(1),
 .note-grid li:nth-child(1),
+.os-repo-grid li:nth-child(1),
+.os-tech-grid li:nth-child(1),
 .matrix-cell:nth-child(1),
 .spec-card:nth-child(1),
 .release-list li:nth-child(1),
@@ -912,6 +918,8 @@ html.js .slide-section.is-waiting .compatibility-section {
 .capability-list li:nth-child(2),
 .step-list li:nth-child(2),
 .note-grid li:nth-child(2),
+.os-repo-grid li:nth-child(2),
+.os-tech-grid li:nth-child(2),
 .matrix-cell:nth-child(2),
 .spec-card:nth-child(2),
 .release-list li:nth-child(2),
@@ -919,12 +927,15 @@ html.js .slide-section.is-waiting .compatibility-section {
 .capability-list li:nth-child(3),
 .step-list li:nth-child(3),
 .note-grid li:nth-child(3),
+.os-repo-grid li:nth-child(3),
+.os-tech-grid li:nth-child(3),
 .matrix-cell:nth-child(3),
 .spec-card:nth-child(3),
 .release-list li:nth-child(3),
 .prose > :nth-child(3) { --card-delay: 150ms; }
 .capability-list li:nth-child(4),
 .step-list li:nth-child(4),
+.os-tech-grid li:nth-child(4),
 .matrix-cell:nth-child(4),
 .release-list li:nth-child(n+4),
 .prose > :nth-child(n+4) { --card-delay: 225ms; }
@@ -4044,5 +4055,153 @@ html[lang="zh-CN"] .page-intro h1 {
   html.js .home-deck .fan-sweeper,
   html.js .home-deck .deck-rail {
     display: none !important;
+  }
+}
+
+/* =========================================================
+   Open Source Page Grids
+   ========================================================= */
+.os-repo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 0;
+  list-style: none;
+  margin-top: 1.5rem;
+}
+
+.os-repo-grid li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.1rem;
+  padding: 1.55rem;
+  background: rgba(18, 20, 24, 0.94);
+  border-top: 3px solid var(--blue);
+}
+
+.os-repo-grid li:nth-child(2) { border-top-color: var(--yellow); }
+.os-repo-grid li:nth-child(3) { border-top-color: var(--green); }
+
+.os-repo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.os-stack {
+  font: 600 0.68rem / 1.3 var(--mono);
+  letter-spacing: 0.06em;
+  color: rgba(245, 244, 238, 0.58);
+}
+
+.os-repo-grid h3 {
+  font-size: 1.35rem;
+  line-height: 1.2;
+  color: #f5f4ee;
+}
+
+.os-repo-grid p {
+  color: rgba(245, 244, 238, 0.78);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.os-repo-grid .matrix-tokens span {
+  padding: 0.24rem 0.55rem;
+  border: 1px solid rgba(245, 244, 238, 0.22);
+  color: rgba(245, 244, 238, 0.92);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.78rem;
+  font-weight: 550;
+  line-height: 1.35;
+}
+
+.os-tech-grid .matrix-tokens span {
+  padding: 0.24rem 0.55rem;
+  background: var(--paper-sunk);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 550;
+  line-height: 1.35;
+}
+
+.os-repo-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font: 600 0.82rem / 1.3 var(--mono);
+}
+
+.os-repo-links a {
+  color: #f5f4ee;
+  text-decoration: none;
+}
+
+.os-repo-links a:hover {
+  color: var(--yellow);
+}
+
+.os-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-bottom: 1px solid var(--ink);
+  padding: 0;
+  list-style: none;
+  margin-top: 1.4rem;
+}
+
+.os-tech-grid li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.55rem;
+  background: var(--paper-card);
+  border-top: 3px solid var(--ink);
+}
+
+.os-tech-grid li:nth-child(1) { border-top-color: var(--blue); }
+.os-tech-grid li:nth-child(2) { border-top-color: var(--green); }
+.os-tech-grid li:nth-child(3) { border-top-color: var(--red); }
+.os-tech-grid li:nth-child(4) { border-top-color: var(--yellow); }
+
+.os-tech-top h3 {
+  margin-top: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.os-tech-sub {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.os-tech-grid .note-card-foot a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.os-tech-grid .note-card-foot a:hover {
+  color: var(--blue);
+}
+
+@media (max-width: 960px) {
+  .os-repo-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .os-tech-grid {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

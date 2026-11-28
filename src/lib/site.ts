@@ -5,6 +5,8 @@ export const site = {
   windowsDownloadUrl: 'https://github.com/hdzw1155/WearEars/releases/download/v0.5.0/WearEars-0.5.0-Windows.exe',
   appRepository: 'https://github.com/hdzw1155/WearEars',
   sourceRepository: 'https://github.com/hdzw1155/wearears-website',
+  fanRibWipeRepository: 'https://github.com/hdzw1155/fan-rib-wipe',
+  fanRibWipeDemo: 'https://fan-rib-wipe.pages.dev',
   contactEmail: '',
 };
 
@@ -15,6 +17,7 @@ export const routes = {
   home: '',
   project: 'project',
   compatibility: 'compatibility',
+  openSource: 'open-source',
   developers: 'developers',
   partners: 'partners',
   blog: 'blog',
@@ -22,7 +25,7 @@ export const routes = {
 } as const;
 export type SitePage = keyof typeof routes;
 export const pages = Object.keys(routes) as SitePage[];
-export const navigation = ['project', 'compatibility', 'developers', 'partners', 'blog'] as const;
+export const navigation = ['project', 'compatibility', 'openSource', 'developers', 'partners', 'blog'] as const;
 
 export const releasesUrl = site.appRepository + '/releases';
 export const issuesUrl = site.appRepository + '/issues';
@@ -50,6 +53,7 @@ export const siteCopy = {
       home: '首页',
       project: '项目',
       compatibility: '兼容性',
+      openSource: '开源',
       developers: '开发者',
       partners: '合作',
       blog: '动态',
@@ -59,6 +63,7 @@ export const siteCopy = {
       home: '在Wear OS 3+手表、Android 11+手机、眼镜HUD与Windows托盘上统一查看耳机电量、切换降噪与音效，支持9大品牌驱动、局域网协同与本机空间音频。',
       project: '获取WearEars Android多端同包APK与Windows 22.5MB独立单文件托盘版，体验四套皮肤、局域网协同与听觉安全护栏。',
       compatibility: '按品牌、型号和证据类型查询WearEars的真机记录、协议候选与扩展能力边界。',
+      openSource: '浏览WearEars开源项目矩阵（WearEars客户端、Fan-Rib Wipe折扇擦除动效库、官网源码）与MIT底层技术模块。',
       developers: '了解WearEars的四层模块化结构、9大品牌驱动裁剪、局域网防火墙与Windows离线构建流程。',
       partners: '面向耳机品牌、ODM和穿戴设备团队的联合验证与技术合作方向。',
       blog: '查看WearEars的GitHub公开发布记录、v0.5.0正式版多端协同与Windows桌面端演进。',
@@ -80,6 +85,7 @@ export const siteCopy = {
       home: 'Home',
       project: 'Project',
       compatibility: 'Compatibility',
+      openSource: 'Open Source',
       developers: 'Developers',
       partners: 'Partners',
       blog: 'Journal',
@@ -89,6 +95,7 @@ export const siteCopy = {
       home: 'Manage cross-brand earbuds across Wear OS 3+, Android 11+, AR/TV HUD and Windows tray. Nine brand drivers, local LAN mesh and 48 kHz binaural spatial DSP.',
       project: 'Download the unified WearEars Android APK and standalone Windows tray executable with 4 themes, LAN firewall and hearing safety gates.',
       compatibility: 'Browse WearEars device records by brand, model and evidence, along with protocol extension boundaries.',
+      openSource: 'Browse WearEars open-source repositories (WearEars app, Fan-Rib Wipe rotational motion component, website source) and MIT technologies.',
       developers: 'Explore WearEars modular codebase, 9 trimmable brand drivers, LAN firewall and offline Windows builds.',
       partners: 'Explore joint validation and engineering collaboration for audio brands, ODMs and wearable teams.',
       blog: 'Read WearEars GitHub releases, v0.5.0 multi-device mesh and Windows desktop engineering notes.',

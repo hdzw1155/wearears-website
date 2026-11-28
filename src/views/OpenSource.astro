@@ -1,0 +1,320 @@
+---
+import FallingTiles from '../components/FallingTiles.astro';
+import FanDeck from '../components/FanDeck.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { appSource, pagePath, site, type Locale } from '../lib/site';
+
+const { locale } = Astro.props as { locale: Locale };
+const zh = locale === 'zh';
+
+const repositories = zh
+  ? [
+      {
+        index: '01',
+        name: 'WearEars',
+        license: 'MIT',
+        stack: 'JAVA 17 · WEAR OS · ANDROID · WINDOWS',
+        summary: '跨品牌蓝牙耳机多端控制主仓：手表圆屏、手机按需短连接、眼镜HUD与22.5MB Windows单文件托盘端。',
+        tags: ['9大品牌驱动', '4套皮肤', '局域网协同', '单端空间音频'],
+        primaryLabel: 'GitHub 仓库',
+        primaryHref: site.appRepository,
+        externalPrimary: true,
+        secondaryLabel: '获取发行包',
+        secondaryHref: pagePath(locale, 'project'),
+        externalSecondary: false,
+      },
+      {
+        index: '02',
+        name: 'Fan-Rib Wipe',
+        license: 'MIT',
+        stack: 'TYPESCRIPT · CSS · REACT · VUE',
+        summary: '角点折扇旋转擦除（Corner-Hinged Rotational Wipe）独立组件：从本官网抽离的零依赖页面转场库，支持四角双向、周长归一与滚动/手动双驱动。',
+        tags: ['4角 × 顺逆双向', '45°平滑多边形', '0运行时依赖', 'X光几何调试'],
+        primaryLabel: '在线 Playground',
+        primaryHref: site.fanRibWipeDemo,
+        externalPrimary: true,
+        secondaryLabel: 'GitHub 源码',
+        secondaryHref: site.fanRibWipeRepository,
+        externalSecondary: true,
+      },
+      {
+        index: '03',
+        name: 'wearears-website',
+        license: 'MIT',
+        stack: 'ASTRO · TYPESCRIPT · CSS',
+        summary: 'WearEars中英双语官网与机型兼容性JSON引擎源码，集成FanDeck滚动舞台、FallingTiles与自动化发布同步。',
+        tags: ['双语对称路由', 'compatibility.json', '零外部字体CDN', 'Cloudflare Pages'],
+        primaryLabel: 'GitHub 仓库',
+        primaryHref: site.sourceRepository,
+        externalPrimary: true,
+        secondaryLabel: 'JSON 接口',
+        secondaryHref: '/compatibility.json',
+        externalSecondary: true,
+      },
+    ]
+  : [
+      {
+        index: '01',
+        name: 'WearEars',
+        license: 'MIT',
+        stack: 'JAVA 17 · WEAR OS · ANDROID · WINDOWS',
+        summary: 'Cross-brand earbud control suite across Wear OS 3+, Android quick-park mode, AR/TV HUD and a 22.5 MB Windows tray binary.',
+        tags: ['9 Brand Drivers', '4 Themes', 'Local LAN Mesh', 'Binaural DSP'],
+        primaryLabel: 'GitHub Repo',
+        primaryHref: site.appRepository,
+        externalPrimary: true,
+        secondaryLabel: 'Downloads',
+        secondaryHref: pagePath(locale, 'project'),
+        externalSecondary: false,
+      },
+      {
+        index: '02',
+        name: 'Fan-Rib Wipe',
+        license: 'MIT',
+        stack: 'TYPESCRIPT · CSS · REACT · VUE',
+        summary: 'Corner-Hinged Rotational Wipe extracted from this website: zero-dependency rotational masking across 4 corners, CW/CCW sweep and aspect-normalized arc speed.',
+        tags: ['4 Corners × CW/CCW', '45° Quad Handoff', '0 Runtime Deps', 'Math X-Ray'],
+        primaryLabel: 'Live Playground',
+        primaryHref: site.fanRibWipeDemo,
+        externalPrimary: true,
+        secondaryLabel: 'GitHub Repo',
+        secondaryHref: site.fanRibWipeRepository,
+        externalSecondary: true,
+      },
+      {
+        index: '03',
+        name: 'wearears-website',
+        license: 'MIT',
+        stack: 'ASTRO · TYPESCRIPT · CSS',
+        summary: 'Source code for the bilingual WearEars portal, FanDeck runway mechanics and machine-readable device compatibility JSON.',
+        tags: ['ZH / EN Routes', 'compatibility.json', 'Offline Fonts', 'Cloudflare Pages'],
+        primaryLabel: 'GitHub Repo',
+        primaryHref: site.sourceRepository,
+        externalPrimary: true,
+        secondaryLabel: 'JSON Feed',
+        secondaryHref: '/compatibility.json',
+        externalSecondary: true,
+      },
+    ];
+
+const technologies = zh
+  ? [
+      {
+        code: 'TECH / 01',
+        title: 'Corner-Hinged Rotational Wipe',
+        subtitle: '角点折扇旋转擦除 · 前端动效引擎',
+        tokens: ['四角铰链支点', 'vw+vh 周长速度归一', '45° 三角/四角零跳变', '-4°..95° 过扫描防露白', 'overflow: clip'],
+        linkLabel: '在线试玩与几何推导',
+        href: site.fanRibWipeDemo,
+      },
+      {
+        code: 'TECH / 02',
+        title: '48 kHz Zero-GC Binaural HRTF',
+        subtitle: '纯JVM零分配双耳空间音频内核',
+        tokens: ['纯Java整型/浮点DSP', '播放热区零对象分配', '系统空间音频自动避让', '45s 空闲自动释放HAL'],
+        linkLabel: '查看内核源码',
+        href: appSource + 'core/src/com/hdz/wearcontrol/WearEarsBinauralKernel.java',
+      },
+      {
+        code: 'TECH / 03',
+        title: 'Probe-Gated WireDriver & Firewall',
+        subtitle: '探测门控协议栈与听觉安全护栏',
+        tokens: ['confirmFeature() 回包授权', '高危私有指令硬拦截', '手机按需短连接 Quick-Park', '70%音量与入耳响铃护栏'],
+        linkLabel: '查看驱动调度源码',
+        href: appSource + 'app/src/com/hdz/wearcontrol/DriverRegistry.java',
+      },
+      {
+        code: 'TECH / 04',
+        title: 'LAN Mesh & Windows Native BT Bridge',
+        subtitle: '跨端局域网协同与零依赖Win蓝牙桥',
+        tokens: ['手表↔手机↔桌面双向发现', '单端内网防火墙开关', '.NET 4.x 原生RFCOMM/GATT桥', '纯离线构建与全自动校验'],
+        linkLabel: '阅读架构交接文档',
+        href: appSource + 'docs/HANDOFF.md',
+      },
+    ]
+  : [
+      {
+        code: 'TECH / 01',
+        title: 'Corner-Hinged Rotational Wipe',
+        subtitle: 'Scroll & imperative rotational masking component',
+        tokens: ['4-Corner Hinge', 'vw+vh Arc Velocity', '45° Triangle→Quad Clip', '-4°..95° Overscan', 'overflow: clip'],
+        linkLabel: 'Open Playground',
+        href: site.fanRibWipeDemo,
+      },
+      {
+        code: 'TECH / 02',
+        title: '48 kHz Zero-GC Binaural HRTF',
+        subtitle: 'Pure JVM real-time spatial DSP kernel',
+        tokens: ['Pure JVM DSP', 'Zero Hot-Loop Allocation', 'Spatial Audio Auto-Yield', '45s Idle HAL Release'],
+        linkLabel: 'View Kernel Source',
+        href: appSource + 'core/src/com/hdz/wearcontrol/WearEarsBinauralKernel.java',
+      },
+      {
+        code: 'TECH / 03',
+        title: 'Probe-Gated WireDriver & Firewall',
+        subtitle: 'Reply-gated capabilities & hearing safety',
+        tokens: ['confirmFeature() Gate', 'Unsafe Opcode Block', 'Quick-Park RFCOMM', '70% Volume Guard'],
+        linkLabel: 'View Driver Registry',
+        href: appSource + 'app/src/com/hdz/wearcontrol/DriverRegistry.java',
+      },
+      {
+        code: 'TECH / 04',
+        title: 'LAN Mesh & Windows Native BT Bridge',
+        subtitle: 'Cross-device local discovery & zero-dep Win bridge',
+        tokens: ['Watch ↔ Phone ↔ Desktop', 'Local LAN Firewall', '.NET Native RFCOMM/GATT', 'Offline build.py Verify'],
+        linkLabel: 'Architecture Handoff',
+        href: appSource + 'docs/HANDOFF.md',
+      },
+    ];
+---
+
+<FanDeck>
+  <section class="slide-section deck-hero is-active" data-slide data-slide-index="0" aria-label={zh ? '开源项目与技术概览' : 'Open source overview'}>
+    <div class="deck-card deck-card-hero">
+      <FallingTiles primary="blue" secondary="yellow" />
+      <PageIntro
+        label="OPEN SOURCE · MIT"
+        meta="WEAREARS · FAN-RIB WIPE · HRTF · WIREDRIVER"
+        title={zh ? '开源项目与底层技术' : 'Open-source projects & technologies'}
+        summary={zh
+          ? 'WearEars将多端蓝牙控制主仓、折扇角点擦除动效组件与纯本地声学算法模块全面按MIT开源。'
+          : 'WearEars releases its cross-device clients, rotational wipe motion engine and local spatial DSP modules under the MIT license.'}
+      >
+        <div class="action-row">
+          <a class="button button-primary" data-arrow="ext" href={site.fanRibWipeDemo} target="_blank" rel="noopener noreferrer">
+            <span>{zh ? '体验 Fan-Rib Wipe' : 'Try Fan-Rib Wipe'}</span>
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+            <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+          </a>
+          <a class="button button-outline" data-arrow="ext" href={site.appRepository} target="_blank" rel="noopener noreferrer">
+            <span>GitHub · WearEars</span>
+            <span class="btn-arrow" aria-hidden="true">↗</span>
+            <span class="sr-only">{zh ? '（在新标签页打开）' : ' (opens in a new tab)'}</span>
+          </a>
+        </div>
+      </PageIntro>
+    </div>
+  </section>
+
+  <section class="slide-section deck-sheet ink-section" data-slide data-slide-index="1" aria-labelledby="os-repos-title">
+    <div class="deck-card deck-ink deck-fan-right ink-chamber">
+      <FallingTiles primary="red" secondary="blue" />
+      <div class="shell section-band-tight">
+        <div class="section-header-bar" data-reveal>
+          <div>
+            <p class="label"><span class="label-mark"></span>OPEN REPOSITORIES</p>
+            <h2 id="os-repos-title">{zh ? '开源项目仓库' : 'Open-source repositories'}</h2>
+          </div>
+          <div class="chamber-metrics chamber-metrics-4">
+            <div><strong>MIT</strong><span>{zh ? '开源协议' : 'License'}</span></div>
+            <div><strong>3</strong><span>{zh ? '独立仓库' : 'Repositories'}</span></div>
+            <div><strong>4</strong><span>{zh ? '运行终端' : 'Platforms'}</span></div>
+            <div><strong>0</strong><span>{zh ? '遥测上传' : 'Telemetry'}</span></div>
+          </div>
+        </div>
+
+        <ol class="os-repo-grid">
+          {repositories.map((repo) => (
+            <li>
+              <div class="os-repo-head">
+                <span class="entry-index">{repo.index} · {repo.license}</span>
+                <span class="os-stack">{repo.stack}</span>
+              </div>
+              <h3>{repo.name}</h3>
+              <p>{repo.summary}</p>
+              <div class="matrix-tokens" aria-label={zh ? '项目关键词' : 'Project highlights'}>
+                {repo.tags.map((tag) => (
+                  <span>{tag}</span>
+                ))}
+              </div>
+              <div class="os-repo-links">
+                <a
+                  href={repo.primaryHref}
+                  target={repo.externalPrimary ? '_blank' : undefined}
+                  rel={repo.externalPrimary ? 'noopener noreferrer' : undefined}
+                >
+                  {repo.primaryLabel} <span aria-hidden="true">{repo.externalPrimary ? '↗' : '→'}</span>
+                </a>
+                <a
+                  href={repo.secondaryHref}
+                  target={repo.externalSecondary ? '_blank' : undefined}
+                  rel={repo.externalSecondary ? 'noopener noreferrer' : undefined}
+                >
+                  {repo.secondaryLabel} <span aria-hidden="true">{repo.externalSecondary ? '↗' : '→'}</span>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide-section deck-sheet" data-slide data-slide-index="2" aria-labelledby="os-tech-title">
+    <div class="deck-card deck-paper deck-fan-left">
+      <FallingTiles primary="green" secondary="yellow" />
+      <div class="shell section-band-tight">
+        <div class="section-header-bar" data-reveal>
+          <div>
+            <p class="label"><span class="label-mark green"></span>OPEN TECHNOLOGIES</p>
+            <h2 id="os-tech-title">{zh ? '开源核心技术' : 'Core open-source technologies'}</h2>
+          </div>
+          <a class="text-link" href={site.fanRibWipeRepository + '/blob/main/docs/MATH_AND_DESIGN.md'} target="_blank" rel="noopener noreferrer">
+            {zh ? '阅读 Fan-Rib Wipe 几何推导' : 'Read Fan-Rib Wipe Math'} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <ul class="os-tech-grid">
+          {technologies.map((tech) => (
+            <li>
+              <div class="os-tech-top">
+                <span class="label">{tech.code}</span>
+                <h3>{tech.title}</h3>
+                <p class="os-tech-sub">{tech.subtitle}</p>
+              </div>
+              <div class="matrix-tokens">
+                {tech.tokens.map((tok) => (
+                  <span>{tok}</span>
+                ))}
+              </div>
+              <div class="note-card-foot">
+                <a href={tech.href} target="_blank" rel="noopener noreferrer">
+                  {tech.linkLabel} <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide-section deck-sheet" data-slide data-slide-index="3" aria-labelledby="os-next-title">
+    <div class="deck-card deck-sunk deck-fan-right">
+      <FallingTiles primary="yellow" secondary="green" />
+      <div class="shell section-band-tight">
+        <div class="roadmap-note">
+          <p class="label"><span class="label-mark yellow"></span>{zh ? '贡献与集成' : 'BUILD & INTEGRATE'}</p>
+          <div>
+            <h2 id="os-next-title">{zh ? '从源码架构或前端动效直接接入' : 'Adopt the stack or inspect the layers'}</h2>
+            <p>
+              {zh
+                ? 'Fan-Rib Wipe可通过npm或原生ES模块直接引入任意Web站点；WearEars客户端与驱动层支持Windows纯离线校验与按品牌裁剪打包。'
+                : 'Use Fan-Rib Wipe in any site via npm or ES modules, or dive into WearEars four-layer architecture and offline verification pipeline.'}
+            </p>
+            <div class="action-row" style="margin-top: 1.25rem;">
+              <a class="button button-primary" href={pagePath(locale, 'developers')}>
+                <span>{zh ? '查看开发者与离线构建' : 'Developers & Build Guide'}</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="button button-outline" href={pagePath(locale, 'compatibility')}>
+                <span>{zh ? '查看机型兼容矩阵' : 'Compatibility Matrix'}</span>
+                <span class="btn-arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</FanDeck>
